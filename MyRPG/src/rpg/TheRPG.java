@@ -60,7 +60,7 @@ public class TheRPG extends SecureClassLoader {
         //Un commentaire
     }
     void ChargementDyn() throws MalformedURLException, ClassNotFoundException, InstantiationException, IllegalAccessException, NoSuchMethodException, SecurityException, IllegalArgumentException, InvocationTargetException {
-    	URLClassLoader cl = new URLClassLoader(new URL[] { new File("C:\\MyPlug.jar").toURI().toURL() });
+    	URLClassLoader cl = new URLClassLoader(new URL[] { new File("..\\Plugin\\MyPlug.jar").toURI().toURL() });
     	Class<?> cl1 =  cl.loadClass("plugin.MyPlugin");
     	Object o =  cl1.newInstance(); 
     	Method m = cl1.getMethod("run");
