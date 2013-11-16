@@ -10,28 +10,29 @@ import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.MalformedURLException;
-import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.security.SecureClassLoader;
 import java.util.ArrayList;
 
-
 /**
- *
+ * 
  * @author giuse_000
  */
 public class TheRPG extends SecureClassLoader {
-	public ArrayList<File> path = new ArrayList<File>();  
-    /**
-     * @param args the command line arguments
-     * 
-     */
-    public static void main(String[] args) {
-        System.out.println("Hello");
-        TheRPG test = new TheRPG();
-        try {
-			test.ChargementDyn();
+	public ArrayList<File> path = new ArrayList<File>();
+
+	/**
+	 * @param args
+	 *            the command line arguments
+	 * 
+	 */
+	public static void main(String[] args) {
+		System.out.println("Hello");
+
+		TheRPG rpg = new TheRPG();
+		try {
+			rpg.ChargementDyn();
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -57,19 +58,20 @@ public class TheRPG extends SecureClassLoader {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-        //Un commentaire
-    }
-    void ChargementDyn() throws MalformedURLException, ClassNotFoundException, InstantiationException, IllegalAccessException, NoSuchMethodException, SecurityException, IllegalArgumentException, InvocationTargetException {
-    	URLClassLoader cl = new URLClassLoader(new URL[] { new File("./Plugin/MyPlug.jar").toURI().toURL() });
-    	Class<?> cl1 =  cl.loadClass("plugin.MyPlugin");
-    	Object o =  cl1.newInstance(); 
-    	Method m = cl1.getMethod("run");
-    	m.invoke(o);
-    	
-    	//Method m = cl1.getDeclaredMethod("run");
-    	
+	}
 
-    	
-    }
-   
+	public void ChargementDyn() throws MalformedURLException, ClassNotFoundException, InstantiationException, IllegalAccessException, NoSuchMethodException, SecurityException, IllegalArgumentException, InvocationTargetException {
+		URLClassLoader cl = new URLClassLoader(new URL[] { 
+			new File("./Plugin/MyPlug.jar").toURI().toURL() 
+		});
+		
+		Class<?> cl1 = cl.loadClass("plugin.MyPlugin");
+		Object o = cl1.newInstance();
+		Method m = cl1.getMethod("run");
+		//Method m = cl1.getDeclaredMethod("run");
+		m.invoke(o);
+
+		
+	}
+
 }
