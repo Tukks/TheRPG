@@ -68,6 +68,7 @@ public class TheRPG extends SecureClassLoader {
 		Class<?> cl1 = cl.loadClass("plugin.MyPlugin");
 		Object o = cl1.newInstance();
 		Method m = cl1.getMethod("run");
+		
 		//Method m = cl1.getDeclaredMethod("run");
 		m.invoke(o);
 
