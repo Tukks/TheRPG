@@ -1,5 +1,6 @@
 package chargementDynamique;
 
+import java.io.File;
 import java.io.IOException;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.InvocationTargetException;
@@ -16,7 +17,10 @@ public abstract class ChargementDynamique extends SecureClassLoader { // faire e
 	String nomClass;
 	Object o;
 	List<Method> listMethode = new ArrayList<Method>();
-	
+	File fichier;
+	ChargementDynamique(){
+		
+	}
 	
 	public static void main(String[] args) throws InstantiationException, IllegalAccessException, ClassNotFoundException, IOException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException{
 		ChargementDynamiqueClass mcl = new ChargementDynamiqueClass("./Plugin/MyPlugin.class");
@@ -88,6 +92,13 @@ public abstract class ChargementDynamique extends SecureClassLoader { // faire e
 
 	public void setListMethode(List<Method> listMethode) {
 		this.listMethode = listMethode;
+	}
+	public File getFichier() {
+		return fichier;
+	}
+
+	public void setFichier(File fichier) {
+		this.fichier = fichier;
 	}
 
 }

@@ -4,16 +4,10 @@ import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.IOException;
 import java.io.InputStream;
-import java.lang.annotation.Annotation;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
+
 import java.net.MalformedURLException;
-import java.net.URLClassLoader;
-import java.security.SecureClassLoader;
-import java.util.ArrayList;
-import java.util.List;
+
 
 
 
@@ -21,10 +15,10 @@ import java.util.List;
 
 public class ChargementDynamiqueClass extends ChargementDynamique {
 	
-	File path;
+
 	
 	ChargementDynamiqueClass(String fileAccess) throws MalformedURLException, InstantiationException, IllegalAccessException, ClassNotFoundException{
-		this.path = new File(fileAccess);
+		this.fichier = new File(fileAccess);
 		this.classCharged =  this.loadClass(""); //Pas besoin du nom, il le trouve tt seul :)
 		this.o = classCharged.newInstance();
 		this.listAllMethod();
@@ -34,7 +28,7 @@ public class ChargementDynamiqueClass extends ChargementDynamique {
 	@Override  
 	protected Class<?> findClass(String name) throws ClassNotFoundException {   
 		try {
-			InputStream in = new BufferedInputStream(new FileInputStream(path));
+			InputStream in = new BufferedInputStream(new FileInputStream(fichier));
 			ByteArrayOutputStream out = new ByteArrayOutputStream();
 			byte[] buf = new byte[1024];
 			int n;
@@ -52,21 +46,8 @@ public class ChargementDynamiqueClass extends ChargementDynamique {
 		}
 	}  
 
-
-
 	
 	
-
-
-	
-	
-	public File getPath() {
-		return path;
-	}
-
-	public void setPath(File path) {
-		this.path = path;
-	}
 	/*@Override  //au cas ou
 	protected Class<?> findClass(String name) throws ClassNotFoundException {  
 		byte[] b;
