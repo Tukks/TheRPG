@@ -11,49 +11,60 @@ import java.security.SecureClassLoader;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class ChargementDynamique extends SecureClassLoader { // faire en class abastract
+public abstract class ChargementDynamique extends SecureClassLoader { // faire
+																		// en
+																		// class
+																		// abastract
 	URLClassLoader cl;
 	Class<?> classCharged;
 	String nomClass;
 	Object o;
 	List<Method> listMethode = new ArrayList<Method>();
 	File fichier;
-	ChargementDynamique(){
-		
+
+	ChargementDynamique() {
+
 	}
-	
-	public static void main(String[] args) throws InstantiationException, IllegalAccessException, ClassNotFoundException, IOException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException{
-		ChargementDynamiqueClass mcl = new ChargementDynamiqueClass("./Plugin/MyPlugin.class");
-		Annotation[] test  =mcl.getMethodForName("coucou").getAnnotations();
+
+	public static void main(String[] args) throws InstantiationException,
+			IllegalAccessException, ClassNotFoundException, IOException,
+			IllegalArgumentException, InvocationTargetException,
+			NoSuchMethodException, SecurityException {
+		ChargementDynamiqueClass mcl = new ChargementDynamiqueClass(
+				"./Plugin/MyPlugin.class");
+		Annotation[] test = mcl.getMethodForName("coucou").getAnnotations();
 		System.out.println(test.length);
 		try {
-			ChargementDynamiqueJar ch = new ChargementDynamiqueJar("./Plugin/MyPlug1.jar");
-			//	ch.getListMethode().get(0).invoke(ch.getO());
-			//String c = (String) ch.getListMethode().get(1).invoke(ch.getO());
-			Class<?> t =  ch.getMethodForName("coucou").getReturnType();
+			ChargementDynamiqueJar ch = new ChargementDynamiqueJar(
+					"./Plugin/MyPlug1.jar");
+			// ch.getListMethode().get(0).invoke(ch.getO());
+			// String c = (String) ch.getListMethode().get(1).invoke(ch.getO());
+			Class<?> t = ch.getMethodForName("coucou").getReturnType();
 			System.out.println(t);
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	}  
+	}
+
 	public Method getMethodForName(String name) {
 		int i = 0;
-		while(i < listMethode.size()){
-			if(listMethode.get(i).getName().equalsIgnoreCase(name)){
-				
+		while (i < listMethode.size()) {
+			if (listMethode.get(i).getName().equalsIgnoreCase(name)) {
+
 				return listMethode.get(i);
 			}
 			i++;
 		}
 		return null;
 	}
-	
-	public void listAllMethod(){
-		for(int i = 0; i < classCharged.getDeclaredMethods().length;i++){
+
+	public void listAllMethod() {
+		for (int i = 0; i < classCharged.getDeclaredMethods().length; i++) {
 			listMethode.add(classCharged.getDeclaredMethods()[i]);
 		}
 	}
+
 	public URLClassLoader getCl() {
 		return cl;
 	}
@@ -93,6 +104,7 @@ public abstract class ChargementDynamique extends SecureClassLoader { // faire e
 	public void setListMethode(List<Method> listMethode) {
 		this.listMethode = listMethode;
 	}
+
 	public File getFichier() {
 		return fichier;
 	}
