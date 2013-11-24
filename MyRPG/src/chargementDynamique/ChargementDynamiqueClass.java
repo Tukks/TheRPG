@@ -1,5 +1,7 @@
 package chargementDynamique;
 
+import java.io.BufferedInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -7,7 +9,7 @@ import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.MalformedURLException;
-import java.net.URL;
+
 import java.net.URLClassLoader;
 import java.security.SecureClassLoader;
 import java.util.ArrayList;
@@ -26,62 +28,56 @@ public class ChargementDynamiqueClass extends SecureClassLoader implements Charg
 	File path;
 	ChargementDynamiqueClass(String fileAccess) throws MalformedURLException, InstantiationException, IllegalAccessException, ClassNotFoundException{
 		this.path = new File(fileAccess);
-		this.classCharged =  this.loadClass("plugin.MyPlugin"); //Loadclass appel Loadclassdata
+		this.classCharged =  this.loadClass(""); //Loadclass appel Loadclassdata
 		this.o = classCharged.newInstance();
 		this.listAllMethod();
 		this.getNomClasse();
 	}
-	
+
 	@Override  
 	protected Class<?> findClass(String name) throws ClassNotFoundException {  
-		byte[] b;
-		b = loadClassData(name);
-
-		// TODO Auto-generated catch block
-		return super.defineClass(name, b, 0, b.length);  
-	}  
-	
-	@SuppressWarnings("resource")
-	private byte[] loadClassData(String name){ 
-		InputStream IS;
-
 		try {
-			IS = new FileInputStream(path);
-			
-			byte[] plug;
-			plug = new byte[IS.available()];
-			IS.read(plug);
-			
-			return plug;
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			System.out.println("erreur");
-			e.printStackTrace();
+			InputStream in = new BufferedInputStream(new FileInputStream(path));
+			ByteArrayOutputStream out = new ByteArrayOutputStream();
+			byte[] buf = new byte[1024];
+			int n;
+			while ((n=in.read(buf,0,buf.length))>0){
+				out.write(buf,0,n);
+			}
+			in.close();
+			byte[] data = out.toByteArray();
+			Class<?> c = defineClass(null, data, 0, data.length);
+			resolveClass(c);
+			return c;
+		} catch (Throwable t) {
+			t.printStackTrace();
+			throw new ClassNotFoundException(name);
 		}
-		return null;
+	}  
 
-	}
 	
+
+	
+
 	public static void main(String[] args) throws InstantiationException, IllegalAccessException, ClassNotFoundException, IOException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException{
 		ChargementDynamiqueClass mcl = new ChargementDynamiqueClass("./Plugin/MyPlugin.class");
-		mcl.getNomClass();
-		//mcl.getMethodForName("run").invoke(mcl.getO());
+		mcl.getMethodForName("run").invoke(mcl.getO());
 	}  
 
-	
+
 	void getNomClasse(){
 		String nom;
 		nom = path.getAbsolutePath();
 		System.out.println(nom);
-		
-		
+
+
 	}
 	@Override
 	public Method getMethodForName(String name) {
 		int i = 0;
 		while(i < listMethode.size()){
 			if(listMethode.get(i).getName().equalsIgnoreCase(name)){
-				
+
 				return listMethode.get(i);
 			}
 			i++;
@@ -144,4 +140,32 @@ public class ChargementDynamiqueClass extends SecureClassLoader implements Charg
 	public void setPath(File path) {
 		this.path = path;
 	}
+	/*@Override  //au cas ou
+	protected Class<?> findClass(String name) throws ClassNotFoundException {  
+		byte[] b;
+		b = loadClassData(name);
+
+		// TODO Auto-generated catch block
+		return super.defineClass(name, b, 0, b.length);  
+	}
+	@SuppressWarnings("resource")
+	private byte[] loadClassData(String name){ 
+		InputStream IS;
+
+		try {
+			IS = new FileInputStream(path);
+
+			byte[] plug;
+			plug = new byte[IS.available()];
+			IS.read(plug);
+
+			return plug;
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			System.out.println("erreur");
+			e.printStackTrace();
+		}
+		return null;
+
+	} */ 
 }
