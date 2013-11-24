@@ -41,10 +41,17 @@ public abstract class ChargementDynamique extends SecureClassLoader { // faire
 			// String c = (String) ch.getListMethode().get(1).invoke(ch.getO());
 			Class<?> t = ch.getMethodForName("coucou").getReturnType();
 			System.out.println(t);
+			ArrayList<ChargementDynamique> teste = new ArrayList<ChargementDynamique>();
+			teste.add(mcl);
+			teste.add(ch);
+			teste.get(1).getMethodForName("run").invoke(teste.get(1).getO());
+			System.out.println(teste.get(0).getMethodForName("coucou").invoke(teste.get(0).getO()));
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		
 	}
 
 	public Method getMethodForName(String name) {
@@ -58,7 +65,7 @@ public abstract class ChargementDynamique extends SecureClassLoader { // faire
 		}
 		return null;
 	}
-
+	
 	public void listAllMethod() {
 		for (int i = 0; i < classCharged.getDeclaredMethods().length; i++) {
 			listMethode.add(classCharged.getDeclaredMethods()[i]);
