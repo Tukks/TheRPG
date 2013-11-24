@@ -31,7 +31,7 @@ public class ChargementDynamiqueClass extends SecureClassLoader implements Charg
 		this.classCharged =  this.loadClass(""); //Loadclass appel Loadclassdata
 		this.o = classCharged.newInstance();
 		this.listAllMethod();
-		this.getNomClasse();
+		
 	}
 
 	@Override  
