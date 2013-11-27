@@ -12,14 +12,14 @@ import java.util.jar.*;
 
 public class ChargementDynamiqueJar extends ChargementDynamique {
 
-	ChargementDynamiqueJar(String fileAccess) throws IOException,
+	public ChargementDynamiqueJar(String fileAccess) throws IOException,
 			ClassNotFoundException, InstantiationException,
 			IllegalAccessException {
 		this.fichier = new File(fileAccess);
 		cl = new URLClassLoader(new URL[] { fichier.toURI().toURL() });
 		java.util.jar.JarFile jar = new JarFile(fichier);
 		classCharged = cl.loadClass(getNomClasse(jar));
-		o = classCharged.newInstance();
+		classInstancie = classCharged.newInstance();
 		this.listAllMethod();
 
 	}

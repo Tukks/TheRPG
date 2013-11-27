@@ -15,6 +15,7 @@ public class ListenerChargementDyn implements ActionListener {
 	}
 	public Boolean isItem(ChargementDynamique plugin){
 		// TODO Definir Grace au annotation si c'est un Plugin item
+		plugin.classCharged.getAnnotations();
 		return null;
 		
 	}

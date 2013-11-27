@@ -10,13 +10,13 @@ import java.net.MalformedURLException;
 
 public class ChargementDynamiqueClass extends ChargementDynamique {
 
-	ChargementDynamiqueClass(String fileAccess) throws MalformedURLException,
+	public ChargementDynamiqueClass(String fileAccess) throws MalformedURLException,
 			InstantiationException, IllegalAccessException,
 			ClassNotFoundException {
 		this.fichier = new File(fileAccess);
 		this.classCharged = this.loadClass(""); // Pas besoin du nom, il le
 												// trouve tt seul :)
-		this.o = classCharged.newInstance();
+		this.classInstancie = classCharged.newInstance();
 		this.listAllMethod();
 
 	}

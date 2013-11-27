@@ -12,13 +12,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class ChargementDynamique extends SecureClassLoader { // faire
-																		// en
-																		// class
-																		// abastract
+	// en
+	// class
+	// abastract
 	URLClassLoader cl;
 	Class<?> classCharged;
 	String nomClass;
-	Object o;
+	Object classInstancie;
+	public Object getClassInstancie() {
+		return classInstancie;
+	}
+
+	public void setClassInstancie(Object classInstancie) {
+		this.classInstancie = classInstancie;
+	}
+
 	List<Method> listMethode = new ArrayList<Method>();
 	File fichier;
 
@@ -26,33 +34,7 @@ public abstract class ChargementDynamique extends SecureClassLoader { // faire
 
 	}
 
-	public static void main(String[] args) throws InstantiationException,
-			IllegalAccessException, ClassNotFoundException, IOException,
-			IllegalArgumentException, InvocationTargetException,
-			NoSuchMethodException, SecurityException {
-		ChargementDynamiqueClass mcl = new ChargementDynamiqueClass(
-				"./Plugin/MyPlugin.class");
-		Annotation[] test = mcl.getMethodForName("coucou").getAnnotations();
-		System.out.println(test.length);
-		try {
-			ChargementDynamiqueJar ch = new ChargementDynamiqueJar(
-					"./Plugin/MyPlug1.jar");
-			// ch.getListMethode().get(0).invoke(ch.getO());
-			// String c = (String) ch.getListMethode().get(1).invoke(ch.getO());
-			Class<?> t = ch.getMethodForName("coucou").getReturnType();
-			System.out.println(t);
-			ArrayList<ChargementDynamique> teste = new ArrayList<ChargementDynamique>();
-			teste.add(mcl);
-			teste.add(ch);
-			teste.get(1).getMethodForName("run").invoke(teste.get(1).getO());
-			System.out.println(teste.get(0).getMethodForName("coucou").invoke(teste.get(0).getO()));
-		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		
-	}
+	
 
 	public Method getMethodForName(String name) {
 		int i = 0;
@@ -65,7 +47,7 @@ public abstract class ChargementDynamique extends SecureClassLoader { // faire
 		}
 		return null;
 	}
-	
+
 	public void listAllMethod() {
 		for (int i = 0; i < classCharged.getDeclaredMethods().length; i++) {
 			listMethode.add(classCharged.getDeclaredMethods()[i]);
@@ -96,13 +78,7 @@ public abstract class ChargementDynamique extends SecureClassLoader { // faire
 		this.nomClass = nomClass;
 	}
 
-	public Object getO() {
-		return o;
-	}
 
-	public void setO(Object o) {
-		this.o = o;
-	}
 
 	public List<Method> getListMethode() {
 		return listMethode;
