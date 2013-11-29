@@ -21,6 +21,9 @@ public class Launch {
 			ChargementDynamiqueJar ch = new ChargementDynamiqueJar(
 					"./Plugin/MyPlugAnno.jar"); //On charge le .jar
 
+			ChargementDynamiqueJar jar = new ChargementDynamiqueJar(
+					"./Plugin/MyPlugTest.jar"); //On charge le .jar
+
 			/**
 			 * On recupere notre classe charger MCL, 
 			 * on recupere la methode par son nom "Coucou" 
@@ -43,9 +46,11 @@ public class Launch {
 			ArrayList<ChargementDynamique> teste = new ArrayList<ChargementDynamique>();
 			teste.add(mcl);
 			teste.add(ch);
-			teste.get(1).getMethodForName("run").invoke(teste.get(1).getClassInstancie());
-			System.out.println(teste.get(0).getMethodForName("coucou").invoke(teste.get(0).getClassInstancie()));
+			teste.add(jar);
 			
+			System.out.println(teste.get(2).getMethodForName("run").invoke(teste.get(2).getClassInstancie()));
+			
+			System.out.println(teste.get(2).getMethodForName("run").getDeclaredAnnotations().length);
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
