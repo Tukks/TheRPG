@@ -5,43 +5,54 @@ public class Item {
 	private int id;
 	private String nom;
 	private String icon;
-	private String type;
+	private Type type;
+	
+	private int force, defense, pointdevie;
 
-	public Item(int id) {
+	public Item(int id, String nom, String icon, Type type) {
 		this.id = id;
+		this.nom = nom;
+		this.icon = icon;
+		this.type = type;
 	}
 
 	public int getId() {
 		return id;
 	}
 
-	public void setId(int id) {
-		this.id = id;
-	}
-
 	public String getNom() {
 		return nom;
-	}
-
-	public void setNom(String nom) {
-		this.nom = nom;
 	}
 
 	public String getIcon() {
 		return icon;
 	}
 
-	public void setIcon(String icon) {
-		this.icon = icon;
-	}
-
-	public String getType() {
+	public Type getType() {
 		return type;
 	}
 
-	public void setType(String type) {
-		this.type = type;
+	public int armement(int force){
+		if(this.getType() == Type.Arme){
+			this.force += force; 
+		}
+		
+		return this.force;
 	}
-
 	
+	public int renforcement(int defense){
+		if(this.getType() == Type.Armure){
+			this.defense += defense;
+		}
+		
+		return this.defense;
+	}
+	
+	public int soin(int pointdevie){
+		if(this.getType() == Type.Potion){
+			this.pointdevie += pointdevie;
+		}
+		
+		return this.pointdevie;
+	}
 }
