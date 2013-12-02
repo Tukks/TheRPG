@@ -18,6 +18,8 @@ public class Launch {
 		try {
 			ChargementDynamiqueClass mcl = new ChargementDynamiqueClass(
 					"./Plugin/MyPlugin.class"); //on charge le .class
+			Object test = mcl.getClassCharged().newInstance();
+			mcl.getClassCharged().getDeclaredMethods()[0].invoke(test);
 			ChargementDynamiqueJar ch = new ChargementDynamiqueJar(
 					"./Plugin/MyPlugAnno.jar"); //On charge le .jar
 

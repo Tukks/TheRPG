@@ -24,6 +24,8 @@ public class ListenerChargementDyn implements ActionListener {
 		return null;
 		
 	}
-	
+	public void getClassForName(String name){
+		
+	}
 	
 }
