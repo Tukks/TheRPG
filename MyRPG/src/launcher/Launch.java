@@ -50,7 +50,7 @@ public class Launch {
 			
 			System.out.println(teste.get(2).getMethodForName("run").invoke(teste.get(2).getClassInstancie()));
 			
-			System.out.println(teste.get(2).getMethodForName("run").getAnnotations()[0]);
+            System.out.println(teste.get(2).getMethodForName("run").getDeclaredAnnotations().length);
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
