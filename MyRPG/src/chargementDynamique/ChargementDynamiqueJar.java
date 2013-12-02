@@ -15,6 +15,7 @@ public class ChargementDynamiqueJar extends ChargementDynamique {
 	public ChargementDynamiqueJar(String fileAccess) throws IOException,
 			ClassNotFoundException, InstantiationException,
 			IllegalAccessException {
+		
 		this.fichier = new File(fileAccess);
 		cl = new URLClassLoader(new URL[] { fichier.toURI().toURL() });
 		java.util.jar.JarFile jar = new JarFile(fichier);

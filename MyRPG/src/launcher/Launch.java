@@ -18,6 +18,8 @@ public class Launch {
 		try {
 			ChargementDynamiqueClass mcl = new ChargementDynamiqueClass(
 					"./Plugin/MyPlugin.class"); //on charge le .class
+			Object test = mcl.getClassCharged().newInstance();
+			mcl.getClassCharged().getDeclaredMethods()[0].invoke(test);
 			ChargementDynamiqueJar ch = new ChargementDynamiqueJar(
 					"./Plugin/MyPlugAnno.jar"); //On charge le .jar
 
@@ -50,7 +52,7 @@ public class Launch {
 			
 			System.out.println(teste.get(2).getMethodForName("run").invoke(teste.get(2).getClassInstancie()));
 			
-			System.out.println(teste.get(2).getMethodForName("run").getAnnotations()[0]);
+            System.out.println(teste.get(2).getMethodForName("run").getDeclaredAnnotations().length);
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
