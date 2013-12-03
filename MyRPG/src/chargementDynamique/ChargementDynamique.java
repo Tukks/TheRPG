@@ -96,4 +96,31 @@ public abstract class ChargementDynamique extends SecureClassLoader { // faire
 		this.fichier = fichier;
 	}
 
+
+
+
+	public Boolean isItem(){
+		// TODO Definir Grace au annotation si c'est un Plugin item
+		
+		Annotation[] anno = this.classCharged.getAnnotations();
+		for(int i = 0; i < anno.length; i++){
+			if(anno[i].toString().contains("Item")){
+				return true;
+			}
+		}
+		
+		return false;
+	}
+	public Boolean isClass(){
+		// TODO Definir Grace au annotation si c'est un Plugin Classe de personnage
+		Annotation[] anno = this.classCharged.getAnnotations();
+		for(int i = 0; i < anno.length; i++){
+			if(anno[i].toString().contains("Classe")){
+				return true;
+			}
+		}
+		
+		return false;
+		
+	}
 }
