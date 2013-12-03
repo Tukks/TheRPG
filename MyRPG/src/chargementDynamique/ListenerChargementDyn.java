@@ -10,21 +10,44 @@ import java.net.MalformedURLException;
 import java.util.ArrayList;
 
 
-public class ListenerChargementDyn implements ActionListener {
+public class ListenerChargementDyn extends Thread {
 	ArrayList<ChargementDynamique> pluginItem = new ArrayList<ChargementDynamique>();
 	ArrayList<ChargementDynamique> pluginClasse = new ArrayList<ChargementDynamique>();
+	int sizePlug;
 	String folder;
-	ListenerChargementDyn(String folder){
+	ListenerChargementDyn(String folder) throws InstantiationException, IllegalAccessException, ClassNotFoundException, IOException{
 		this.folder = folder;
+		sizePlug = new ListFile(folder, "").listFichier().size();
+		this.ChargerAllClass();
+		this.ChargerAllJar();
 	}
-	@Override
-	public void actionPerformed(ActionEvent arg0) {
-		// TODO Regarder a intervalleregulier dans le dossier Plugin
-		
+	public void run() {
+		System.out.println(pluginItem.size());
+		System.out.println(pluginClasse.size());
+
+		while(true){
+			System.out.println("HEY");
+			ListFile lf = new ListFile(folder, "");
+			int sizeTemp = lf.listFichier().size();;
+			if( sizeTemp < sizePlug){
+				
+				//on va supprimer celui qui est plus la
+			}else if(sizeTemp > sizePlug){
+				//on va ajouter celui qui est nouveaux
+
+			}
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
 	}
+	
 	public void ChargerAllClass() throws MalformedURLException, InstantiationException, IllegalAccessException, ClassNotFoundException{
 		ListFile lf = new ListFile(folder, "class");
-		ArrayList<File> path = new ArrayList<File>();  
 
 		for (int i = 0; i < lf.listFichier().size(); i++) {
 			if(!lf.listFichier().get(i).isDirectory()){
@@ -40,8 +63,6 @@ public class ListenerChargementDyn implements ActionListener {
 	}
 	public void ChargerAllJar() throws ClassNotFoundException, InstantiationException, IllegalAccessException, IOException{
 		ListFile lf = new ListFile(folder, "jar");
-		ArrayList<File> path = new ArrayList<File>();  
-
 		for (int i = 0; i < lf.listFichier().size(); i++) {
 			if(!lf.listFichier().get(i).isDirectory()){
 				ChargementDynamiqueJar cdc = new ChargementDynamiqueJar(lf.listFichier().get(i).getAbsolutePath());
@@ -54,16 +75,18 @@ public class ListenerChargementDyn implements ActionListener {
 			}
 		}
 	}
-	public static void main(String[] args) throws MalformedURLException, InstantiationException, IllegalAccessException, ClassNotFoundException, IllegalArgumentException, InvocationTargetException{
+	public static void main(String[] args) throws InstantiationException, IllegalAccessException, ClassNotFoundException, IllegalArgumentException, InvocationTargetException, IOException{
 		ListenerChargementDyn lcd = new ListenerChargementDyn("./Plugin");
 		lcd.ChargerAllClass();
 		System.out.println(lcd.getPluginClasse().size()); // c'est normal que sa marche pas
 		// il manque les annotation dans les classe ;)
-		lcd.getPluginClasse().get(0).getListMethode().get(0).invoke(lcd.getPluginClasse().get(0).getClassInstancie());
+		Thread test = new Thread(lcd);
+		test.start();
+		//	lcd.getPluginClasse().get(0).getListMethode().get(0).invoke(lcd.getPluginClasse().get(0).getClassInstancie());
 	}
-	
+
 	public void getClassForName(String name){
-		
+
 	}
 	public ArrayList<ChargementDynamique> getPluginItem() {
 		return pluginItem;
@@ -83,6 +106,6 @@ public class ListenerChargementDyn implements ActionListener {
 	public void setFolder(String folder) {
 		this.folder = folder;
 	}
-	
-	
+
+
 }
