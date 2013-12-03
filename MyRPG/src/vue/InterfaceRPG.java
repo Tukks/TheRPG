@@ -63,9 +63,12 @@ public class InterfaceRPG {
 		appercuPerso.setSize(400, 400);
 		appercuPerso
 				.setBackgroundImage(new Image(display, PathManager.classImg));
-		// 4 > caractéristiques
+		// 3 > caractéristiques
 
-		// 5 > armes
+		Composite carac = new Composite(fenetre, SWT.BORDER_DOT);
+		carac.setSize(400, 400);
+
+		// 4 > armes
 
 		GroupDeco gd = new GroupDeco(fenetre, "Choisissez une arme", new Image(
 				display, PathManager.bgGroup), 2);
@@ -77,7 +80,17 @@ public class InterfaceRPG {
 					PathManager.itemImg));
 		}
 
-		// 6 > armures
+		// 5 > armures
+
+		gd = new GroupDeco(fenetre, "Choisissez une armure", null, 2);
+		Group groupArmures = gd.getG();
+		groupArmures.setSize(400, 400);
+
+		// 6 > items
+
+		gd = new GroupDeco(fenetre, "Choisissez 3 items", null, 2);
+		Group groupItem = gd.getG();
+		groupArmures.setSize(400, 400);
 
 		// curseur
 		// Cursor cursor1 = new Cursor(display, cursor_Image, 1, 1);
