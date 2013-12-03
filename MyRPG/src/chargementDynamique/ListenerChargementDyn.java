@@ -57,7 +57,8 @@ public class ListenerChargementDyn implements ActionListener {
 	public static void main(String[] args) throws MalformedURLException, InstantiationException, IllegalAccessException, ClassNotFoundException, IllegalArgumentException, InvocationTargetException{
 		ListenerChargementDyn lcd = new ListenerChargementDyn("./Plugin");
 		lcd.ChargerAllClass();
-		System.out.println(lcd.getPluginClasse().size());
+		System.out.println(lcd.getPluginClasse().size()); // c'est normal que sa marche pas
+		// il manque les annotation dans les classe ;)
 		lcd.getPluginClasse().get(0).getListMethode().get(0).invoke(lcd.getPluginClasse().get(0).getClassInstancie());
 	}
 	
