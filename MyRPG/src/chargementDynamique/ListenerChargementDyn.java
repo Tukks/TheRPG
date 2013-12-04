@@ -1,8 +1,5 @@
 package chargementDynamique;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.File;
 import java.io.IOException;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.InvocationTargetException;
@@ -24,9 +21,7 @@ public class ListenerChargementDyn extends Thread {
 	}
 
 	public void run() {
-		System.out.println(pluginItem.size());
-		System.out.println(pluginClasse.size());
-
+		
 		while (true) {
 			ListFile lf = new ListFile(folder, "");
 			Integer sizeTemp = lf.nombreFichier();
@@ -125,9 +120,7 @@ public class ListenerChargementDyn extends Thread {
 			IllegalAccessException, ClassNotFoundException,
 			IllegalArgumentException, InvocationTargetException, IOException {
 		ListenerChargementDyn lcd = new ListenerChargementDyn("./Plugin");
-		System.out.println(lcd.getPluginClasse().size()); // c'est normal que sa
-															// marche pas
-		// il manque les annotation dans les classe ;)
+		
 		Thread test = new Thread(lcd);
 		test.start();
 		// lcd.getPluginClasse().get(0).getListMethode().get(0).invoke(lcd.getPluginClasse().get(0).getClassInstancie());
