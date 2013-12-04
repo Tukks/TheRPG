@@ -37,7 +37,19 @@ public class ListFile {
 		return nListFiles;
 
 	}
+	public int nombreFichier() {
+		File file = new File(root);
+		ArrayList<File> listFiles = new ArrayList(Arrays.asList(file
+				.listFiles()));
+		int cpt = 0;
+		for (int i = 0; i < listFiles.size(); i++) {
+			if (!listFiles.get(i).isDirectory()) {
+				cpt++;
+			}
+		}
+		return cpt;
 
+	}
 	public static void main(String[] args) {
 		ListFile fil = new ListFile(".", "class");
 		for (int i = 0; i < fil.listFichier().size(); i++) {

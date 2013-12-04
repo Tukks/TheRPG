@@ -4,21 +4,29 @@ import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
-
 import java.net.MalformedURLException;
 
 public class ChargementDynamiqueClass extends ChargementDynamique {
 
-	public ChargementDynamiqueClass(String fileAccess) throws MalformedURLException,
-			InstantiationException, IllegalAccessException,
-			ClassNotFoundException {
+	public ChargementDynamiqueClass(String fileAccess)
+			throws MalformedURLException, InstantiationException,
+			IllegalAccessException, ClassNotFoundException {
 		this.fichier = new File(fileAccess);
-		this.classCharged = this.loadClass(""); // Pas besoin du nom, il le
-												// trouve tt seul :)
-		this.classInstancie = classCharged.newInstance();
-		this.listAllMethod();
 
+	}
+
+	public boolean ChargementClass() throws InstantiationException, IllegalAccessException {
+		try {
+			this.classCharged = this.loadClass("");
+			this.classInstancie = classCharged.newInstance();
+			this.listAllMethod();
+		} catch (ClassNotFoundException e) {
+			return false;
+		}
+
+		return true;
 	}
 
 	@Override
@@ -37,9 +45,8 @@ public class ChargementDynamiqueClass extends ChargementDynamique {
 			Class<?> c = defineClass(null, data, 0, data.length);
 			resolveClass(c);
 			return c;
-		} catch (Throwable t) {
-			t.printStackTrace();
-			throw new ClassNotFoundException(name);
+		} catch (ClassFormatError | IOException t) {
+			throw new ClassNotFoundException("nop");
 		}
 	}
 

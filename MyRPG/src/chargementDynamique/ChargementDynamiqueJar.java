@@ -2,27 +2,37 @@ package chargementDynamique;
 
 import java.io.File;
 import java.io.IOException;
-
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
-
 import java.util.Enumeration;
-
 import java.util.jar.*;
 
 public class ChargementDynamiqueJar extends ChargementDynamique {
+	private java.util.jar.JarFile jar;
 
-	public ChargementDynamiqueJar(String fileAccess) throws IOException,
-			ClassNotFoundException, InstantiationException,
-			IllegalAccessException {
-		
+	public ChargementDynamiqueJar(String fileAccess)
+			throws ClassNotFoundException, InstantiationException,
+			IllegalAccessException, MalformedURLException {
+
 		this.fichier = new File(fileAccess);
 		cl = new URLClassLoader(new URL[] { fichier.toURI().toURL() });
-		java.util.jar.JarFile jar = new JarFile(fichier);
-		classCharged = cl.loadClass(getNomClasse(jar));
-		classInstancie = classCharged.newInstance();
-		this.listAllMethod();
 
+		
+
+	}
+
+	public boolean ChargermentJar() throws ClassNotFoundException, InstantiationException, IllegalAccessException {
+		try {
+			jar = new JarFile(fichier);
+			classCharged = cl.loadClass(getNomClasse(jar));
+			classInstancie = classCharged.newInstance();
+			this.listAllMethod();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			return false;
+		}
+		return true;
 	}
 
 	private String getNomClasse(JarFile jar) {
