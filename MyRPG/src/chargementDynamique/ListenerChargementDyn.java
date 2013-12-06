@@ -25,7 +25,7 @@ public class ListenerChargementDyn extends Thread {
 		while (true) {
 			ListFile lf = new ListFile(folder, "");
 			Integer sizeTemp = lf.nombreFichier();
-			if (sizeTemp.in tValue() != sizePlug) {
+			if (sizeTemp.intValue() != sizePlug) {
 				
 				if (sizeTemp.intValue() < sizePlug) {
 					System.out.println("une classe en moins dude");
