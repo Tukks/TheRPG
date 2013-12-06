@@ -32,9 +32,13 @@ public abstract class ChargementDynamique extends SecureClassLoader { // faire
 	File fichier;
 
 	
+	public String getTypeItem(){
+		return this.classCharged.getAnnotation(Item.class).type().name();
 
+		
+	}
 	public String getNameItem(){
-		return this.classCharged.getAnnotation(Item.class).toString();
+		return this.classCharged.getAnnotation(Item.class).nom();
 		
 		
 	}

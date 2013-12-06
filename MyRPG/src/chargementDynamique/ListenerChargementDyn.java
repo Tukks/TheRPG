@@ -11,6 +11,8 @@ import java.util.ArrayList;
  *
  */
 public class ListenerChargementDyn extends Thread {
+	
+
 	ArrayList<ChargementDynamique> pluginItem = new ArrayList<ChargementDynamique>();
 	ArrayList<ChargementDynamique> pluginClasse = new ArrayList<ChargementDynamique>();
 	int sizePlug;
@@ -185,5 +187,11 @@ public class ListenerChargementDyn extends Thread {
 	public void setFolder(String folder) {
 		this.folder = folder;
 	}
+	public int getSizePlug() {
+		return sizePlug;
+	}
 
+	public void setSizePlug(int sizePlug) {
+		this.sizePlug = sizePlug;
+	}
 }
