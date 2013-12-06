@@ -6,12 +6,13 @@ import java.net.URLClassLoader;
 import java.security.SecureClassLoader;
 import java.util.ArrayList;
 import java.util.List;
+
 import annot.Classe;
+import annot.Item;
 
 public abstract class ChargementDynamique extends SecureClassLoader { // faire
-	// en
-	// class
-	// abastract
+	
+	
 	URLClassLoader cl;
 	Class<?> classCharged;
 	String nomClass;
@@ -20,6 +21,9 @@ public abstract class ChargementDynamique extends SecureClassLoader { // faire
 		return classInstancie;
 	}
 
+	/**
+	 * @param classInstancie
+	 */
 	public void setClassInstancie(Object classInstancie) {
 		this.classInstancie = classInstancie;
 	}
@@ -29,17 +33,22 @@ public abstract class ChargementDynamique extends SecureClassLoader { // faire
 
 	
 
-	/*public void getNameItem(){
-		System.out.println(this.classCharged.getAnnotation(Item.class).toString());
+	public String getNameItem(){
+		return this.classCharged.getAnnotation(Item.class).toString();
 		
 		
-	}*/
+	}
 	public String getNameClasse(){
 		
 		return this.classCharged.getAnnotation(Classe.class).nom();
 		
 		
 	}
+	/**
+	 * 
+	 * @param name
+	 * @return Method 
+	 */
 	public Method getMethodForName(String name) {
 		int i = 0;
 		while (i < listMethode.size()) {
