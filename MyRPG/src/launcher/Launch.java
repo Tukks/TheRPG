@@ -3,10 +3,7 @@ package launcher;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.net.MalformedURLException;
-import java.util.ArrayList;
 
-import chargementDynamique.ChargementDynamique;
-import chargementDynamique.ChargementDynamiqueClass;
 import chargementDynamique.ChargementDynamiqueJar;
 
 public class Launch {

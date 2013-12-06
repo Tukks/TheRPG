@@ -6,6 +6,7 @@ import java.net.URLClassLoader;
 import java.security.SecureClassLoader;
 import java.util.ArrayList;
 import java.util.List;
+import annot.Classe;
 
 public abstract class ChargementDynamique extends SecureClassLoader { // faire
 	// en
