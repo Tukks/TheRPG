@@ -16,7 +16,7 @@ public class ListenerChargementDyn extends Thread {
 	int sizePlug;
 	String folder;
 
-	ListenerChargementDyn(String folder) throws InstantiationException,
+	public ListenerChargementDyn(String folder) throws InstantiationException,
 			IllegalAccessException, ClassNotFoundException, IOException {
 		this.folder = folder;
 		this.countAllClass();
