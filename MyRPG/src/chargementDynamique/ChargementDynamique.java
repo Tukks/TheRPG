@@ -7,7 +7,6 @@ import java.security.SecureClassLoader;
 import java.util.ArrayList;
 import java.util.List;
 
-import plugin.*;
 public abstract class ChargementDynamique extends SecureClassLoader { // faire
 	// en
 	// class
@@ -27,16 +26,19 @@ public abstract class ChargementDynamique extends SecureClassLoader { // faire
 	List<Method> listMethode = new ArrayList<Method>();
 	File fichier;
 
-	ChargementDynamique() {
+	
 
-	}
-
-	public String getName(){
+	/*public void getNameItem(){
+		System.out.println(this.classCharged.getAnnotation(Item.class).toString());
+		
+		
+	}*/
+	public String getNameClasse(){
+		
 		return this.classCharged.getAnnotation(Classe.class).nom();
 		
 		
 	}
-
 	public Method getMethodForName(String name) {
 		int i = 0;
 		while (i < listMethode.size()) {

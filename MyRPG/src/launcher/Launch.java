@@ -19,7 +19,7 @@ public class Launch {
 			
 			ChargementDynamiqueJar Classe = new ChargementDynamiqueJar("./Plugin/MyPlugClasse.jar");
 			Classe.ChargermentJar();
-			Classe.getName();
+			Classe.getNameClasse();
 			
 			
 		} catch (MalformedURLException e) {
