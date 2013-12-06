@@ -8,5 +8,7 @@ public class Item {
 	ArrayList<Item> Armure;
 	ArrayList<Item> Potion;
 	
-	
+	public int select(){
+		return 1;
+	}
 }
