@@ -1,29 +1,35 @@
 package vue;
 
+import java.io.IOException;
+import java.util.ArrayList;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
+import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
 import util.PathManager;
+import chargementDynamique.ChargementDynamique;
+import chargementDynamique.ListenerChargementDyn;
 
 public class InterfaceRPG {
 
 	private static Display display = new Display();;
 	private ImageData cursor_Image = new ImageData(PathManager.cursorImg);
 
-	public InterfaceRPG() {
+	public InterfaceRPG() throws InstantiationException,
+			IllegalAccessException, ClassNotFoundException, IOException {
 
 		Shell fenetre = new Shell(display, SWT.CLOSE | SWT.MIN);
 		fenetre.setSize(1024, 700);
@@ -32,25 +38,43 @@ public class InterfaceRPG {
 		layout.numColumns = 3;
 		layout.marginWidth = 20;
 		layout.marginTop = 20;
+		layout.verticalSpacing = 25;
+		layout.horizontalSpacing = 25;
+		layout.makeColumnsEqualWidth = true;
 
 		fenetre.setLayout(layout);
 
-		Font font = new Font(display, "Arial", 20, SWT.BOLD);
+		Font font = new Font(display, "Arial", 15, SWT.BOLD);
 
 		// 1 > liste des classes
+		// ---------------------------------------------------------------------------------------
 
-		List listeClasses = new List(fenetre, SWT.V_SCROLL | SWT.MULTI);
-		listeClasses.setFont(font);
-		for (int i = 0; i < 10; i++) {
-			listeClasses.add("element " + i);
-		}
+		ListenerChargementDyn l = new ListenerChargementDyn("./Plugin");
+		Thread t = new Thread(l);
+		t.start();
+		ArrayList<ChargementDynamique> listeClasses = l.getPluginClasse();
+
+		GridData gridData = new GridData();
+		gridData.grabExcessHorizontalSpace = true;
+		gridData.grabExcessVerticalSpace = true;
+		gridData.horizontalAlignment = GridData.FILL;
+		gridData.verticalAlignment = GridData.FILL;
+		gridData.widthHint = 200;
+
+		GroupDeco gd = new GroupDeco(fenetre,
+				"Choisissez une classe de personnage", 1);
+		Group groupeClasses = gd.getG();
+
+		// List listeClasses = new List(groupeClasses, SWT.V_SCROLL |
+		// SWT.MULTI);
+
+		// listeClasses.setLayoutData(gridData);
 
 		// 2 > saisie nom du perso + apperçu perso
+		// ---------------------------------------------------------------------------------------
 
-		Group groupPerso = new Group(fenetre, SWT.SHADOW_IN);
-		groupPerso.setSize(500, 500);
-		GridLayout lPerso = new GridLayout();
-		groupPerso.setLayout(lPerso);
+		gd = new GroupDeco(fenetre, "", 1);
+		Group groupPerso = gd.getG();
 
 		Label label = new Label(groupPerso, SWT.NONE);
 		label.setText("Saisir un nom de personnage");
@@ -63,34 +87,53 @@ public class InterfaceRPG {
 		appercuPerso.setSize(400, 400);
 		appercuPerso
 				.setBackgroundImage(new Image(display, PathManager.classImg));
-		// 3 > caractéristiques
 
-		Composite carac = new Composite(fenetre, SWT.BORDER_DOT);
-		carac.setSize(400, 400);
+		groupPerso.setLayoutData(gridData);
+
+		// 3 > caractéristiques
+		// ---------------------------------------------------------------------------------------
+
+		gd = new GroupDeco(fenetre, "Caractéristiques", 2);
+		Group groupCarac = gd.getG();
+
+		groupPerso.setLayoutData(gridData);
 
 		// 4 > armes
+		// ---------------------------------------------------------------------------------------
 
-		GroupDeco gd = new GroupDeco(fenetre, "Choisissez une arme", new Image(
-				display, PathManager.bgGroup), 2);
+		gd = new GroupDeco(fenetre, "Choisissez une arme", 2);
 		Group groupArmes = gd.getG();
 
 		for (int i = 0; i < 4; i++) {
 
-			new Button(groupArmes, SWT.FLAT).setImage(new Image(display,
+			new Button(groupArmes, SWT.PUSH).setImage(new Image(display,
 					PathManager.itemImg));
 		}
 
-		// 5 > armures
+		groupArmes.setLayoutData(gridData);
 
-		gd = new GroupDeco(fenetre, "Choisissez une armure", null, 2);
+		// 5 > armures
+		// ---------------------------------------------------------------------------------------
+
+		gd = new GroupDeco(fenetre, "Choisissez une armure", 2);
 		Group groupArmures = gd.getG();
 		groupArmures.setSize(400, 400);
 
 		// 6 > items
+		// ---------------------------------------------------------------------------------------
 
-		gd = new GroupDeco(fenetre, "Choisissez 3 items", null, 2);
+		ArrayList<ChargementDynamique> items = l.getPluginItem();
+		gd = new GroupDeco(fenetre, "Choisissez 3 items", 2);
 		Group groupItem = gd.getG();
-		groupArmures.setSize(400, 400);
+
+		for (ChargementDynamique i : items) {
+
+			// new Button(groupItem, SWT.PUSH).setText(i.);
+		}
+
+		// ---------------------------------------------------------------------------------------
+		// FIN GROUPES
+		// ---------------------------------------------------------------------------------------
 
 		// curseur
 		// Cursor cursor1 = new Cursor(display, cursor_Image, 1, 1);
@@ -118,7 +161,8 @@ public class InterfaceRPG {
 		shell.setLocation(new Point(x, y));
 	}
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws InstantiationException,
+			IllegalAccessException, ClassNotFoundException, IOException {
 		new InterfaceRPG();
 	}
 
