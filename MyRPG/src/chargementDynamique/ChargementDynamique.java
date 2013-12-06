@@ -1,16 +1,13 @@
 package chargementDynamique;
 
 import java.io.File;
-import java.io.IOException;
-import java.lang.annotation.Annotation;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.net.MalformedURLException;
 import java.net.URLClassLoader;
 import java.security.SecureClassLoader;
 import java.util.ArrayList;
 import java.util.List;
 
+import plugin.*;
 public abstract class ChargementDynamique extends SecureClassLoader { // faire
 	// en
 	// class
@@ -34,7 +31,11 @@ public abstract class ChargementDynamique extends SecureClassLoader { // faire
 
 	}
 
-	
+	public String getName(){
+		return this.classCharged.getAnnotation(Classe.class).nom();
+		
+		
+	}
 
 	public Method getMethodForName(String name) {
 		int i = 0;

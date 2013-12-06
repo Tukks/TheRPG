@@ -16,43 +16,12 @@ public class Launch {
 	IllegalArgumentException, InvocationTargetException,
 	NoSuchMethodException, SecurityException {
 		try {
-			ChargementDynamiqueClass mcl = new ChargementDynamiqueClass(
-					"./Plugin/MyPlugin.class"); //on charge le .class
-			Object test = mcl.getClassCharged().newInstance();
-			mcl.getClassCharged().getDeclaredMethods()[0].invoke(test);
-			ChargementDynamiqueJar ch = new ChargementDynamiqueJar(
-					"./Plugin/MyPlugAnno.jar"); //On charge le .jar
-
-			ChargementDynamiqueJar jar = new ChargementDynamiqueJar(
-					"./Plugin/MyPlugTest.jar"); //On charge le .jar
-
-			/**
-			 * On recupere notre classe charger MCL, 
-			 * on recupere la methode par son nom "Coucou" 
-			 * et on l'utilise avec invoke, en mettant en param la class Instancié
-			 *  (deja presente dans la L'objet ChargementDynamiqueClass)
-			 */
-			System.out.println(mcl.getMethodForName("coucou").invoke(mcl.getClassInstancie()));
-			/**
-			 * Magique on peut recuperer directement la liste des methodes sans leur nom
-			 */
-			System.out.println(mcl.getListMethode().get(1).invoke(mcl.getClassInstancie()));
-			/**
-			 * Meme facon de faire que ce soit un class ou un jar qui a etait chargé
-			 */
-			System.out.println(ch.getListMethode().get(1).invoke(ch.getClassInstancie())); 
-
-			/**
-			 * et La cerise, on peut faire des liste de class chargé et utiliser leur methode
-			 */
-			ArrayList<ChargementDynamique> teste = new ArrayList<ChargementDynamique>();
-			teste.add(mcl);
-			teste.add(ch);
-			teste.add(jar);
 			
-			System.out.println(teste.get(2).getMethodForName("run").invoke(teste.get(2).getClassInstancie()));
+			ChargementDynamiqueJar Classe = new ChargementDynamiqueJar("./Plugin/MyPlugClasse.jar");
+			Classe.ChargermentJar();
+			Classe.getName();
 			
-            System.out.println(teste.get(2).getMethodForName("run").getDeclaredAnnotations().length);
+			
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
