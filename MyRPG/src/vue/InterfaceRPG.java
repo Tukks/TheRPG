@@ -16,6 +16,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
@@ -46,14 +47,6 @@ public class InterfaceRPG {
 
 		Font font = new Font(display, "Arial", 15, SWT.BOLD);
 
-		// 1 > liste des classes
-		// ---------------------------------------------------------------------------------------
-
-		ListenerChargementDyn l = new ListenerChargementDyn("./Plugin");
-		Thread t = new Thread(l);
-		t.start();
-		ArrayList<ChargementDynamique> listeClasses = l.getPluginClasse();
-
 		GridData gridData = new GridData();
 		gridData.grabExcessHorizontalSpace = true;
 		gridData.grabExcessVerticalSpace = true;
@@ -61,9 +54,24 @@ public class InterfaceRPG {
 		gridData.verticalAlignment = GridData.FILL;
 		gridData.widthHint = 200;
 
+		ListenerChargementDyn l = new ListenerChargementDyn("./Plugin");
+		Thread t = new Thread(l);
+		t.start();
+
+		// 1 > liste des classes
+		// ---------------------------------------------------------------------------------------
+
+		ArrayList<ChargementDynamique> listeClasses = l.getPluginClasse();
+
 		GroupDeco gd = new GroupDeco(fenetre,
 				"Choisissez une classe de personnage", 1);
 		Group groupeClasses = gd.getG();
+
+		List liste = new List(groupeClasses, SWT.V_SCROLL | SWT.MULTI);
+
+		for (ChargementDynamique classe : listeClasses) {
+			liste.add(classe.getNameClasse());
+		}
 
 		// List listeClasses = new List(groupeClasses, SWT.V_SCROLL |
 		// SWT.MULTI);
