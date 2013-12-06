@@ -25,8 +25,8 @@ public class ListenerChargementDyn extends Thread {
 		while (true) {
 			ListFile lf = new ListFile(folder, "");
 			Integer sizeTemp = lf.nombreFichier();
-			if (sizeTemp.intValue() != sizePlug) {
-
+			if (sizeTemp.in tValue() != sizePlug) {
+				
 				if (sizeTemp.intValue() < sizePlug) {
 					System.out.println("une classe en moins dude");
 
@@ -143,6 +143,7 @@ public class ListenerChargementDyn extends Thread {
 		// TODO Definir Grace au annotation si c'est un Plugin Classe de
 		// personnage
 		Annotation[] anno = cd.getClassCharged().getAnnotations();
+	
 		for (int i = 0; i < anno.length; i++) {
 			if (anno[i].toString().contains("Classe")) {
 				return true;
