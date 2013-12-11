@@ -4,14 +4,15 @@ import java.io.IOException;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.InvocationTargetException;
 import java.net.MalformedURLException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 
 /**
  * @author giuse_000
- *
+ * 
  */
-public class ListenerChargementDyn extends Thread {
-	
+public class ListenerChargementDyn {
 
 	ArrayList<ChargementDynamique> pluginItem = new ArrayList<ChargementDynamique>();
 	ArrayList<ChargementDynamique> pluginClasse = new ArrayList<ChargementDynamique>();
@@ -26,55 +27,7 @@ public class ListenerChargementDyn extends Thread {
 		this.ChargerAllJar();
 	}
 
-	public void run() {
-		
-		while (true) {
-			ListFile lf = new ListFile(folder, "");
-			Integer sizeTemp = lf.nombreFichier();
-			if (sizeTemp.intValue() != sizePlug) {
-				
-				if (sizeTemp.intValue() < sizePlug) {
-					System.out.println("une classe en moins dude");
-
-					sizePlug = sizeTemp.intValue();
-					try {
-						this.ChargerAllClass();
-						this.ChargerAllJar();
-					} catch (MalformedURLException | InstantiationException
-							| IllegalAccessException | ClassNotFoundException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-
-					// on va supprimer celui qui est plus la
-				} else if (sizeTemp.intValue() > sizePlug) {
-					sizePlug = sizeTemp.intValue();
-					System.out.println("une classe en plus dude");
-					try {
-						this.ChargerAllClass();
-						this.ChargerAllJar();
-					} catch (MalformedURLException | InstantiationException
-							| IllegalAccessException | ClassNotFoundException e) {
-						// TODO Auto-generated catch block
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-					}
-					// on va ajouter celui qui est nouveaux
-
-				}
-				try {
-					Thread.sleep(1000);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-		}
-
-	}
+	
 
 	public void ChargerAllClass() throws MalformedURLException,
 			InstantiationException, IllegalAccessException,
@@ -95,6 +48,35 @@ public class ListenerChargementDyn extends Thread {
 				}
 			}
 		}
+	}
+
+	public void ChargerClass(String root) throws MalformedURLException,
+			InstantiationException, IllegalAccessException,
+			ClassNotFoundException {
+		System.out.println(this.getPluginClasse().size());
+    	System.out.println("This size Item" +this.getPluginItem().size());
+		ChargementDynamiqueClass cdc = new ChargementDynamiqueClass(root);
+		boolean testIfValide = cdc.ChargementClass();
+
+		if (testIfValide && this.isClass(cdc)) {
+			pluginClasse.add(cdc);
+		} else if (testIfValide && this.isItem(cdc)) {
+			pluginItem.add(cdc);
+
+		}
+	}
+
+	public void ChargerJar(String root) throws ClassNotFoundException, InstantiationException, IllegalAccessException, MalformedURLException {
+		ChargementDynamiqueJar cdc = new ChargementDynamiqueJar(root);
+		boolean testIfValide = cdc.ChargermentJar();
+
+		if (testIfValide && this.isClass(cdc)) {
+			pluginClasse.add(cdc);
+		} else if (testIfValide && this.isItem(cdc)) {
+			pluginItem.add(cdc);
+
+		}
+		
 	}
 
 	public void ChargerAllJar() throws ClassNotFoundException,
@@ -125,10 +107,11 @@ public class ListenerChargementDyn extends Thread {
 	public static void main(String[] args) throws InstantiationException,
 			IllegalAccessException, ClassNotFoundException,
 			IllegalArgumentException, InvocationTargetException, IOException {
-		ListenerChargementDyn lcd = new ListenerChargementDyn("./Plugin");
+		//ListenerChargementDyn lcd = new ListenerChargementDyn("./Plugin");
+		Path dir = Paths.get("./Plugin");
+		WatchDir WD = new WatchDir(dir, false);
+		WD.start();
 		
-		Thread test = new Thread(lcd);
-		test.start();
 		// lcd.getPluginClasse().get(0).getListMethode().get(0).invoke(lcd.getPluginClasse().get(0).getClassInstancie());
 	}
 
@@ -149,7 +132,7 @@ public class ListenerChargementDyn extends Thread {
 		// TODO Definir Grace au annotation si c'est un Plugin Classe de
 		// personnage
 		Annotation[] anno = cd.getClassCharged().getAnnotations();
-	
+
 		for (int i = 0; i < anno.length; i++) {
 			if (anno[i].toString().contains("Classe")) {
 				return true;
@@ -187,6 +170,7 @@ public class ListenerChargementDyn extends Thread {
 	public void setFolder(String folder) {
 		this.folder = folder;
 	}
+
 	public int getSizePlug() {
 		return sizePlug;
 	}

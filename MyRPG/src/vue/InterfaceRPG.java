@@ -1,6 +1,8 @@
 package vue;
 
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 
 import org.eclipse.swt.SWT;
@@ -23,6 +25,7 @@ import org.eclipse.swt.widgets.Text;
 import util.PathManager;
 import chargementDynamique.ChargementDynamique;
 import chargementDynamique.ListenerChargementDyn;
+import chargementDynamique.WatchDir;
 
 public class InterfaceRPG {
 
@@ -54,8 +57,10 @@ public class InterfaceRPG {
 		gridData.verticalAlignment = GridData.FILL;
 		gridData.widthHint = 200;
 
-		ListenerChargementDyn l = new ListenerChargementDyn("./Plugin");
-		Thread t = new Thread(l);
+		Path dir = Paths.get("./Plugin");
+		WatchDir WatchDirectories = new WatchDir(dir, false);
+		ListenerChargementDyn l = WatchDirectories.getLcd();
+		Thread t = new Thread(WatchDirectories);
 		t.start();
 
 		// 1 > liste des classes
