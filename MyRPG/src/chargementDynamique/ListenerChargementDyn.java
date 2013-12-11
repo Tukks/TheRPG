@@ -7,12 +7,13 @@ import java.net.MalformedURLException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Observable;
 
 /**
  * @author giuse_000
  * 
  */
-public final class ListenerChargementDyn {
+public final class ListenerChargementDyn extends Observable{
 
 	private ArrayList<ChargementDynamique> pluginItem = new ArrayList<ChargementDynamique>();
 	private ArrayList<ChargementDynamique> pluginClasse = new ArrayList<ChargementDynamique>();
