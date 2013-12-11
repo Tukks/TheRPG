@@ -59,7 +59,7 @@ public class InterfaceRPG {
 
 		Path dir = Paths.get("./Plugin");
 		WatchDir WatchDirectories = new WatchDir(dir, false);
-		ListenerChargementDyn l = WatchDirectories.getLcd();
+		ListenerChargementDyn l = ListenerChargementDyn.getInstance();
 		Thread t = new Thread(WatchDirectories);
 		t.start();
 
