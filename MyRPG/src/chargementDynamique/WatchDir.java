@@ -116,7 +116,8 @@ public class WatchDir extends Thread{
         this.keys = new HashMap<WatchKey,Path>();
         this.recursive = recursive;
         this.dir = dir;
-        lcd = new ListenerChargementDyn(dir.toString());
+        lcd = ListenerChargementDyn.getInstance();
+        
         if (recursive) {
             System.out.format("Scanning %s ...\n", dir);
             registerAll(this.dir);

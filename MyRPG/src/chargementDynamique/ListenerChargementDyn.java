@@ -12,22 +12,23 @@ import java.util.ArrayList;
  * @author giuse_000
  * 
  */
-public class ListenerChargementDyn {
+public final class ListenerChargementDyn {
 
-	ArrayList<ChargementDynamique> pluginItem = new ArrayList<ChargementDynamique>();
-	ArrayList<ChargementDynamique> pluginClasse = new ArrayList<ChargementDynamique>();
-	int sizePlug;
-	String folder;
+	private ArrayList<ChargementDynamique> pluginItem = new ArrayList<ChargementDynamique>();
+	private ArrayList<ChargementDynamique> pluginClasse = new ArrayList<ChargementDynamique>();
+	private int sizePlug;
+	private String folder;
+	private static ListenerChargementDyn lcd;
 
-	public ListenerChargementDyn(String folder) throws InstantiationException,
+
+	private ListenerChargementDyn(String folder) throws InstantiationException,
 			IllegalAccessException, ClassNotFoundException, IOException {
+		
 		this.folder = folder;
 		this.countAllClass();
 		this.ChargerAllClass();
 		this.ChargerAllJar();
 	}
-
-	
 
 	public void ChargerAllClass() throws MalformedURLException,
 			InstantiationException, IllegalAccessException,
@@ -54,7 +55,7 @@ public class ListenerChargementDyn {
 			InstantiationException, IllegalAccessException,
 			ClassNotFoundException {
 		System.out.println(this.getPluginClasse().size());
-    	System.out.println("This size Item" +this.getPluginItem().size());
+		System.out.println("This size Item" + this.getPluginItem().size());
 		ChargementDynamiqueClass cdc = new ChargementDynamiqueClass(root);
 		boolean testIfValide = cdc.ChargementClass();
 
@@ -66,7 +67,9 @@ public class ListenerChargementDyn {
 		}
 	}
 
-	public void ChargerJar(String root) throws ClassNotFoundException, InstantiationException, IllegalAccessException, MalformedURLException {
+	public void ChargerJar(String root) throws ClassNotFoundException,
+			InstantiationException, IllegalAccessException,
+			MalformedURLException {
 		ChargementDynamiqueJar cdc = new ChargementDynamiqueJar(root);
 		boolean testIfValide = cdc.ChargermentJar();
 
@@ -76,7 +79,7 @@ public class ListenerChargementDyn {
 			pluginItem.add(cdc);
 
 		}
-		
+
 	}
 
 	public void ChargerAllJar() throws ClassNotFoundException,
@@ -107,7 +110,7 @@ public class ListenerChargementDyn {
 	public static void main(String[] args) throws InstantiationException,
 			IllegalAccessException, ClassNotFoundException,
 			IllegalArgumentException, InvocationTargetException, IOException {
-		//ListenerChargementDyn lcd = new ListenerChargementDyn("./Plugin");
+		// ListenerChargementDyn lcd = new ListenerChargementDyn("./Plugin");
 		Path dir = Paths.get("./Plugin");
 		WatchDir WD = new WatchDir(dir, false);
 		WD.start();
@@ -141,6 +144,19 @@ public class ListenerChargementDyn {
 
 		return false;
 
+	}
+	
+
+		
+	public static ListenerChargementDyn getInstance() throws InstantiationException, IllegalAccessException, ClassNotFoundException, IOException {
+		if (null == lcd) { // Premier appel
+			synchronized ( ListenerChargementDyn.class) { 
+				if (null == lcd) {
+					lcd = new ListenerChargementDyn("./Plugin");
+				}
+			}
+		}
+		return lcd;
 	}
 
 	public void getClassForName(String name) {
