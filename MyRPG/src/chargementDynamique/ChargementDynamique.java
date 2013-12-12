@@ -11,12 +11,12 @@ import annot.Classe;
 import annot.Item;
 
 public abstract class ChargementDynamique extends SecureClassLoader { // faire
-	
-	
+
 	URLClassLoader cl;
 	Class<?> classCharged;
 	String nomClass;
 	Object classInstancie;
+
 	public Object getClassInstancie() {
 		return classInstancie;
 	}
@@ -31,27 +31,27 @@ public abstract class ChargementDynamique extends SecureClassLoader { // faire
 	List<Method> listMethode = new ArrayList<Method>();
 	File fichier;
 
-	
-	public String getTypeItem(){
+	public String getTypeItem() {
 		return this.classCharged.getAnnotation(Item.class).type().name();
+		// return this.classCharged.getAnnotation(Item.class).type().toString();
 
-		
 	}
-	public String getNameItem(){
+
+	public String getNameItem() {
 		return this.classCharged.getAnnotation(Item.class).nom();
-		
-		
+
 	}
-	public String getNameClasse(){
-		
+
+	public String getNameClasse() {
+
 		return this.classCharged.getAnnotation(Classe.class).nom();
-		
-		
+
 	}
+
 	/**
 	 * 
 	 * @param name
-	 * @return Method 
+	 * @return Method
 	 */
 	public Method getMethodForName(String name) {
 		int i = 0;
@@ -95,8 +95,6 @@ public abstract class ChargementDynamique extends SecureClassLoader { // faire
 		this.nomClass = nomClass;
 	}
 
-
-
 	public List<Method> getListMethode() {
 		return listMethode;
 	}
@@ -113,8 +111,4 @@ public abstract class ChargementDynamique extends SecureClassLoader { // faire
 		this.fichier = fichier;
 	}
 
-
-
-
-	
 }
