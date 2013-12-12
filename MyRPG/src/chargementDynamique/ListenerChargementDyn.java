@@ -7,24 +7,23 @@ import java.net.MalformedURLException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.Observable;
 
 /**
  * @author giuse_000
  * 
  */
-public final class ListenerChargementDyn extends Observable{
+public final class ListenerChargementDyn extends Observable {
 
-	private ArrayList<ChargementDynamique> pluginItem = new ArrayList<ChargementDynamique>();
-	private ArrayList<ChargementDynamique> pluginClasse = new ArrayList<ChargementDynamique>();
+	private LinkedList<ChargementDynamique> pluginItem = new LinkedList<ChargementDynamique>();
+	private LinkedList<ChargementDynamique> pluginClasse = new LinkedList<ChargementDynamique>();
 	private int sizePlug;
 	private String folder;
 	private static ListenerChargementDyn lcd;
-
-
+ 
 	private ListenerChargementDyn(String folder) throws InstantiationException,
 			IllegalAccessException, ClassNotFoundException, IOException {
-		
 		this.folder = folder;
 		this.countAllClass();
 		this.ChargerAllClass();
@@ -115,7 +114,7 @@ public final class ListenerChargementDyn extends Observable{
 		Path dir = Paths.get("./Plugin");
 		WatchDir WD = new WatchDir(dir, false);
 		WD.start();
-		
+
 		// lcd.getPluginClasse().get(0).getListMethode().get(0).invoke(lcd.getPluginClasse().get(0).getClassInstancie());
 	}
 
@@ -146,12 +145,12 @@ public final class ListenerChargementDyn extends Observable{
 		return false;
 
 	}
-	
 
-		
-	public static ListenerChargementDyn getInstance() throws InstantiationException, IllegalAccessException, ClassNotFoundException, IOException {
+	public static ListenerChargementDyn getInstance()
+			throws InstantiationException, IllegalAccessException,
+			ClassNotFoundException, IOException {
 		if (null == lcd) { // Premier appel
-			synchronized ( ListenerChargementDyn.class) { 
+			synchronized (ListenerChargementDyn.class) {
 				if (null == lcd) {
 					lcd = new ListenerChargementDyn("./Plugin");
 				}
@@ -160,23 +159,39 @@ public final class ListenerChargementDyn extends Observable{
 		return lcd;
 	}
 
-	public void getClassForName(String name) {
-
+	public ChargementDynamique getClassForNamePluginClasse(String name) {
+		int i = 0;
+		while(i < this.pluginClasse.size()){
+			if(this.pluginClasse.get(i).getNameClasse().equalsIgnoreCase(name)){
+				return this.pluginClasse.get(i);
+			}
+		}
+		return null;
 	}
 
-	public ArrayList<ChargementDynamique> getPluginItem() {
+	public ChargementDynamique getClassForNamePluginItem(String name) {
+		int i = 0;
+		while(i < this.pluginItem.size()){
+			if(this.pluginItem.get(i).getNameItem().equalsIgnoreCase(name)){
+				return this.pluginItem.get(i);
+			}
+		}
+		return null;
+	}
+
+	public LinkedList<ChargementDynamique> getPluginItem() {
 		return pluginItem;
 	}
 
-	public void setPluginItem(ArrayList<ChargementDynamique> pluginItem) {
+	public void setPluginItem(LinkedList<ChargementDynamique> pluginItem) {
 		this.pluginItem = pluginItem;
 	}
 
-	public ArrayList<ChargementDynamique> getPluginClasse() {
+	public LinkedList<ChargementDynamique> getPluginClasse() {
 		return pluginClasse;
 	}
 
-	public void setPluginClasse(ArrayList<ChargementDynamique> pluginClasse) {
+	public void setPluginClasse(LinkedList<ChargementDynamique> pluginClasse) {
 		this.pluginClasse = pluginClasse;
 	}
 
