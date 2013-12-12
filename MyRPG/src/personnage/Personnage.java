@@ -2,16 +2,28 @@ package personnage;
 
 import java.util.List;
 
+import chargementDynamique.ChargementDynamique;
 import objet.Item;
 
-public abstract class Personnage {
+public class Personnage {
 
 	String nom;
+	Item item;
+	ChargementDynamique classPerso;
 	// coeff multiplicateur
+
 	int pointDeVie;
-	int forceDeFrappe; 
+	int forceDeFrappe;
 	int defense;
 
-	public abstract int combattre(List<Item> item);
+	Personnage(Item item, ChargementDynamique classPerso, String nom) {
+		this.item = item;
+		this.nom = nom;
+		this.classPerso = classPerso;
+	}
+
+	public int combattre(List<Item> item) {
+		return 0;
+	}
 
 }
