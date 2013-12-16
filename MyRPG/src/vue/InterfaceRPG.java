@@ -50,7 +50,6 @@ public class InterfaceRPG implements Observer {
 		t.start();
 
 		l.addObserver(this);
-
 		// 1 > liste des classes
 		createListClasses(fenetre, l, gridData);
 
@@ -202,14 +201,17 @@ public class InterfaceRPG implements Observer {
 
 	public static void main(String[] args) throws InstantiationException,
 			IllegalAccessException, ClassNotFoundException, IOException {
-		new InterfaceRPG();
+		InterfaceRPG rpg =  new InterfaceRPG();
+		
 	}
 
 	@Override
 	public void update(Observable arg0, Object arg1) {
-		listeClasses.add("coucou");
+		
+		System.out.println("coucou");
+		/*listeClasses.add("coucou");
 		listeClasses.redraw();
-		listeClasses.update();
+		listeClasses.update();*/
 	}
 
 }

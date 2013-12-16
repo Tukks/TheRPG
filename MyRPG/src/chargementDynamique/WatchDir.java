@@ -170,10 +170,10 @@ public class WatchDir extends Thread{
                 // print out event
                 System.out.format("%s: %s\n", event.kind().name(), child);
             	
-
-                if(event.kind().name().equals(ENTRY_CREATE)){
-                	if(event.kind().name().contains("class")) lcd.ChargerClass(child.toString());
-                	if(event.kind().name().contains("jar")) lcd.ChargerJar(child.toString());
+                
+                if(kind == ENTRY_CREATE){
+                	if(child.toString().contains("class")) lcd.ChargerClass(child.toString());
+                	if(child.toString().contains("jar")) lcd.ChargerJar(child.toString());
 
                 }else if(event.kind().name().equals(ENTRY_DELETE)){
                 }

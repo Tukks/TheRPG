@@ -49,8 +49,7 @@ public final class ListenerChargementDyn extends Observable {
 			}
 		}
 
-		this.setChanged();
-		this.notifyObservers();
+		
 	}
 
 	public void ChargerClass(String root) throws MalformedURLException,
@@ -65,8 +64,8 @@ public final class ListenerChargementDyn extends Observable {
 			pluginClasse.add(cdc);
 		} else if (testIfValide && this.isItem(cdc)) {
 			pluginItem.add(cdc);
-
 		}
+		
 		this.setChanged();
 		this.notifyObservers();
 	}
@@ -79,12 +78,15 @@ public final class ListenerChargementDyn extends Observable {
 
 		if (testIfValide && this.isClass(cdc)) {
 			pluginClasse.add(cdc);
+
 		} else if (testIfValide && this.isItem(cdc)) {
 			pluginItem.add(cdc);
+			
 
 		}
 		this.setChanged();
 		this.notifyObservers();
+
 
 	}
 
@@ -105,8 +107,8 @@ public final class ListenerChargementDyn extends Observable {
 				}
 			}
 		}
-		this.setChanged();
-		this.notifyObservers();
+		
+		
 	}
 
 	public void countAllClass() {
@@ -218,4 +220,11 @@ public final class ListenerChargementDyn extends Observable {
 	public void setSizePlug(int sizePlug) {
 		this.sizePlug = sizePlug;
 	}
+	public void setChanged(){
+	    super.setChanged();
+	}
+	public void notifyObservers(){
+		super.notifyObservers();
+	}
+	
 }
