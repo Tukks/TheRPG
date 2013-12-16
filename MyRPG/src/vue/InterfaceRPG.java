@@ -34,6 +34,7 @@ public class InterfaceRPG implements Observer {
 	private static Display display = new Display();;
 	private ImageData cursor_Image = new ImageData(PathManager.cursorImg);
 	private Font font = new Font(display, "Arial", 15, SWT.BOLD);
+	private List listeClasses;
 
 	public InterfaceRPG() throws InstantiationException,
 			IllegalAccessException, ClassNotFoundException, IOException {
@@ -161,16 +162,16 @@ public class InterfaceRPG implements Observer {
 
 	private void createListClasses(Shell fenetre, ListenerChargementDyn l,
 			GridData gridData) {
-		LinkedList<ChargementDynamique> listeClasses = l.getPluginClasse();
+		LinkedList<ChargementDynamique> classes = l.getPluginClasse();
 
 		GroupDeco gd = new GroupDeco(fenetre,
 				"Choisissez une classe de personnage", 1);
 		Group groupeClasses = gd.getG();
 
-		List liste = new List(groupeClasses, SWT.V_SCROLL | SWT.MULTI);
+		listeClasses = new List(groupeClasses, SWT.V_SCROLL | SWT.MULTI);
 
-		for (ChargementDynamique classe : listeClasses) {
-			liste.add(classe.getNameClasse());
+		for (ChargementDynamique classe : classes) {
+			listeClasses.add(classe.getNameClasse());
 		}
 		groupeClasses.setLayoutData(gridData);
 	}
@@ -206,8 +207,9 @@ public class InterfaceRPG implements Observer {
 
 	@Override
 	public void update(Observable arg0, Object arg1) {
-		// TODO Auto-generated method stub
-
+		listeClasses.add("coucou");
+		listeClasses.redraw();
+		listeClasses.update();
 	}
 
 }

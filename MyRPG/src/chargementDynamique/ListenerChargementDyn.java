@@ -6,7 +6,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.net.MalformedURLException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Observable;
 
@@ -21,7 +20,7 @@ public final class ListenerChargementDyn extends Observable {
 	private int sizePlug;
 	private String folder;
 	private static ListenerChargementDyn lcd;
- 
+
 	private ListenerChargementDyn(String folder) throws InstantiationException,
 			IllegalAccessException, ClassNotFoundException, IOException {
 		this.folder = folder;
@@ -49,6 +48,9 @@ public final class ListenerChargementDyn extends Observable {
 				}
 			}
 		}
+
+		this.setChanged();
+		this.notifyObservers();
 	}
 
 	public void ChargerClass(String root) throws MalformedURLException,
@@ -65,6 +67,8 @@ public final class ListenerChargementDyn extends Observable {
 			pluginItem.add(cdc);
 
 		}
+		this.setChanged();
+		this.notifyObservers();
 	}
 
 	public void ChargerJar(String root) throws ClassNotFoundException,
@@ -79,6 +83,8 @@ public final class ListenerChargementDyn extends Observable {
 			pluginItem.add(cdc);
 
 		}
+		this.setChanged();
+		this.notifyObservers();
 
 	}
 
@@ -99,6 +105,8 @@ public final class ListenerChargementDyn extends Observable {
 				}
 			}
 		}
+		this.setChanged();
+		this.notifyObservers();
 	}
 
 	public void countAllClass() {
@@ -161,8 +169,8 @@ public final class ListenerChargementDyn extends Observable {
 
 	public ChargementDynamique getClassForNamePluginClasse(String name) {
 		int i = 0;
-		while(i < this.pluginClasse.size()){
-			if(this.pluginClasse.get(i).getNameClasse().equalsIgnoreCase(name)){
+		while (i < this.pluginClasse.size()) {
+			if (this.pluginClasse.get(i).getNameClasse().equalsIgnoreCase(name)) {
 				return this.pluginClasse.get(i);
 			}
 		}
@@ -171,8 +179,8 @@ public final class ListenerChargementDyn extends Observable {
 
 	public ChargementDynamique getClassForNamePluginItem(String name) {
 		int i = 0;
-		while(i < this.pluginItem.size()){
-			if(this.pluginItem.get(i).getNameItem().equalsIgnoreCase(name)){
+		while (i < this.pluginItem.size()) {
+			if (this.pluginItem.get(i).getNameItem().equalsIgnoreCase(name)) {
 				return this.pluginItem.get(i);
 			}
 		}
