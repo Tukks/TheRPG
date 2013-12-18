@@ -8,6 +8,9 @@ import java.util.Observable;
 import java.util.Observer;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.events.MouseListener;
+import org.eclipse.swt.graphics.Cursor;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.ImageData;
@@ -15,7 +18,6 @@ import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Group;
@@ -35,6 +37,19 @@ public class InterfaceRPG implements Observer {
 	private ImageData cursor_Image = new ImageData(PathManager.cursorImg);
 	private Font font = new Font(display, "Arial", 15, SWT.BOLD);
 	private List listeClasses;
+	private LinkedList<ChargementDynamique> classes;
+	private LinkedList<ChargementDynamique> items;
+	private List listeItems;
+
+	public int getSizeListeClasses() {
+		return sizeListeClasses;
+	}
+
+	public void setSizeListeClasses(int sizeListeClasses) {
+		this.sizeListeClasses = sizeListeClasses;
+	}
+
+	protected int sizeListeClasses;
 
 	public InterfaceRPG() throws InstantiationException,
 			IllegalAccessException, ClassNotFoundException, IOException {
@@ -48,8 +63,13 @@ public class InterfaceRPG implements Observer {
 		ListenerChargementDyn l = ListenerChargementDyn.getInstance();
 		Thread t = new Thread(watchDirectories);
 		t.start();
+		classes = l.getPluginClasse();
+		// récupération de la taille de la liste
+		setSizeListeClasses(classes.size());
+		items = l.getPluginItem();
 
 		l.addObserver(this);
+
 		// 1 > liste des classes
 		createListClasses(fenetre, l, gridData);
 
@@ -59,20 +79,20 @@ public class InterfaceRPG implements Observer {
 		// 3 > caractéristiques
 		createGroupCarac(fenetre, gridData);
 
-		// 4 > armes
-		createGroupArms(fenetre, gridData);
+		// 4 > items
+		createListItems(fenetre, gridData);
 
 		// 5 > armures
 		createGroupArmures(fenetre, gridData);
 
-		// 6 > items
+		// 6 > potion
 		createGroupItems(fenetre, l, gridData);
 
 		// FIN GROUPES
 
 		// curseur
-		// Cursor cursor1 = new Cursor(display, cursor_Image, 1, 1);
-		// fenetre.setCursor(cursor1);
+		Cursor cursor1 = new Cursor(display, cursor_Image, 1, 1);
+		fenetre.setCursor(cursor1);
 
 		// bg fenetre
 		Image bg_Image = new Image(display, PathManager.bgImg);
@@ -119,19 +139,6 @@ public class InterfaceRPG implements Observer {
 		groupArmures.setLayoutData(gridData);
 	}
 
-	private void createGroupArms(Shell fenetre, GridData gridData) {
-		GroupDeco gd = new GroupDeco(fenetre, "Choisissez une arme", 2);
-		Group groupArmes = gd.getG();
-
-		for (int i = 0; i < 4; i++) {
-
-			new Button(groupArmes, SWT.PUSH).setImage(new Image(display,
-					PathManager.itemImg));
-		}
-
-		groupArmes.setLayoutData(gridData);
-	}
-
 	private void createGroupCarac(Shell fenetre, GridData gridData) {
 		GroupDeco gd = new GroupDeco(fenetre, "Caractéristiques", 2);
 		Group groupCarac = gd.getG();
@@ -161,7 +168,6 @@ public class InterfaceRPG implements Observer {
 
 	private void createListClasses(Shell fenetre, ListenerChargementDyn l,
 			GridData gridData) {
-		LinkedList<ChargementDynamique> classes = l.getPluginClasse();
 
 		GroupDeco gd = new GroupDeco(fenetre,
 				"Choisissez une classe de personnage", 1);
@@ -172,7 +178,43 @@ public class InterfaceRPG implements Observer {
 		for (ChargementDynamique classe : classes) {
 			listeClasses.add(classe.getNameClasse());
 		}
+
+		listeClasses.addMouseListener(new MouseListener() {
+
+			@Override
+			public void mouseUp(MouseEvent arg0) {
+				System.out.println(listeClasses.getItem(listeClasses
+						.getSelectionIndex()));
+
+			}
+
+			@Override
+			public void mouseDown(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void mouseDoubleClick(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+
 		groupeClasses.setLayoutData(gridData);
+	}
+
+	private void createListItems(Shell fenetre, GridData gridData) {
+		GroupDeco gd = new GroupDeco(fenetre, "Choisissez une arme", 3);
+		Group groupItems = gd.getG();
+
+		listeItems = new List(groupItems, SWT.V_SCROLL | SWT.MULTI);
+
+		for (ChargementDynamique item : items) {
+			listeItems.add(item.getNameItem());
+		}
+
+		groupItems.setLayoutData(gridData);
 	}
 
 	private Shell createFrame() {
@@ -201,17 +243,22 @@ public class InterfaceRPG implements Observer {
 
 	public static void main(String[] args) throws InstantiationException,
 			IllegalAccessException, ClassNotFoundException, IOException {
-		InterfaceRPG rpg =  new InterfaceRPG();
-		
+		InterfaceRPG rpg = new InterfaceRPG();
+
 	}
 
 	@Override
 	public void update(Observable arg0, Object arg1) {
-		
-		System.out.println("coucou");
-		/*listeClasses.add("coucou");
-		listeClasses.redraw();
-		listeClasses.update();*/
+
+		Display.getDefault().syncExec(new Runnable() {
+			public void run() {
+				if (classes.size() != sizeListeClasses)
+					listeClasses.add(classes.getLast().getNameClasse());
+				else
+					listeItems.add(items.getLast().getNameItem());
+			}
+		});
+
 	}
 
 }
