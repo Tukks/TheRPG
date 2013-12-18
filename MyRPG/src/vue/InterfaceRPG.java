@@ -8,8 +8,6 @@ import java.util.Observable;
 import java.util.Observer;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.MouseEvent;
-import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.graphics.Cursor;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.Image;
@@ -18,13 +16,10 @@ import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Group;
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.widgets.Text;
 
 import util.PathManager;
 import chargementDynamique.ChargementDynamique;
@@ -71,16 +66,16 @@ public class InterfaceRPG implements Observer {
 		l.addObserver(this);
 
 		// 1 > liste des classes
-		createListClasses(fenetre, l, gridData);
+		new GroupClasses(fenetre, classes, gridData);
 
 		// 2 > saisie nom du perso + apperçu perso
-		createGroupPerso(fenetre, gridData);
+		new GroupAppercuPerso(fenetre, gridData);
 
 		// 3 > caractéristiques
-		createGroupCarac(fenetre, gridData);
+		new GroupCaracteristiquesPerso(fenetre, gridData);
 
 		// 4 > items
-		createListItems(fenetre, gridData);
+		new GroupItems(fenetre, items, gridData);
 
 		// 5 > armures
 		createGroupArmures(fenetre, gridData);
@@ -137,84 +132,6 @@ public class InterfaceRPG implements Observer {
 		Group groupArmures = gd.getG();
 		groupArmures.setSize(400, 400);
 		groupArmures.setLayoutData(gridData);
-	}
-
-	private void createGroupCarac(Shell fenetre, GridData gridData) {
-		GroupDeco gd = new GroupDeco(fenetre, "Caractéristiques", 2);
-		Group groupCarac = gd.getG();
-
-		groupCarac.setLayoutData(gridData);
-	}
-
-	private Group createGroupPerso(Shell fenetre, GridData gridData) {
-		GroupDeco gd = new GroupDeco(fenetre, "", 1);
-		Group groupPerso = gd.getG();
-
-		Label label = new Label(groupPerso, SWT.NONE);
-		label.setText("Saisir un nom de personnage");
-		label.setBounds(10, 10, 100, 25);
-
-		Text text = new Text(groupPerso, SWT.BORDER_DOT);
-		text.setSize(200, 10);
-
-		Composite appercuPerso = new Composite(groupPerso, SWT.BORDER);
-		appercuPerso.setSize(400, 400);
-		appercuPerso
-				.setBackgroundImage(new Image(display, PathManager.classImg));
-
-		groupPerso.setLayoutData(gridData);
-		return groupPerso;
-	}
-
-	private void createListClasses(Shell fenetre, ListenerChargementDyn l,
-			GridData gridData) {
-
-		GroupDeco gd = new GroupDeco(fenetre,
-				"Choisissez une classe de personnage", 1);
-		Group groupeClasses = gd.getG();
-
-		listeClasses = new List(groupeClasses, SWT.V_SCROLL | SWT.MULTI);
-
-		for (ChargementDynamique classe : classes) {
-			listeClasses.add(classe.getNameClasse());
-		}
-
-		listeClasses.addMouseListener(new MouseListener() {
-
-			@Override
-			public void mouseUp(MouseEvent arg0) {
-				System.out.println(listeClasses.getItem(listeClasses
-						.getSelectionIndex()));
-
-			}
-
-			@Override
-			public void mouseDown(MouseEvent arg0) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void mouseDoubleClick(MouseEvent arg0) {
-				// TODO Auto-generated method stub
-
-			}
-		});
-
-		groupeClasses.setLayoutData(gridData);
-	}
-
-	private void createListItems(Shell fenetre, GridData gridData) {
-		GroupDeco gd = new GroupDeco(fenetre, "Choisissez une arme", 3);
-		Group groupItems = gd.getG();
-
-		listeItems = new List(groupItems, SWT.V_SCROLL | SWT.MULTI);
-
-		for (ChargementDynamique item : items) {
-			listeItems.add(item.getNameItem());
-		}
-
-		groupItems.setLayoutData(gridData);
 	}
 
 	private Shell createFrame() {
