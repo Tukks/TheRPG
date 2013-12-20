@@ -1,4 +1,4 @@
-package vue;
+package vue.group;
 
 import java.util.LinkedList;
 
@@ -13,22 +13,22 @@ import org.eclipse.swt.widgets.Shell;
 import util.PathManager;
 import chargementDynamique.ChargementDynamique;
 
-public class GroupItems {
+public class GroupArmures {
 
 	private Group thisGroup;
-	private LinkedList<ChargementDynamique> items;
+	private LinkedList<ChargementDynamique> armures;
 	private List listeDesItems;
 
-	public GroupItems(Shell fenetre, LinkedList<ChargementDynamique> items,
+	public GroupArmures(Shell fenetre, LinkedList<ChargementDynamique> items,
 			GridData gridData) {
 
-		this.items = items;
+		this.armures = items;
 		thisGroup = new Group(fenetre, SWT.FLAT);
 		thisGroup.setLayoutData(gridData);
 
 		listeDesItems = new List(thisGroup, SWT.MULTI);
 
-		thisGroup.setText("Choisir un item");
+		thisGroup.setText("Choisir une armure");
 		thisGroup.setLayout(new GridLayout());
 		thisGroup.setBackgroundImage(new Image(fenetre.getDisplay(),
 				PathManager.bgGroup));
@@ -37,8 +37,9 @@ public class GroupItems {
 	}
 
 	private void FillList() {
-		for (ChargementDynamique item : items) {
-			listeDesItems.add(item.getNameItem());
+		for (ChargementDynamique armure : armures) {
+			if (armure.getTypeItem() == "Armure")
+				listeDesItems.add(armure.getNameItem());
 		}
 	}
 

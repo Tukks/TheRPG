@@ -23,6 +23,12 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
 
 import util.PathManager;
+import vue.group.GroupApercuPerso;
+import vue.group.GroupArmes;
+import vue.group.GroupArmures;
+import vue.group.GroupCaracteristiquesPerso;
+import vue.group.GroupClasses;
+import vue.group.GroupPotions;
 import chargementDynamique.ChargementDynamique;
 import chargementDynamique.ListenerChargementDyn;
 import chargementDynamique.WatchDir;
@@ -69,13 +75,13 @@ public class InterfaceRPG implements Observer {
 		l.addObserver(gc);
 
 		// 2 > saisie nom du perso + apperçu perso
-		new GroupAppercuPerso(fenetre, gridData);
+		new GroupApercuPerso(fenetre, gridData);
 
 		// 3 > caractéristiques
 		new GroupCaracteristiquesPerso(fenetre, gridData);
 
 		// 4 > items
-		new GroupItems(fenetre, items, gridData);
+		new GroupArmes(fenetre, items, gridData);
 
 		// 5 > armures
 		new GroupArmures(fenetre, items, gridData);

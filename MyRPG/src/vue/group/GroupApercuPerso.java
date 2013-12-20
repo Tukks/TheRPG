@@ -1,4 +1,4 @@
-package vue;
+package vue.group;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
@@ -12,12 +12,12 @@ import org.eclipse.swt.widgets.Text;
 
 import util.PathManager;
 
-public class GroupAppercuPerso {
+public class GroupApercuPerso {
 
 	private Group thisGroup;
 	private Label label;
 
-	public GroupAppercuPerso(Shell fenetre, GridData gridData) {
+	public GroupApercuPerso(Shell fenetre, GridData gridData) {
 
 		thisGroup = new Group(fenetre, SWT.FLAT);
 		thisGroup.setLayoutData(gridData);
