@@ -1,8 +1,15 @@
 package battle;
 
+import java.io.Serializable;
 import java.util.Random;
 
-public class Enemy {
+import serializable.VisitorRPG;
+
+public class Enemy implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8487896641271550505L;
 	String nom;
 	int pdv;
 	int attaque;
@@ -41,6 +48,42 @@ public class Enemy {
 		Random rand = new Random();
 		int nombreAleatoire = rand.nextInt(max - min + 1) + min;
 		return nombreAleatoire;
+	}
+	public void accept(VisitorRPG visitor){
+		visitor.visiter(this);
+	}
+	public String getNom() {
+		return nom;
+	}
+	public void setNom(String nom) {
+		this.nom = nom;
+	}
+	public int getPdv() {
+		return pdv;
+	}
+	public void setPdv(int pdv) {
+		this.pdv = pdv;
+	}
+	public int getAttaque() {
+		return attaque;
+	}
+	public void setAttaque(int attaque) {
+		this.attaque = attaque;
+	}
+	public int getNbrPotion() {
+		return nbrPotion;
+	}
+	public void setNbrPotion(int nbrPotion) {
+		this.nbrPotion = nbrPotion;
+	}
+	public int getDefense() {
+		return defense;
+	}
+	public void setDefense(int defense) {
+		this.defense = defense;
+	}
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 	
 }

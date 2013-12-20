@@ -10,6 +10,11 @@ import java.net.MalformedURLException;
 
 public class ChargementDynamiqueClass extends ChargementDynamique {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	public ChargementDynamiqueClass(String fileAccess)
 			throws MalformedURLException, InstantiationException,
 			IllegalAccessException, ClassNotFoundException {
@@ -17,17 +22,7 @@ public class ChargementDynamiqueClass extends ChargementDynamique {
 
 	}
 
-	public boolean ChargementClass() throws InstantiationException, IllegalAccessException {
-		try {
-			this.classCharged = this.loadClass("");
-			this.classInstancie = classCharged.newInstance();
-			this.listAllMethod();
-		} catch (ClassNotFoundException e) {
-			return false;
-		}
-
-		return true;
-	}
+	
 
 	@Override
 	protected Class<?> findClass(String name) throws ClassNotFoundException {
