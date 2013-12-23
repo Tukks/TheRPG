@@ -28,7 +28,7 @@ public abstract class ChargementDynamique extends SecureClassLoader implements S
 	transient Object classInstancie; //a reconstruire a la deserialization
 	List<Method> listMethode = new ArrayList<Method>();
 	File fichier;
-	private java.util.jar.JarFile jar;
+	public java.util.jar.JarFile jar;
 
 	public static ChargementDynamique rebuildClass(Object classCharged) throws InstantiationException, IllegalAccessException{
 		ChargementDynamique newClass = new ChargementDynamique() {
@@ -43,42 +43,8 @@ public abstract class ChargementDynamique extends SecureClassLoader implements S
 		
 	}
 	
-	public boolean ChargementClass() throws InstantiationException, IllegalAccessException {
-		try {
-			this.classCharged = this.loadClass("");
-			this.classInstancie = classCharged.newInstance();
-			this.listAllMethod();
-		} catch (ClassNotFoundException e) {
-			return false;
-		}
-
-		return true;
-	}
-	public boolean ChargermentJar() throws ClassNotFoundException, InstantiationException, IllegalAccessException {
-		try {
-			jar = new JarFile(fichier);
-			classCharged = cl.loadClass(getNomClasse(jar));
-			classInstancie = classCharged.newInstance();
-			this.listAllMethod();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			return false;
-		}
-		return true;
-	}
-	private String getNomClasse(JarFile jar) {
-		Enumeration<JarEntry> enume = jar.entries();
-		JarEntry nomFichier;
-		while (enume.hasMoreElements()) {
-			nomFichier = enume.nextElement();
-			String nomFile = nomFichier.toString();
-			if (nomFile.contains(".class") && !nomFile.contains(".classpath")) {
-				return nomFile.replace("/", ".").substring(0,
-						nomFile.length() - 6);
-			}
-		}
-		return null;
-	}
+	
+	
 	public Object getClassInstancie() {
 		return classInstancie;
 	}
@@ -171,7 +137,7 @@ public abstract class ChargementDynamique extends SecureClassLoader implements S
 	public void setFichier(File fichier) {
 		this.fichier = fichier;
 	}
-	public void accept(VisitorRPG visitor){
+	public void accept(VisitorRPG visitor) throws IOException{
 		visitor.visiter(this);
 	}
 }

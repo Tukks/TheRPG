@@ -25,7 +25,30 @@ public class ChargementDynamiqueJar extends ChargementDynamique {
 
 	}
 
-	
+	public boolean ChargermentJar() throws ClassNotFoundException, InstantiationException, IllegalAccessException {
+		try {
+			jar = new JarFile(fichier);
+			classCharged = cl.loadClass(getNomClasse(jar));
+			classInstancie = classCharged.newInstance();
+			this.listAllMethod();
+		} catch (IOException e) {
+			return false;
+		}
+		return true;
+	}
+	private String getNomClasse(JarFile jar) {
+		Enumeration<JarEntry> enume = jar.entries();
+		JarEntry nomFichier;
+		while (enume.hasMoreElements()) {
+			nomFichier = enume.nextElement();
+			String nomFile = nomFichier.toString();
+			if (nomFile.contains(".class") && !nomFile.contains(".classpath")) {
+				return nomFile.replace("/", ".").substring(0,
+						nomFile.length() - 6);
+			}
+		}
+		return null;
+	}
 	
 
 }

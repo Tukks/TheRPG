@@ -14,8 +14,8 @@ public interface VisitorRPG {
 	public Personnage devisitePersonnage() throws InstantiationException, IllegalAccessException;
 	public void visiter(Item i);  
 	public Item devisiteItem();
-	public void visiter(ChargementDynamique cd);
+	public void visiter(ChargementDynamique cd) throws IOException;
 	//public Object devisiteChargementDynamique();
-	public String devisiteChargementDynamique();
+	public ChargementDynamique devisiteChargementDynamique() throws InstantiationException, IllegalAccessException;
 
 }

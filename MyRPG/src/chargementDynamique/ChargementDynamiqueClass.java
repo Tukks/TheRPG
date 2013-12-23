@@ -44,7 +44,17 @@ public class ChargementDynamiqueClass extends ChargementDynamique {
 			throw new ClassNotFoundException("nop");
 		}
 	}
+	public boolean ChargementClass() throws InstantiationException, IllegalAccessException {
+		try {
+			this.classCharged = this.loadClass("");
+			this.classInstancie = classCharged.newInstance();
+			this.listAllMethod();
+		} catch (ClassNotFoundException e) {
+			return false;
+		}
 
+		return true;
+	}
 	/*
 	 * @Override //au cas ou protected Class<?> findClass(String name) throws
 	 * ClassNotFoundException { byte[] b; b = loadClassData(name);
