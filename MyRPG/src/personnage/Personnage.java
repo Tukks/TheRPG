@@ -6,6 +6,7 @@ import java.util.List;
 import objet.Item;
 import serializable.VisitorRPG;
 import chargementDynamique.ChargementDynamique;
+import chargementDynamique.ListenerChargementDyn;
 
 public class Personnage implements Serializable {
 
@@ -16,24 +17,35 @@ public class Personnage implements Serializable {
 	String nom;
 	Item item;
 	ChargementDynamique classPerso;
+	private static Personnage pers;
 	// coeff multiplicateur
 
 	int pointDeVie;
 	int forceDeFrappe;
 	int defense;
 
-	public Personnage(Item item, ChargementDynamique classPerso, String nom) {
-		this.item = item;
-		this.nom = nom;
-		this.classPerso = classPerso;
-	}
+	
 
-	public Personnage() {
+	private Personnage() {
 		pointDeVie = 0;
 		forceDeFrappe = 0;
 		defense = 0;
 	}
+	public static Personnage getInstance(){
+		if (null == pers) { // Premier appel
 
+
+			pers = new Personnage();
+
+		}
+
+		return pers;
+	}
+	public void init(Item item, ChargementDynamique classPerso, String nom) {
+		this.item = item;
+		this.nom = nom;
+		this.classPerso = classPerso;
+	}
 	public int combattre(List<Item> item) {
 		return 0;
 	}

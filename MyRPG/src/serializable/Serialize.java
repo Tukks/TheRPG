@@ -191,7 +191,9 @@ public class Serialize implements VisitorRPG {
 			//Get class de personnage
 			classPersonnage = this.devisiteChargementDynamique();
 //recreer Pers
-			p = new Personnage(i, classPersonnage, ois.readUTF());
+			p = Personnage.getInstance();
+			p.init(i, classPersonnage, ois.readUTF());
+			
 
 			return p;
 
@@ -264,7 +266,8 @@ public class Serialize implements VisitorRPG {
 		ChargementDynamiqueJar cd = new ChargementDynamiqueJar(
 				"./Plugin/Guerrier.jar");
 		cd.ChargermentJar();
-		Personnage p = new Personnage(item, cd, "Le gueurier");
+		Personnage p = Personnage.getInstance();
+		p.init(item, cd, "Le gueurier");
 
 		Serialize s = new Serialize();
 		s.visiter(p);
