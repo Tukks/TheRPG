@@ -3,12 +3,11 @@ package personnage;
 import java.io.Serializable;
 import java.util.List;
 
-import chargementDynamique.ChargementDynamique;
 import objet.Item;
 import serializable.VisitorRPG;
+import chargementDynamique.ChargementDynamique;
 
-public class Personnage implements Serializable{
-
+public class Personnage implements Serializable {
 
 	/**
 	 * 
@@ -29,11 +28,17 @@ public class Personnage implements Serializable{
 		this.classPerso = classPerso;
 	}
 
+	public Personnage() {
+		pointDeVie = 0;
+		forceDeFrappe = 0;
+		defense = 0;
+	}
+
 	public int combattre(List<Item> item) {
 		return 0;
 	}
-	
-	public void accept(VisitorRPG visitor){
+
+	public void accept(VisitorRPG visitor) {
 		visitor.visiter(this);
 	}
 
