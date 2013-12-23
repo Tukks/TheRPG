@@ -16,12 +16,29 @@ import chargementDynamique.ChargementDynamique;
 import chargementDynamique.ChargementDynamiqueClass;
 import chargementDynamique.ChargementDynamiqueJar;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class Serialize.
+ */
 public class Serialize implements VisitorRPG {
+	
+	/** The fichier out. */
 	FileOutputStream fichierOUT;
+	
+	/** The fichier in. */
 	FileInputStream fichierIN;
+	
+	/** The ois. */
 	ObjectInputStream ois;
+	
+	/** The oos. */
 	ObjectOutputStream oos;
 
+	/**
+	 * Instantiates a new serialize.
+	 *
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	Serialize() throws IOException {
 		// TODO Auto-generated constructor stub
 		fichierOUT = new FileOutputStream("SaveJeux.ser");
@@ -30,6 +47,9 @@ public class Serialize implements VisitorRPG {
 		this.ois = new ObjectInputStream(fichierIN);
 	}
 
+	/* (non-Javadoc)
+	 * @see serializable.VisitorRPG#visiter(battle.Enemy)
+	 */
 	@Override
 	public void visiter(Enemy e) {
 		// TODO Auto-generated method stub
@@ -42,6 +62,9 @@ public class Serialize implements VisitorRPG {
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see serializable.VisitorRPG#devisiteEnemy()
+	 */
 	@Override
 	public Enemy devisiteEnemy() {
 
@@ -58,6 +81,9 @@ public class Serialize implements VisitorRPG {
 
 	}
 
+	/* (non-Javadoc)
+	 * @see serializable.VisitorRPG#visiter(personnage.Personnage)
+	 */
 	@Override
 	public void visiter(Personnage p) {
 		// TODO Auto-generated method stub
@@ -81,6 +107,9 @@ public class Serialize implements VisitorRPG {
 
 	}
 
+	/* (non-Javadoc)
+	 * @see serializable.VisitorRPG#visiter(objet.Item)
+	 */
 	@Override
 	public void visiter(Item i) {
 		// TODO Auto-generated method stub
@@ -95,11 +124,17 @@ public class Serialize implements VisitorRPG {
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see serializable.VisitorRPG#visiter(chargementDynamique.ChargementDynamique)
+	 */
 	@Override
 	public void visiter(ChargementDynamique cd) throws IOException {
 		oos.writeUTF(cd.getFichier().getPath());
 	}
 
+	/* (non-Javadoc)
+	 * @see serializable.VisitorRPG#devisiteChargementDynamique()
+	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public ChargementDynamique devisiteChargementDynamique()
@@ -126,6 +161,9 @@ public class Serialize implements VisitorRPG {
 		return null;
 	}
 
+	/* (non-Javadoc)
+	 * @see serializable.VisitorRPG#devisitePersonnage()
+	 */
 	@Override
 	public Personnage devisitePersonnage() throws InstantiationException,
 	IllegalAccessException {
@@ -164,6 +202,12 @@ public class Serialize implements VisitorRPG {
 
 	}
 
+	/**
+	 * Checks if is class.
+	 *
+	 * @param path the path
+	 * @return true, if is class
+	 */
 	private boolean isClass(String path) {
 		if (path.contains("class")) {
 			return true;
@@ -173,6 +217,9 @@ public class Serialize implements VisitorRPG {
 
 	}
 
+	/* (non-Javadoc)
+	 * @see serializable.VisitorRPG#devisiteItem()
+	 */
 	@Override
 	public Item devisiteItem() {
 		try {
@@ -189,6 +236,19 @@ public class Serialize implements VisitorRPG {
 
 	}
 
+	/**
+	 * The main method.
+	 *
+	 * @param args the arguments
+	 * @throws ClassNotFoundException the class not found exception
+	 * @throws InstantiationException the instantiation exception
+	 * @throws IllegalAccessException the illegal access exception
+	 * @throws IllegalArgumentException the illegal argument exception
+	 * @throws InvocationTargetException the invocation target exception
+	 * @throws NoSuchMethodException the no such method exception
+	 * @throws SecurityException the security exception
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	public static void main(String[] args) throws ClassNotFoundException,
 	InstantiationException, IllegalAccessException,
 	IllegalArgumentException, InvocationTargetException,

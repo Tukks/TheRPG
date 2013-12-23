@@ -8,12 +8,24 @@ import java.net.URLClassLoader;
 import java.util.Enumeration;
 import java.util.jar.*;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class ChargementDynamiqueJar.
+ */
 public class ChargementDynamiqueJar extends ChargementDynamique {
-	/**
-	 * 
-	 */
+	
+	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 2101763447674054511L;
 
+	/**
+	 * Instantiates a new chargement dynamique jar.
+	 *
+	 * @param fileAccess the file access
+	 * @throws ClassNotFoundException the class not found exception
+	 * @throws InstantiationException the instantiation exception
+	 * @throws IllegalAccessException the illegal access exception
+	 * @throws MalformedURLException the malformed url exception
+	 */
 	public ChargementDynamiqueJar(String fileAccess)
 			throws ClassNotFoundException, InstantiationException,
 			IllegalAccessException, MalformedURLException {
@@ -25,6 +37,14 @@ public class ChargementDynamiqueJar extends ChargementDynamique {
 
 	}
 
+	/**
+	 * Chargerment jar.
+	 *
+	 * @return true, if successful
+	 * @throws ClassNotFoundException the class not found exception
+	 * @throws InstantiationException the instantiation exception
+	 * @throws IllegalAccessException the illegal access exception
+	 */
 	public boolean ChargermentJar() throws ClassNotFoundException, InstantiationException, IllegalAccessException {
 		try {
 			jar = new JarFile(fichier);
@@ -36,6 +56,13 @@ public class ChargementDynamiqueJar extends ChargementDynamique {
 		}
 		return true;
 	}
+	
+	/**
+	 * Gets the nom classe.
+	 *
+	 * @param jar the jar
+	 * @return the nom classe
+	 */
 	private String getNomClasse(JarFile jar) {
 		Enumeration<JarEntry> enume = jar.entries();
 		JarEntry nomFichier;

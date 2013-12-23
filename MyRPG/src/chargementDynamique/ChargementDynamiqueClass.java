@@ -8,13 +8,24 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class ChargementDynamiqueClass.
+ */
 public class ChargementDynamiqueClass extends ChargementDynamique {
 
-	/**
-	 * 
-	 */
+	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
+	/**
+	 * Instantiates a new chargement dynamique class.
+	 *
+	 * @param fileAccess the file access
+	 * @throws MalformedURLException the malformed url exception
+	 * @throws InstantiationException the instantiation exception
+	 * @throws IllegalAccessException the illegal access exception
+	 * @throws ClassNotFoundException the class not found exception
+	 */
 	public ChargementDynamiqueClass(String fileAccess)
 			throws MalformedURLException, InstantiationException,
 			IllegalAccessException, ClassNotFoundException {
@@ -24,6 +35,9 @@ public class ChargementDynamiqueClass extends ChargementDynamique {
 
 	
 
+	/* (non-Javadoc)
+	 * @see java.lang.ClassLoader#findClass(java.lang.String)
+	 */
 	@Override
 	protected Class<?> findClass(String name) throws ClassNotFoundException {
 		try {
@@ -44,6 +58,14 @@ public class ChargementDynamiqueClass extends ChargementDynamique {
 			throw new ClassNotFoundException("nop");
 		}
 	}
+	
+	/**
+	 * Chargement class.
+	 *
+	 * @return true, if successful
+	 * @throws InstantiationException the instantiation exception
+	 * @throws IllegalAccessException the illegal access exception
+	 */
 	public boolean ChargementClass() throws InstantiationException, IllegalAccessException {
 		try {
 			this.classCharged = this.loadClass("");
