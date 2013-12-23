@@ -22,13 +22,14 @@ import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
 
+import personnage.Personnage;
 import util.PathManager;
-import vue.group.GroupApercuPerso;
-import vue.group.GroupArmes;
-import vue.group.GroupArmures;
-import vue.group.GroupCaracteristiquesPerso;
-import vue.group.GroupClasses;
-import vue.group.GroupPotions;
+import vue.groupItems.GroupArmes;
+import vue.groupItems.GroupArmures;
+import vue.groupItems.GroupClasses;
+import vue.groupItems.GroupPotions;
+import vue.groupPerso.GroupApercuPerso;
+import vue.groupPerso.GroupCaracteristiquesPerso;
 import chargementDynamique.ChargementDynamique;
 import chargementDynamique.ListenerChargementDyn;
 import chargementDynamique.WatchDir;
@@ -51,43 +52,62 @@ public class InterfaceRPG implements Observer {
 	}
 
 	protected int sizeListeClasses;
-	private GroupClasses gc;
+	private GroupClasses gClasses;
+	private GroupArmes gArmes;
+	private GroupArmures gArmures;
+	private GroupPotions gPotions;
+	private ListenerChargementDyn listenerCD;
+	private Thread threadCD;
+	private GroupCaracteristiquesPerso gCarac;
 
 	public InterfaceRPG() throws InstantiationException,
 			IllegalAccessException, ClassNotFoundException, IOException {
 
 		Shell fenetre = createFrame();
 
+		// création du perso de base
+		Personnage perso = Personnage.getInstance();
+
 		GridData gridData = getGridData();
 
 		Path dir = Paths.get("./Plugin");
 		WatchDir watchDirectories = new WatchDir(dir, false);
-		ListenerChargementDyn l = ListenerChargementDyn.getInstance();
-		Thread t = new Thread(watchDirectories);
-		t.start();
-		classes = l.getPluginClasse();
+		listenerCD = ListenerChargementDyn.getInstance();
+
+		threadCD = new Thread(watchDirectories);
+		threadCD.start();
+
+		items = listenerCD.getPluginItem();
+		classes = listenerCD.getPluginClasse();
+
 		// récupération de la taille de la liste
 		setSizeListeClasses(classes.size());
-		items = l.getPluginItem();
+
+		// **** création des groupes ****
 
 		// 1 > liste des classes
-		gc = new GroupClasses(fenetre, classes, gridData);
-		l.addObserver(gc);
+		gClasses = new GroupClasses(fenetre, classes, gridData);
+		listenerCD.addObserver(gClasses);
 
 		// 2 > saisie nom du perso + apperçu perso
 		new GroupApercuPerso(fenetre, gridData);
 
-		// 3 > caractéristiques
-		new GroupCaracteristiquesPerso(fenetre, gridData);
-
-		// 4 > items
-		new GroupArmes(fenetre, items, gridData);
+		// 4 > armes
+		gArmes = new GroupArmes(fenetre, items, gridData);
 
 		// 5 > armures
-		new GroupArmures(fenetre, items, gridData);
+		gArmures = new GroupArmures(fenetre, items, gridData);
 
-		// 6 > potion
-		new GroupPotions(fenetre, items, gridData);
+		// 6 > potions
+		gPotions = new GroupPotions(fenetre, items, gridData);
+
+		// 3 > caractéristiques
+		gCarac = new GroupCaracteristiquesPerso(fenetre, gridData, perso,
+				gClasses, gArmures, gArmes);
+
+		gClasses.addObserver(gCarac);
+		gArmes.addObserver(gCarac);
+		gArmures.addObserver(gCarac);
 
 		// FIN GROUPES
 
@@ -114,13 +134,74 @@ public class InterfaceRPG implements Observer {
 		display.dispose();
 	}
 
+	public GroupClasses getgClasses() {
+		return gClasses;
+	}
+
+	public void setgClasses(GroupClasses gClasses) {
+		this.gClasses = gClasses;
+	}
+
+	public GroupArmes getgArmes() {
+		return gArmes;
+	}
+
+	public void setgArmes(GroupArmes gArmes) {
+		this.gArmes = gArmes;
+	}
+
+	public GroupArmures getgArmures() {
+		return gArmures;
+	}
+
+	public void setgArmures(GroupArmures gArmures) {
+		this.gArmures = gArmures;
+	}
+
+	public GroupPotions getgPotions() {
+		return gPotions;
+	}
+
+	public void setgPotions(GroupPotions gPotions) {
+		this.gPotions = gPotions;
+	}
+
+	public GroupCaracteristiquesPerso getgCarac() {
+		return gCarac;
+	}
+
+	public void setgCarac(GroupCaracteristiquesPerso gCarac) {
+		this.gCarac = gCarac;
+	}
+
 	private Listener getListener() {
 		return new Listener() {
 			@Override
 			public void handleEvent(Event arg0) {
 
-				System.out.println("classes selectionnee : "
-						+ gc.getValSelection());
+				// giu code
+				// Item item = new Item(
+				// listenerCD.getClassForNamePluginItem(gArmes
+				// .getValSelection()),
+				// listenerCD.getClassForNamePluginItem("armureChoisie"),
+				// listenerCD.getClassForNamePluginItem("potionChoisie"));
+				// Personnage perso = new Personnage(item,
+				//
+				// listenerCD.getClassForNameClasse("ClasseChoisie"), nom);
+				// threadCD.stop();
+				// end
+
+				// String classeSelectionnee = gClasses.getValSelection();
+				//
+				// System.out.println(classes.getLast().getNameClasse());
+				//
+				// Integer i = classes.indexOf(gClasses.getValSelection());
+				//
+				// // *** création du personnage ***
+				//
+				// Personnage p = new Personnage(null, classes.getLast(),
+				// "testNom");
+
 			}
 
 		};
@@ -160,12 +241,6 @@ public class InterfaceRPG implements Observer {
 		shell.setLocation(new Point(x, y));
 	}
 
-	public static void main(String[] args) throws InstantiationException,
-			IllegalAccessException, ClassNotFoundException, IOException {
-		InterfaceRPG rpg = new InterfaceRPG();
-
-	}
-
 	@Override
 	public void update(Observable arg0, Object arg1) {
 
@@ -180,4 +255,9 @@ public class InterfaceRPG implements Observer {
 
 	}
 
+	public static void main(String[] args) throws InstantiationException,
+			IllegalAccessException, ClassNotFoundException, IOException {
+		new InterfaceRPG();
+
+	}
 }
