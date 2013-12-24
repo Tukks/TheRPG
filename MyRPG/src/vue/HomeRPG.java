@@ -1,11 +1,6 @@
 package vue;
 
 import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.LinkedList;
-import java.util.Observable;
-import java.util.Observer;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Cursor;
@@ -14,33 +9,18 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
-import org.eclipse.swt.layout.FillLayout;
-import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
-import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
 
 import util.PathManager;
-import vue.group.GroupApercuPerso;
-import vue.group.GroupArmes;
-import vue.group.GroupArmures;
-import vue.group.GroupCaracteristiquesPerso;
-import vue.group.GroupClasses;
-import vue.group.GroupPotions;
-import chargementDynamique.ChargementDynamique;
-import chargementDynamique.ListenerChargementDyn;
-import chargementDynamique.WatchDir;
 
 public class HomeRPG {
 
 	private static Display display = new Display();
 	private ImageData cursor_Image = new ImageData(PathManager.cursorImg);
-
-	private GroupClasses gc;
 
 	public HomeRPG() throws InstantiationException, IllegalAccessException,
 			ClassNotFoundException, IOException {
