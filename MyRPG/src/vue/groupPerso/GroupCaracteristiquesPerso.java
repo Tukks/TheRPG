@@ -51,13 +51,13 @@ public class GroupCaracteristiquesPerso implements Observer {
 				+ Integer.toString(perso.getDefense()));
 
 		lClasse = new Label(thisGroup, SWT.CENTER);
-		lClasse.setText("Classe :");
+		lClasse.setText("Classe : ");
 
 		lArme = new Label(thisGroup, SWT.CENTER);
-		lArme.setText("Armur :");
+		lArme.setText("Arme : ");
 
 		lArmure = new Label(thisGroup, SWT.CENTER);
-		lArmure.setText("Armure :");
+		lArmure.setText("Armure : ");
 	}
 
 	@Override

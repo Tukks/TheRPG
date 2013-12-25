@@ -7,6 +7,8 @@ import java.util.LinkedList;
 import java.util.Observable;
 import java.util.Observer;
 
+import objet.Item;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Cursor;
 import org.eclipse.swt.graphics.Image;
@@ -59,6 +61,8 @@ public class InterfaceRPG implements Observer {
 	private ListenerChargementDyn listenerCD;
 	private Thread threadCD;
 	private GroupCaracteristiquesPerso gCarac;
+	private GroupApercuPerso gAppercu;
+	private Personnage perso;
 
 	public InterfaceRPG() throws InstantiationException,
 			IllegalAccessException, ClassNotFoundException, IOException {
@@ -66,7 +70,7 @@ public class InterfaceRPG implements Observer {
 		Shell fenetre = createFrame();
 
 		// création du perso de base
-		Personnage perso = Personnage.getInstance();
+		perso = Personnage.getInstance();
 
 		GridData gridData = getGridData();
 
@@ -90,7 +94,7 @@ public class InterfaceRPG implements Observer {
 		listenerCD.addObserver(gClasses);
 
 		// 2 > saisie nom du perso + apperçu perso
-		new GroupApercuPerso(fenetre, gridData);
+		gAppercu = new GroupApercuPerso(fenetre, gridData);
 
 		// 4 > armes
 		gArmes = new GroupArmes(fenetre, items, gridData);
@@ -125,6 +129,13 @@ public class InterfaceRPG implements Observer {
 		button.addListener(SWT.Selection, getListener());
 
 		centrerSurEcran(display, fenetre);
+
+		fenetre.addListener(SWT.Close, new Listener() {
+			public void handleEvent(Event event) {
+				// stopper le thread
+			}
+		});
+
 		fenetre.open();
 
 		while (!fenetre.isDisposed())
@@ -179,28 +190,22 @@ public class InterfaceRPG implements Observer {
 			@Override
 			public void handleEvent(Event arg0) {
 
-				// giu code
-				// Item item = new Item(
-				// listenerCD.getClassForNamePluginItem(gArmes
-				// .getValSelection()),
-				// listenerCD.getClassForNamePluginItem("armureChoisie"),
-				// listenerCD.getClassForNamePluginItem("potionChoisie"));
-				// Personnage perso = new Personnage(item,
-				//
-				// listenerCD.getClassForNameClasse("ClasseChoisie"), nom);
-				// threadCD.stop();
-				// end
+				Item item = new Item(
+						listenerCD.getClassForNamePluginItem(gArmes
+								.getValSelection()),
+						listenerCD.getClassForNamePluginItem(gArmures
+								.getValSelection()),
+						listenerCD.getClassForNamePluginItem(gPotions
+								.getValSelection()));
 
-				// String classeSelectionnee = gClasses.getValSelection();
-				//
-				// System.out.println(classes.getLast().getNameClasse());
-				//
-				// Integer i = classes.indexOf(gClasses.getValSelection());
-				//
-				// // *** création du personnage ***
-				//
-				// Personnage p = new Personnage(null, classes.getLast(),
-				// "testNom");
+				perso.setClassPerso(listenerCD
+						.getClassForNamePluginClasse(gClasses.getValSelection()));
+
+				perso.setNom(gAppercu.getNomPerso());
+				perso.setItem(item);
+
+				// à changer
+				threadCD.stop();
 
 			}
 

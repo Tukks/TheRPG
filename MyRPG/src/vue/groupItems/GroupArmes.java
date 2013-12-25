@@ -23,7 +23,7 @@ public class GroupArmes extends Observable implements Observer {
 	private Group thisGroup;
 	private LinkedList<ChargementDynamique> items;
 	private List listeDesArmes;
-	private String valSelection = " ";
+	private String valSelection = "";
 
 	public GroupArmes(Shell fenetre, LinkedList<ChargementDynamique> items,
 			GridData gridData) {
@@ -40,6 +40,9 @@ public class GroupArmes extends Observable implements Observer {
 				PathManager.bgGroup));
 		FillList();
 		addListener();
+
+		if (listeDesArmes.getItemCount() == 0)
+			listeDesArmes.setEnabled(false);
 
 	}
 

@@ -23,7 +23,7 @@ public class GroupArmures extends Observable implements Observer {
 	private Group thisGroup;
 	private LinkedList<ChargementDynamique> armures;
 	private List listeDesArmures;
-	private String valSelection = " ";
+	private String valSelection = "";
 
 	public GroupArmures(Shell fenetre, LinkedList<ChargementDynamique> items,
 			GridData gridData) {
@@ -41,17 +41,26 @@ public class GroupArmures extends Observable implements Observer {
 		FillList();
 		addListener();
 
+		if (listeDesArmures.getItemCount() == 0)
+			listeDesArmures.setEnabled(false);
+
 	}
 
 	private void addListener() {
 		listeDesArmures.addMouseListener(new MouseAdapter() {
 
 			@Override
+			public void mouseUp(MouseEvent arg0) {
+				super.mouseUp(arg0);
+				notifyObservers();
+				setChanged();
+			}
+
+			@Override
 			public void mouseDown(MouseEvent arg0) {
 				super.mouseDown(arg0);
 				valSelection = listeDesArmures.getItem(listeDesArmures
 						.getSelectionIndex());
-
 				notifyObservers();
 				setChanged();
 			}

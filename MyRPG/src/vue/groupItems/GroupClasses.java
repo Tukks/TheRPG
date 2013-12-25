@@ -24,7 +24,7 @@ public class GroupClasses extends Observable implements Observer {
 	private LinkedList<ChargementDynamique> classes;
 	private List listeDesClasses;
 	private Shell shell;
-	private String valSelection = " ";
+	private String valSelection = "";
 
 	public GroupClasses(Shell fenetre, LinkedList<ChargementDynamique> classes,
 			GridData gridData) {
@@ -43,6 +43,9 @@ public class GroupClasses extends Observable implements Observer {
 
 		fillList();
 		addListener();
+
+		if (listeDesClasses.getItemCount() == 0)
+			listeDesClasses.setEnabled(false);
 
 	}
 

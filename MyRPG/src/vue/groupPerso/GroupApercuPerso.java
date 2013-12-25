@@ -5,6 +5,7 @@ import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -24,24 +25,39 @@ public class GroupApercuPerso {
 	protected Image persoImage;
 	private Shell shell;
 	private String nomPerso = "default";
+	private Text text;
+	private Font font;
 
 	public GroupApercuPerso(Shell fenetre, GridData gridData) {
 
+		font = new Font(fenetre.getDisplay(), "Arial", 12, SWT.BOLD);
+
 		thisGroup = new Group(fenetre, SWT.FLAT);
 		thisGroup.setLayoutData(gridData);
+		thisGroup.setFont(font);
 		shell = fenetre;
 
-		Text text = new Text(thisGroup, SWT.BORDER_DOT);
+		text = new Text(thisGroup, SWT.SINGLE);
 		text.setTextLimit(50);
 		text.setText("Saisir le nom du perso");
 		text.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+		text.setFont(new Font(shell.getDisplay(), "Arial", 11, SWT.NORMAL));
 
-		thisGroup.setText("Apperçu personnage :");
+		thisGroup.setText("Aperçu personnage :");
 		thisGroup.setLayout(new GridLayout());
 		thisGroup.setBackgroundImage(new Image(fenetre.getDisplay(),
 				PathManager.bgGroup));
 		addPhotoApercu();
 
+	}
+
+	public String getNomPerso() {
+		nomPerso = text.getText();
+		return nomPerso;
+	}
+
+	public void setNomPerso(String nomPerso) {
+		this.nomPerso = nomPerso;
 	}
 
 	private void addPhotoApercu() {

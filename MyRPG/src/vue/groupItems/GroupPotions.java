@@ -18,12 +18,16 @@ import org.eclipse.swt.widgets.Shell;
 import util.PathManager;
 import chargementDynamique.ChargementDynamique;
 
-public class GroupPotions extends Observable implements Observer {
+public class GroupPotions implements Observer {
 
 	private Group thisGroup;
 	private LinkedList<ChargementDynamique> potions;
 	private List listeDesPotions;
-	private String valSelection;
+	private String valSelection = "";
+
+	public String getValSelection() {
+		return valSelection;
+	}
 
 	public GroupPotions(Shell fenetre, LinkedList<ChargementDynamique> items,
 			GridData gridData) {
@@ -34,12 +38,16 @@ public class GroupPotions extends Observable implements Observer {
 
 		listeDesPotions = new List(thisGroup, SWT.SINGLE);
 
-		thisGroup.setText("Choisir trois potions");
+		thisGroup.setText("Choisir une potion");
 		thisGroup.setLayout(new GridLayout());
 		thisGroup.setBackgroundImage(new Image(fenetre.getDisplay(),
 				PathManager.bgGroup));
+
 		FillList();
 		addListener();
+
+		if (listeDesPotions.getItemCount() == 0)
+			listeDesPotions.setEnabled(false);
 
 	}
 
@@ -51,9 +59,6 @@ public class GroupPotions extends Observable implements Observer {
 				super.mouseDown(arg0);
 				valSelection = listeDesPotions.getItem(listeDesPotions
 						.getSelectionIndex());
-				System.out.println(valSelection);
-				notifyAll();
-				setChanged();
 			}
 		});
 	}
