@@ -62,12 +62,10 @@ public class GroupCaracteristiquesPerso implements Observer {
 
 	@Override
 	public void update(Observable o, Object arg) {
-
 		// maj des labels
 		lClasse.setText("Classe : " + gClasses.getValSelection());
 		lArme.setText("Arme : " + gArmes.getValSelection());
 		lArmure.setText("Armure : " + gArmures.getValSelection());
-
 		// rafraichissement des labels
 		lClasse.pack();
 		lArme.pack();

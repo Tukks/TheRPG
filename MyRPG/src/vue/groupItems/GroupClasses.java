@@ -40,9 +40,9 @@ public class GroupClasses extends Observable implements Observer {
 		thisGroup.setLayout(new GridLayout());
 		thisGroup.setBackgroundImage(new Image(fenetre.getDisplay(),
 				PathManager.bgGroup));
+		addListener();
 
 		fillList();
-		addListener();
 
 		if (listeDesClasses.getItemCount() == 0)
 			listeDesClasses.setEnabled(false);
@@ -57,8 +57,8 @@ public class GroupClasses extends Observable implements Observer {
 				super.mouseDown(arg0);
 				// on récup la valeur selectionnée
 				valSelection = listeDesClasses.getItem(listeDesClasses
-						.getSelectionIndex());
-
+					.getSelectionIndex());
+				
 				notifyObservers();
 				setChanged();
 			}
