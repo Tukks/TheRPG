@@ -64,10 +64,12 @@ public class BattleVue implements Observer {
 
 	@Override
 	public void update(Observable obs, Object obj) {
+		
 		System.out.println("View      : Observable " + obs.getClass()
 				+ ", object " /* + obj.getClass() */);
+		if(!text.isDisposed()){
 		text.setText(/* model.getVal() + */"ok new text par update");
-	}
+		}}
 
 	// pour initialiser textfield
 	public void setValue(int t) {
@@ -82,7 +84,9 @@ public class BattleVue implements Observer {
 
 	public void addControleur(BattleControleur ncontroleur) {
 		System.out.println("View      : adding controller");
-		lancerComb.addListener(SWT.Selection, ncontroleur);
+		if(!lancerComb.isDisposed()){
+			lancerComb.addListener(SWT.Selection, ncontroleur);
+		}
 	}
 
 	private Shell createFrame() {
