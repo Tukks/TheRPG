@@ -175,6 +175,7 @@ public final class ListenerChargementDyn extends Observable {
 			if (this.pluginClasse.get(i).getNameClasse().equalsIgnoreCase(name)) {
 				return this.pluginClasse.get(i);
 			}
+			i++;
 		}
 		return null;
 	}
@@ -185,6 +186,7 @@ public final class ListenerChargementDyn extends Observable {
 			if (this.pluginItem.get(i).getNameItem().equalsIgnoreCase(name)) {
 				return this.pluginItem.get(i);
 			}
+			i++;
 		}
 		return null;
 	}
