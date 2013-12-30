@@ -27,7 +27,7 @@ public class HomeRPG {
 
 		Shell fenetre = new Shell(display, SWT.CLOSE | SWT.MIN);
 		fenetre.setSize(1024, 700);
-			
+
 		// curseur
 		Cursor cursor1 = new Cursor(display, cursor_Image, 1, 1);
 		fenetre.setCursor(cursor1);
@@ -40,22 +40,22 @@ public class HomeRPG {
 		Button buttonCreation = new Button(fenetre, SWT.PUSH);
 		buttonCreation.setText("Créer un nouveau personnage");
 		buttonCreation.setSize(new Point(400, 45));
-		buttonCreation.setLocation(new Point(315,250));
-		buttonCreation.setFont(new Font(display,"Arial",14,SWT.NONE));
-		buttonCreation.addListener(SWT.Selection, getListenerCreation());		
-		
+		buttonCreation.setLocation(new Point(315, 250));
+		buttonCreation.setFont(new Font(display, "Arial", 14, SWT.NONE));
+		buttonCreation.addListener(SWT.Selection, listenCreation);
+
 		Button buttonCharger = new Button(fenetre, SWT.PUSH);
 		buttonCharger.setText("Charger un personnage");
-		buttonCharger.setSize(new Point(400, 45));		
-		buttonCharger.setLocation(new Point(315,300));
-		buttonCharger.setFont(new Font(display,"Arial",14,SWT.NONE));
-		
+		buttonCharger.setSize(new Point(400, 45));
+		buttonCharger.setLocation(new Point(315, 300));
+		buttonCharger.setFont(new Font(display, "Arial", 14, SWT.NONE));
+
 		Button buttonSupprimer = new Button(fenetre, SWT.PUSH);
 		buttonSupprimer.setText("Supprimer un personnage");
-		buttonSupprimer.setSize(new Point(400, 45));		
-		buttonSupprimer.setLocation(new Point(315,350));
-		buttonSupprimer.setFont(new Font(display,"Arial",14,SWT.NONE));
-		
+		buttonSupprimer.setSize(new Point(400, 45));
+		buttonSupprimer.setLocation(new Point(315, 350));
+		buttonSupprimer.setFont(new Font(display, "Arial", 14, SWT.NONE));
+
 		centrerSurEcran(display, fenetre);
 		fenetre.open();
 
@@ -66,16 +66,22 @@ public class HomeRPG {
 		display.dispose();
 	}
 
-	private Listener getListenerCreation() {
-		return new Listener() {
-			@Override
-			public void handleEvent(Event arg0) {
+	Listener listenCreation = new Listener() {
 
-				System.out.println("Coucou");
-			}
-
-		};
-	}
+		@Override
+		public void handleEvent(Event arg0) {
+	
+				try {
+					display.close();
+					new InterfaceRPG();
+				} catch (InstantiationException | IllegalAccessException
+						| ClassNotFoundException | IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		}
+		
+	};
 
 	public static void centrerSurEcran(Display display, Shell shell) {
 		Rectangle rect = display.getClientArea();
@@ -87,8 +93,7 @@ public class HomeRPG {
 
 	public static void main(String[] args) throws InstantiationException,
 			IllegalAccessException, ClassNotFoundException, IOException {
-		HomeRPG rpg = new HomeRPG();
-
+		new HomeRPG();
 	}
 
 }

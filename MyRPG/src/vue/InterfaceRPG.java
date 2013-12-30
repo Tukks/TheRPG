@@ -257,12 +257,5 @@ public class InterfaceRPG implements Observer {
 					listeItems.add(items.getLast().getNameItem());
 			}
 		});
-
-	}
-
-	public static void main(String[] args) throws InstantiationException,
-			IllegalAccessException, ClassNotFoundException, IOException {
-		new InterfaceRPG();
-
 	}
 }
