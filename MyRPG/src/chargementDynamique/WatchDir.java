@@ -48,165 +48,169 @@ import chargementDynamique.ListenerChargementDyn;
 
 public class WatchDir extends Thread{
 
-    private final WatchService watcher;
-    private final Map<WatchKey,Path> keys;
-    private final boolean recursive;
-    private boolean trace = false;
-    ListenerChargementDyn lcd ;
-    final Path dir;
-   
-    @SuppressWarnings("unchecked")
-    static <T> WatchEvent<T> cast(WatchEvent<?> event) {
-        return (WatchEvent<T>)event;
-    }
-    
-    public void run() {
-        try {
+	private final WatchService watcher;
+	private final Map<WatchKey,Path> keys;
+	private final boolean recursive;
+	private boolean trace = false;
+	ListenerChargementDyn lcd ;
+	final Path dir;
+	boolean running = true;
+	@SuppressWarnings("unchecked")
+	static <T> WatchEvent<T> cast(WatchEvent<?> event) {
+		return (WatchEvent<T>)event;
+	}
+
+	public void run() {
+		try {
 			new WatchDir(dir, recursive).processEvents();
 		} catch (InstantiationException | IllegalAccessException
 				| ClassNotFoundException | IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-    }
-    
-    /**
-     * Register the given directory with the WatchService
-     */
-    private void register(Path dir) throws IOException {
-        WatchKey key = dir.register(watcher, ENTRY_CREATE, ENTRY_DELETE, ENTRY_MODIFY);
-        if (trace) {
-            Path prev = keys.get(key);
-            if (prev == null) {
-                System.out.format("register: %s\n", dir);
-            } else {
-                if (!dir.equals(prev)) {
-                    System.out.format("update: %s -> %s\n", prev, dir);
-                }
-            }
-        }
-        keys.put(key, dir);
-    }
+	}
 
-    /**
-     * Register the given directory, and all its sub-directories, with the
-     * WatchService.
-     */
-    private void registerAll(final Path start) throws IOException {
-        // register directory and sub-directories
-        Files.walkFileTree(start, new SimpleFileVisitor<Path>() {
-            @Override
-            public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs)
-                throws IOException
-            {
-                register(dir);
-                return FileVisitResult.CONTINUE;
-            }
-        });
-    }
+	/**
+	 * Register the given directory with the WatchService
+	 */
+	private void register(Path dir) throws IOException {
+		WatchKey key = dir.register(watcher, ENTRY_CREATE, ENTRY_DELETE, ENTRY_MODIFY);
+		if (trace) {
+			Path prev = keys.get(key);
+			if (prev == null) {
+				System.out.format("register: %s\n", dir);
+			} else {
+				if (!dir.equals(prev)) {
+					System.out.format("update: %s -> %s\n", prev, dir);
+				}
+			}
+		}
+		keys.put(key, dir);
+	}
 
-    /**
-     * Creates a WatchService and registers the given directory
-     * @throws ClassNotFoundException 
-     * @throws IllegalAccessException 
-     * @throws InstantiationException 
-     */
-    public WatchDir(Path dir, boolean recursive) throws IOException, InstantiationException, IllegalAccessException, ClassNotFoundException {
-        this.watcher = FileSystems.getDefault().newWatchService();
-        this.keys = new HashMap<WatchKey,Path>();
-        this.recursive = recursive;
-        this.dir = dir;
-        lcd = ListenerChargementDyn.getInstance();
-        
-        if (recursive) {
-            System.out.format("Scanning %s ...\n", dir);
-            registerAll(this.dir);
-            System.out.println("Done.");
-        } else {
-            register(dir);
-        }
+	/**
+	 * Register the given directory, and all its sub-directories, with the
+	 * WatchService.
+	 */
+	private void registerAll(final Path start) throws IOException {
+		// register directory and sub-directories
+		Files.walkFileTree(start, new SimpleFileVisitor<Path>() {
+			@Override
+			public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs)
+					throws IOException
+					{
+				register(dir);
+				return FileVisitResult.CONTINUE;
+					}
+		});
+	}
 
-        // enable trace after initial registration
-        this.trace = true;
-    }
+	/**
+	 * Creates a WatchService and registers the given directory
+	 * @throws ClassNotFoundException 
+	 * @throws IllegalAccessException 
+	 * @throws InstantiationException 
+	 */
+	public WatchDir(Path dir, boolean recursive) throws IOException, InstantiationException, IllegalAccessException, ClassNotFoundException {
+		this.watcher = FileSystems.getDefault().newWatchService();
+		this.keys = new HashMap<WatchKey,Path>();
+		this.recursive = recursive;
+		this.dir = dir;
+		lcd = ListenerChargementDyn.getInstance();
 
-    /**
-     * Process all events for keys queued to the watcher
-     * @throws ClassNotFoundException 
-     * @throws IllegalAccessException 
-     * @throws InstantiationException 
-     * @throws MalformedURLException 
-     */
-    void processEvents() throws MalformedURLException, InstantiationException, IllegalAccessException, ClassNotFoundException {
-        for (;;) {
+		if (recursive) {
+			System.out.format("Scanning %s ...\n", dir);
+			registerAll(this.dir);
+			System.out.println("Done.");
+		} else {
+			register(dir);
+		}
 
-            // wait for key to be signalled
-            WatchKey key;
-            try {
-                key = watcher.take();
-            } catch (InterruptedException x) {
-                return;
-            }
+		// enable trace after initial registration
+		this.trace = true;
+	}
 
-            Path dir = keys.get(key);
-            if (dir == null) {
-                System.err.println("WatchKey not recognized!!");
-                continue;
-            }
+	/**
+	 * Process all events for keys queued to the watcher
+	 * @throws ClassNotFoundException 
+	 * @throws IllegalAccessException 
+	 * @throws InstantiationException 
+	 * @throws MalformedURLException 
+	 */
+	void processEvents() throws MalformedURLException, InstantiationException, IllegalAccessException, ClassNotFoundException {
+		for (;;) {
+			if(running == true){
+				// wait for key to be signalled
+				WatchKey key;
+				try {
+					key = watcher.take();
+				} catch (InterruptedException x) {
+					return;
+				}
 
-            for (WatchEvent<?> event: key.pollEvents()) {
-                WatchEvent.Kind kind = event.kind();
+				Path dir = keys.get(key);
+				if (dir == null) {
+					System.err.println("WatchKey not recognized!!");
+					continue;
+				}
 
-                // TBD - provide example of how OVERFLOW event is handled
-                if (kind == OVERFLOW) {
-                    continue;
-                }
+				for (WatchEvent<?> event: key.pollEvents()) {
+					WatchEvent.Kind kind = event.kind();
 
-                // Context for directory entry event is the file name of entry
-                WatchEvent<Path> ev = cast(event);
-                Path name = ev.context();
-                Path child = dir.resolve(name);
+					// TBD - provide example of how OVERFLOW event is handled
+					if (kind == OVERFLOW) {
+						continue;
+					}
 
-                // print out event
-                System.out.format("%s: %s\n", event.kind().name(), child);
-            	
-                
-                if(kind == ENTRY_CREATE){
-                	if(child.toString().contains("class")) lcd.ChargerClass(child.toString());
-                	if(child.toString().contains("jar")) lcd.ChargerJar(child.toString());
+					// Context for directory entry event is the file name of entry
+					WatchEvent<Path> ev = cast(event);
+					Path name = ev.context();
+					Path child = dir.resolve(name);
 
-                }else if(event.kind().name().equals(ENTRY_DELETE)){
-                }
-                // if directory is created, and watching recursively, then
-                // register it and its sub-directories
-                if (recursive && (kind == ENTRY_CREATE)) {
-                    try {
-                        if (Files.isDirectory(child, NOFOLLOW_LINKS)) {
-                            registerAll(child);
-                        }
-                    } catch (IOException x) {
-                        // ignore to keep sample readbale
-                    }
-                }
-            }
+					// print out event
+					System.out.format("%s: %s\n", event.kind().name(), child);
 
-            // reset key and remove from set if directory no longer accessible
-            boolean valid = key.reset();
-            if (!valid) {
-                keys.remove(key);
 
-                // all directories are inaccessible
-                if (keys.isEmpty()) {
-                    break;
-                }
-            }
-        }
-    }
+					if(kind == ENTRY_CREATE){
+						if(child.toString().contains("class")) lcd.ChargerClass(child.toString());
+						if(child.toString().contains("jar")) lcd.ChargerJar(child.toString());
 
-    static void usage() {
-        System.err.println("usage: java WatchDir [-r] dir");
-        System.exit(-1);
-    }
+					}else if(event.kind().name().equals(ENTRY_DELETE)){
+					}
+					// if directory is created, and watching recursively, then
+					// register it and its sub-directories
+					if (recursive && (kind == ENTRY_CREATE)) {
+						try {
+							if (Files.isDirectory(child, NOFOLLOW_LINKS)) {
+								registerAll(child);
+							}
+						} catch (IOException x) {
+							// ignore to keep sample readbale
+						}
+					}
+
+				}
+
+				// reset key and remove from set if directory no longer accessible
+				boolean valid = key.reset();
+				if (!valid) {
+					keys.remove(key);
+
+					// all directories are inaccessible
+					if (keys.isEmpty()) {
+						break;
+					}
+				}
+			}
+		}
+	}
+	public void stopWatchDir(){
+		this.running = false;
+	}
+	static void usage() {
+		System.err.println("usage: java WatchDir [-r] dir");
+		System.exit(-1);
+	}
 
 	public ListenerChargementDyn getLcd() {
 		return lcd;
@@ -216,5 +220,5 @@ public class WatchDir extends Thread{
 		this.lcd = lcd;
 	}
 
-   
+
 }

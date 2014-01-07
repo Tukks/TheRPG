@@ -206,7 +206,7 @@ public class InterfaceRPG implements Observer {
 
 				// à changer
 				threadCD.stop();
-
+				
 			}
 
 		};
@@ -248,7 +248,7 @@ public class InterfaceRPG implements Observer {
 
 	@Override
 	public void update(Observable arg0, Object arg1) {
-
+		
 		Display.getDefault().syncExec(new Runnable() {
 			public void run() {
 				if (classes.size() != sizeListeClasses)

@@ -53,6 +53,7 @@ public class Serialize implements VisitorRPG {
 	@Override
 	public void visiter(Enemy e) {
 		// TODO Auto-generated method stub
+		
 		try {
 			oos.writeObject(e);
 			oos.flush();
