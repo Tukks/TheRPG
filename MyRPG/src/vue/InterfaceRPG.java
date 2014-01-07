@@ -1,6 +1,7 @@
 package vue;
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.LinkedList;
@@ -24,6 +25,11 @@ import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
 
+import battle.BattleControleur;
+import battle.BattleModel;
+import battle.BattleVue;
+import battle.Enemy;
+import battle.RunMVCBattle;
 import personnage.Personnage;
 import util.PathManager;
 import vue.groupItems.GroupArmes;
@@ -33,12 +39,13 @@ import vue.groupItems.GroupPotions;
 import vue.groupPerso.GroupApercuPerso;
 import vue.groupPerso.GroupCaracteristiquesPerso;
 import chargementDynamique.ChargementDynamique;
+import chargementDynamique.ChargementDynamiqueJar;
 import chargementDynamique.ListenerChargementDyn;
 import chargementDynamique.WatchDir;
 
 public class InterfaceRPG implements Observer {
 
-	private static Display display = new Display();;
+	public static Display display = new Display();;
 	private ImageData cursor_Image = new ImageData(PathManager.cursorImg);
 	private List listeClasses;
 	private LinkedList<ChargementDynamique> classes;
@@ -189,7 +196,6 @@ public class InterfaceRPG implements Observer {
 		return new Listener() {
 			@Override
 			public void handleEvent(Event arg0) {
-
 				Item item = new Item(
 						listenerCD.getClassForNamePluginItem(gArmes
 								.getValSelection()),
@@ -198,14 +204,38 @@ public class InterfaceRPG implements Observer {
 						listenerCD.getClassForNamePluginItem(gPotions
 								.getValSelection()));
 
-				perso.setClassPerso(listenerCD
-						.getClassForNamePluginClasse(gClasses.getValSelection()));
-
-				perso.setNom(gAppercu.getNomPerso());
-				perso.setItem(item);
+				try {
+					perso.init(item,
+							listenerCD
+							.getClassForNamePluginClasse(gClasses.getValSelection()),
+									gAppercu.getNomPerso());
+				} catch (IllegalAccessException | IllegalArgumentException
+						| InvocationTargetException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 
 				// à changer
-				threadCD.stop();
+				//threadCD.stop();
+				display.close();
+
+				Enemy e = new Enemy();
+				BattleModel model = new BattleModel(perso, e);
+				BattleVue vue = new BattleVue();
+				model.addObserver(vue);
+				BattleControleur controleur = new BattleControleur();
+				controleur.addModel(model);
+				controleur.addVue(vue);
+				controleur.initModel("texte de base (init) - DEBUT");
+				vue.addControleur(controleur);
+				vue.addModel(model);
+				try { /**A mettre dans un boutton dans la classe Battle Vue**/
+					model.Combat();
+				} catch (IllegalAccessException | IllegalArgumentException
+						| InvocationTargetException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				
 			}
 

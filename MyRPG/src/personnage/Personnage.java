@@ -1,6 +1,7 @@
 package personnage;
 
 import java.io.Serializable;
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 import objet.Item;
@@ -41,10 +42,16 @@ public class Personnage implements Serializable {
 
 		return pers;
 	}
-	public void init(Item item, ChargementDynamique classPerso, String nom) {
+	public void init(Item item, ChargementDynamique classPerso, String nom) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException {
 		this.item = item;
 		this.nom = nom;
 		this.classPerso = classPerso;
+		pointDeVie =(int) this.classPerso.getMethodForName("getPdv").invoke(this.classPerso.getClassInstancie());
+		forceDeFrappe =(int) this.classPerso.getMethodForName("getForce").invoke(this.classPerso.getClassInstancie()) +
+				(int) this.item.getArme().getMethodForName("getForce").invoke(this.item.getArme().getClassInstancie());
+		defense = (int) this.classPerso.getMethodForName("getDefense").invoke(this.classPerso.getClassInstancie()) +
+				(int) this.item.getArmure().getMethodForName("getDefense").invoke(this.item.getArmure().getClassInstancie());
+		
 	}
 	public int combattre(List<Item> item) {
 		return 0;

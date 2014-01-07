@@ -1,5 +1,6 @@
 package serializable;
 import java.io.*;
+import java.lang.reflect.InvocationTargetException;
 
 import objet.Item;
 import chargementDynamique.ChargementDynamique;
@@ -40,8 +41,10 @@ public interface VisitorRPG {
 	 * @return the personnage
 	 * @throws InstantiationException the instantiation exception
 	 * @throws IllegalAccessException the illegal access exception
+	 * @throws InvocationTargetException 
+	 * @throws IllegalArgumentException 
 	 */
-	public Personnage devisitePersonnage() throws InstantiationException, IllegalAccessException;
+	public Personnage devisitePersonnage() throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException;
 	
 	/**
 	 * Visiter.

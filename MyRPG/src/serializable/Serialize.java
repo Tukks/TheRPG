@@ -167,7 +167,7 @@ public class Serialize implements VisitorRPG {
 	 */
 	@Override
 	public Personnage devisitePersonnage() throws InstantiationException,
-	IllegalAccessException {
+	IllegalAccessException, IllegalArgumentException, InvocationTargetException {
 		try {
 			Personnage p;
 			Item i;

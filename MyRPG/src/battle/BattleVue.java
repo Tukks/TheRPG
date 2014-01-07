@@ -1,7 +1,10 @@
 package battle;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.Observable;
 import java.util.Observer;
+
+import objet.Item;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
@@ -10,9 +13,12 @@ import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
+import personnage.Personnage;
 import util.PathManager;
 
 public class BattleVue implements Observer {
@@ -21,27 +27,11 @@ public class BattleVue implements Observer {
 	private Display dis = new Display();
 	private Button lancerComb;
 	private Text text;
-
 	public BattleVue() {
 		System.out.println("Vue()");
 		Shell shell = createFrame();
 		lancerComb = new Button(shell, SWT.NONE);
 		lancerComb.setText("Lancer combat");
-		// lancerComb.addSelectionListener(new SelectionListener() {
-		//
-		// @Override
-		// public void widgetSelected(SelectionEvent arg0) {
-		// System.out.println("ok list");
-		//
-		// }
-		//
-		// @Override
-		// public void widgetDefaultSelected(SelectionEvent arg0) {
-		// // TODO Auto-generated method stub
-		//
-		// }
-		// });
-
 		text = new Text(shell, SWT.SINGLE);
 		// text.insert("creation text field");
 
@@ -61,7 +51,7 @@ public class BattleVue implements Observer {
 
 		dis.dispose();
 	}
-
+	
 	@Override
 	public void update(Observable obs, Object obj) {
 		
@@ -122,7 +112,7 @@ public class BattleVue implements Observer {
 	public void setModel(BattleModel model) {
 		this.model = model;
 	}
-
+	
 	// public static void main(String args[]) {
 	// new BattleVue();
 	// }
