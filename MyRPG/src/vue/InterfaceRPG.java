@@ -221,21 +221,17 @@ public class InterfaceRPG implements Observer {
 
 				Enemy e = new Enemy();
 				BattleModel model = new BattleModel(perso, e);
-				BattleVue vue = new BattleVue();
-				model.addObserver(vue);
 				BattleControleur controleur = new BattleControleur();
+				BattleVue vue = new BattleVue(model);
 				controleur.addModel(model);
 				controleur.addVue(vue);
 				controleur.initModel("texte de base (init) - DEBUT");
 				vue.addControleur(controleur);
-				vue.addModel(model);
-				try { /**A mettre dans un boutton dans la classe Battle Vue**/
-					model.Combat();
-				} catch (IllegalAccessException | IllegalArgumentException
-						| InvocationTargetException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
+				model.addObserver(vue);
+				
+				
+				
+				
 				
 			}
 

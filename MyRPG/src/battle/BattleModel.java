@@ -53,17 +53,35 @@ public class BattleModel extends Observable {
 		this.enemy = enemy;
 	}
 	public void Combat() throws IllegalAccessException, IllegalArgumentException, InvocationTargetException{
-		while(perso.getPointDeVie() >= 0 && enemy.getPdv() >= 0){
+		while(combatFinish(enemy,perso)){
 			enemy.setPdv(enemy.getPdv() - perso.getForceDeFrappe());
 			perso.setPointDeVie(perso.getPointDeVie() - pdvEnleverPerso(enemy.getAttaque()));
-			System.out.println("Il reste a l'enemie " + enemy.getPdv() + " et au perso " + perso.getPointDeVie());
+			//a traiter enemy et perso == 0 pv
 		}
-		
 	}
-	
-	public int pdvEnleverPerso(int attaque){
-		return attaque - perso.getDefense();
+	public boolean combatFinish(Enemy enemy, Personnage perso){
 		
+		if(enemy.getPdv() > 0 && perso.getPointDeVie() > 0){
+			System.out.println("Il reste a l'enemie " + enemy.getPdv() + " et au perso " + perso.getPointDeVie());
+			return true;
+		}else if(enemy.getPdv() < 0 && perso.getPointDeVie() > 0){
+			System.out.println("Il reste a l'enemie " + 0 + " et au perso " + perso.getPointDeVie());
+			System.out.println("Le perso " + perso.getNom() + " a Gagner");
+			return false;
+		}else if(enemy.getPdv() > 0 && perso.getPointDeVie() < 0){
+			System.out.println("Il reste a l'enemie " + enemy.getPdv() + " et au perso " + 0);
+			System.out.println("L'enemie " + enemy.getNom() + " a Gagner");
+			return false;
+		}
+		System.out.println("Erreur exception");
+		return false;
+	}
+	public int pdvEnleverPerso(int attaque){
+		if(perso.getDefense() > attaque){
+			return 0;
+		}else{
+			return attaque - perso.getDefense();
+		}
 	}
 	
 	

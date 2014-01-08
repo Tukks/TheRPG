@@ -13,7 +13,7 @@ public class RunMVCBattle {
 
 	public RunMVCBattle(Personnage perso, Enemy enemy) {
 		BattleModel model = new BattleModel(perso, enemy);
-		BattleVue vue = new BattleVue();
+		BattleVue vue = new BattleVue(model);
 		model.addObserver(vue);
 		// model.lancerCombat();
 

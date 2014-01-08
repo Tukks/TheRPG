@@ -27,14 +27,15 @@ public class BattleVue implements Observer {
 	private Display dis = new Display();
 	private Button lancerComb;
 	private Text text;
-	public BattleVue() {
+	public BattleVue(BattleModel model) {
+		this.model = model;
 		System.out.println("Vue()");
 		Shell shell = createFrame();
 		lancerComb = new Button(shell, SWT.NONE);
 		lancerComb.setText("Lancer combat");
 		text = new Text(shell, SWT.SINGLE);
 		// text.insert("creation text field");
-
+		lancerComb.addListener(SWT.Selection, getListener());
 		// model.addObserver(this);
 
 		shell.setVisible(true);
@@ -51,7 +52,27 @@ public class BattleVue implements Observer {
 
 		dis.dispose();
 	}
-	
+	void makeCombat(){
+		try {
+			this.model.Combat();
+		} catch (IllegalAccessException | IllegalArgumentException
+				| InvocationTargetException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	private Listener getListener() {
+		return new Listener() {
+
+			@Override
+			public void handleEvent(Event arg0) {
+				// TODO Auto-generated method stub
+				System.out.println("hey");
+				makeCombat();
+			}
+		};
+		
+		}
 	@Override
 	public void update(Observable obs, Object obj) {
 		
