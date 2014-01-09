@@ -1,5 +1,10 @@
 package battle;
 
+import java.awt.TextArea;
+import java.io.Console;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.PrintStream;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Observable;
 import java.util.Observer;
@@ -7,14 +12,20 @@ import java.util.Observer;
 import objet.Item;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.StyledText;
+import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
+import org.eclipse.swt.internal.ole.win32.DVTARGETDEVICE;
+import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Listener;
+import org.eclipse.swt.widgets.ProgressBar;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
@@ -27,11 +38,35 @@ public class BattleVue implements Observer {
 	private Display dis = new Display();
 	private Button lancerComb;
 	private Text text;
+	StyledText st;
+	ProgressBar progressbarEnemy;
+	ProgressBar progressbarPerso;
+	double pdvEnemyMax;
+	double pdvPersoMax;
 	public BattleVue(BattleModel model) {
 		this.model = model;
-		System.out.println("Vue()");
-		Shell shell = createFrame();
+		model.addObserver(this);
+		pdvEnemyMax = model.getEnemy().getPdv();
+		pdvPersoMax = model.getPerso().getPointDeVie();
+		Shell shell = new Shell(dis, SWT.CLOSE | SWT.MIN);
+		shell.setSize(1024, 700);
+		progressbarEnemy = new ProgressBar(shell, SWT.HORIZONTAL
+				| SWT.SMOOTH);
+		progressbarPerso = new ProgressBar(shell, SWT.HORIZONTAL
+				| SWT.SMOOTH);
+		progressbarEnemy.setSize(new Point(150, 25));
+		progressbarEnemy.setLocation(new Point(850, 450));
+		progressbarPerso.setSize(new Point(150, 25));
+		progressbarPerso.setLocation(new Point(10, 450));
+		progressbarPerso.setSelection(100);
+		progressbarEnemy.setSelection(100);
+		st = new StyledText(shell, SWT.V_SCROLL | SWT.WRAP | SWT.BORDER | SWT.READ_ONLY);
+		st.setSize(new Point(1000, 200));
+		st.setLocation(new Point(10,475 ));
+	
 		lancerComb = new Button(shell, SWT.NONE);
+		lancerComb.setLocation(new Point(10,0));
+		lancerComb.setSize(new Point(100,20));
 		lancerComb.setText("Lancer combat");
 		text = new Text(shell, SWT.SINGLE);
 		// text.insert("creation text field");
@@ -52,15 +87,18 @@ public class BattleVue implements Observer {
 
 		dis.dispose();
 	}
-	void makeCombat(){
+
+	void makeCombat() {
 		try {
 			this.model.Combat();
+
 		} catch (IllegalAccessException | IllegalArgumentException
 				| InvocationTargetException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
+
 	private Listener getListener() {
 		return new Listener() {
 
@@ -71,16 +109,23 @@ public class BattleVue implements Observer {
 				makeCombat();
 			}
 		};
-		
-		}
+
+	}
+
 	@Override
 	public void update(Observable obs, Object obj) {
-		
-		System.out.println("View      : Observable " + obs.getClass()
-				+ ", object " /* + obj.getClass() */);
-		if(!text.isDisposed()){
-		text.setText(/* model.getVal() + */"ok new text par update");
-		}}
+		if (!st.isDisposed()) {
+			st.append(model.getText());
+			int percentEnemie = (int)((model.getEnemy().getPdv() * 100.0f) /pdvEnemyMax);
+			int percentPerso = (int)((model.getPerso().getPointDeVie() * 100.0f) /pdvPersoMax);
+
+			progressbarEnemy.setSelection(percentEnemie) ;
+			
+			
+			progressbarPerso.setSelection(percentPerso) ;
+			st.redraw();
+		}
+	}
 
 	// pour initialiser textfield
 	public void setValue(int t) {
@@ -95,7 +140,7 @@ public class BattleVue implements Observer {
 
 	public void addControleur(BattleControleur ncontroleur) {
 		System.out.println("View      : adding controller");
-		if(!lancerComb.isDisposed()){
+		if (!lancerComb.isDisposed()) {
 			lancerComb.addListener(SWT.Selection, ncontroleur);
 		}
 	}
@@ -133,7 +178,7 @@ public class BattleVue implements Observer {
 	public void setModel(BattleModel model) {
 		this.model = model;
 	}
-	
+
 	// public static void main(String args[]) {
 	// new BattleVue();
 	// }

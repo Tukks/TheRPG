@@ -12,13 +12,13 @@ public class BattleModel extends Observable {
 
 	Personnage perso;
 	Enemy enemy;
-	String text;
-	private static BattleModel bm;
+	String text = new String();
+	
 
 	public BattleModel(Personnage perso, Enemy enemy) {
 		this.perso = perso;
 		this.enemy = enemy;
-		System.out.println("Model()");
+		
 		setVal("debut by Model");
 	}
 	
@@ -56,21 +56,34 @@ public class BattleModel extends Observable {
 		while(combatFinish(enemy,perso)){
 			enemy.setPdv(enemy.getPdv() - perso.getForceDeFrappe());
 			perso.setPointDeVie(perso.getPointDeVie() - pdvEnleverPerso(enemy.getAttaque()));
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			//a traiter enemy et perso == 0 pv
 		}
 	}
 	public boolean combatFinish(Enemy enemy, Personnage perso){
 		
 		if(enemy.getPdv() > 0 && perso.getPointDeVie() > 0){
-			System.out.println("Il reste a l'enemie " + enemy.getPdv() + " et au perso " + perso.getPointDeVie());
+			text = "\n Il reste a l'enemie " + enemy.getPdv() + " et au perso " + perso.getPointDeVie();
+
+			setChanged();
+			notifyObservers();
 			return true;
 		}else if(enemy.getPdv() < 0 && perso.getPointDeVie() > 0){
-			System.out.println("Il reste a l'enemie " + 0 + " et au perso " + perso.getPointDeVie());
-			System.out.println("Le perso " + perso.getNom() + " a Gagner");
+			text = "\n Il reste a l'enemie " + 0 + " et au perso " + perso.getPointDeVie();
+			text ="\n Le perso " + perso.getNom() + " a Gagner";
+			setChanged();
+			notifyObservers();
 			return false;
 		}else if(enemy.getPdv() > 0 && perso.getPointDeVie() < 0){
-			System.out.println("Il reste a l'enemie " + enemy.getPdv() + " et au perso " + 0);
-			System.out.println("L'enemie " + enemy.getNom() + " a Gagner");
+			text ="\n Il reste a l'enemie " + enemy.getPdv() + " et au perso " + 0;
+			text ="\n L'enemie " + enemy.getNom() + " a Gagner";
+			setChanged();
+			notifyObservers();
 			return false;
 		}
 		System.out.println("Erreur exception");
@@ -83,7 +96,9 @@ public class BattleModel extends Observable {
 			return attaque - perso.getDefense();
 		}
 	}
-	
+	String getText(){
+		return text;
+	}
 	
 }
 

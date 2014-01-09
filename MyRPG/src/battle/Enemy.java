@@ -15,11 +15,12 @@ public class Enemy implements Serializable{
 	int attaque;
 	int nbrPotion;
 	int defense;
+	boolean reculer = false;
 	
 	public Enemy() {
 		// TODO Auto-generated constructor stub
 		this.pdv = generateRand(100,10000);
-		this.attaque = generateRand(1,1000);
+		this.attaque = generateRand(1,10);
 		this.nbrPotion = generateRand(1,5);
 		this.defense = generateRand(1, 10);
 		this.nom = generateName();

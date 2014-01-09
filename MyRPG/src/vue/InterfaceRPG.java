@@ -221,13 +221,13 @@ public class InterfaceRPG implements Observer {
 
 				Enemy e = new Enemy();
 				BattleModel model = new BattleModel(perso, e);
-				BattleControleur controleur = new BattleControleur();
 				BattleVue vue = new BattleVue(model);
+				BattleControleur controleur = new BattleControleur();
+
 				controleur.addModel(model);
 				controleur.addVue(vue);
 				controleur.initModel("texte de base (init) - DEBUT");
 				vue.addControleur(controleur);
-				model.addObserver(vue);
 				
 				
 				
