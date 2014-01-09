@@ -65,7 +65,7 @@ public class GroupPotions implements Observer {
 
 	private void FillList() {
 		for (ChargementDynamique potion : potions) {
-			if (potion.getTypeItem() == "Potion")
+			if (potion.getTypeItem() == "Poison" || potion.getTypeItem() == "Potion" )
 				listeDesPotions.add(potion.getNameItem());
 		}
 		listeDesPotions.pack();
