@@ -20,7 +20,7 @@ public class Enemy implements Serializable{
 	public Enemy() {
 		// TODO Auto-generated constructor stub
 		this.pdv = generateRand(100,10000);
-		this.attaque = generateRand(1,10);
+		this.attaque = generateRand(1,100);
 		this.nbrPotion = generateRand(1,5);
 		this.defense = generateRand(1, 10);
 		this.nom = generateName();

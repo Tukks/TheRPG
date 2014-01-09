@@ -54,13 +54,14 @@ public class WatchDir extends Thread{
 	private boolean trace = false;
 	ListenerChargementDyn lcd ;
 	final Path dir;
-	boolean running = true;
+	public volatile boolean continu = true;
 	@SuppressWarnings("unchecked")
 	static <T> WatchEvent<T> cast(WatchEvent<?> event) {
 		return (WatchEvent<T>)event;
 	}
 
 	public void run() {
+		while(continu){
 		try {
 			new WatchDir(dir, recursive).processEvents();
 		} catch (InstantiationException | IllegalAccessException
@@ -68,6 +69,15 @@ public class WatchDir extends Thread{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		}
+	}
+
+	public boolean isContinu() {
+		return continu;
+	}
+
+	public void setContinu(boolean continu) {
+		this.continu = continu;
 	}
 
 	/**
@@ -139,7 +149,7 @@ public class WatchDir extends Thread{
 	 */
 	void processEvents() throws MalformedURLException, InstantiationException, IllegalAccessException, ClassNotFoundException {
 		for (;;) {
-			if(running == true){
+			if(continu == true){
 				// wait for key to be signalled
 				WatchKey key;
 				try {
@@ -204,9 +214,7 @@ public class WatchDir extends Thread{
 			}
 		}
 	}
-	public void stopWatchDir(){
-		this.running = false;
-	}
+	
 	static void usage() {
 		System.err.println("usage: java WatchDir [-r] dir");
 		System.exit(-1);

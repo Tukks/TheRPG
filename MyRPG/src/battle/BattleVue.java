@@ -32,7 +32,7 @@ import org.eclipse.swt.widgets.Text;
 import personnage.Personnage;
 import util.PathManager;
 
-public class BattleVue implements Observer {
+public class BattleVue extends Thread implements Observer {
 
 	private BattleModel model; // en mode PULL
 	private Display dis = new Display();
@@ -54,6 +54,7 @@ public class BattleVue implements Observer {
 				| SWT.SMOOTH);
 		progressbarPerso = new ProgressBar(shell, SWT.HORIZONTAL
 				| SWT.SMOOTH);
+		
 		progressbarEnemy.setSize(new Point(150, 25));
 		progressbarEnemy.setLocation(new Point(850, 450));
 		progressbarPerso.setSize(new Point(150, 25));
@@ -87,8 +88,7 @@ public class BattleVue implements Observer {
 
 		dis.dispose();
 	}
-
-	void makeCombat() {
+		void makeCombat() {
 		try {
 			this.model.Combat();
 
@@ -111,19 +111,22 @@ public class BattleVue implements Observer {
 		};
 
 	}
-
+	public void run(){
+		
+	}
 	@Override
 	public void update(Observable obs, Object obj) {
 		if (!st.isDisposed()) {
 			st.append(model.getText());
+			
 			int percentEnemie = (int)((model.getEnemy().getPdv() * 100.0f) /pdvEnemyMax);
 			int percentPerso = (int)((model.getPerso().getPointDeVie() * 100.0f) /pdvPersoMax);
 
 			progressbarEnemy.setSelection(percentEnemie) ;
-			
-			
 			progressbarPerso.setSelection(percentPerso) ;
 			st.redraw();
+			long time = System.currentTimeMillis() + 1000; 
+			while(System.currentTimeMillis() < time) {}
 		}
 	}
 
@@ -143,23 +146,6 @@ public class BattleVue implements Observer {
 		if (!lancerComb.isDisposed()) {
 			lancerComb.addListener(SWT.Selection, ncontroleur);
 		}
-	}
-
-	private Shell createFrame() {
-		Shell fenetre = new Shell(dis, SWT.CLOSE | SWT.MIN);
-		fenetre.setSize(1024, 700);
-
-		GridLayout layout = new GridLayout();
-		layout.numColumns = 3;
-		layout.marginWidth = 20;
-		layout.marginTop = 20;
-		layout.verticalSpacing = 25;
-		layout.horizontalSpacing = 25;
-		layout.makeColumnsEqualWidth = true;
-
-		fenetre.setLayout(layout);
-
-		return fenetre;
 	}
 
 	public static void centrerSurEcran(Display display, Shell shell) {

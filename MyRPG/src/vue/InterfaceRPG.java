@@ -51,7 +51,7 @@ public class InterfaceRPG implements Observer {
 	private LinkedList<ChargementDynamique> classes;
 	private LinkedList<ChargementDynamique> items;
 	private List listeItems;
-
+private WatchDir watchDirectories;
 	public int getSizeListeClasses() {
 		return sizeListeClasses;
 	}
@@ -82,7 +82,7 @@ public class InterfaceRPG implements Observer {
 		GridData gridData = getGridData();
 
 		Path dir = Paths.get("./Plugin");
-		WatchDir watchDirectories = new WatchDir(dir, false);
+		watchDirectories = new WatchDir(dir, false);
 		listenerCD = ListenerChargementDyn.getInstance();
 
 		threadCD = new Thread(watchDirectories);
@@ -196,6 +196,8 @@ public class InterfaceRPG implements Observer {
 		return new Listener() {
 			@Override
 			public void handleEvent(Event arg0) {
+				watchDirectories.setContinu(false);
+				threadCD.interrupt();
 				Item item = new Item(
 						listenerCD.getClassForNamePluginItem(gArmes
 								.getValSelection()),
