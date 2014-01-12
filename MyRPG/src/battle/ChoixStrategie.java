@@ -93,5 +93,8 @@ public class ChoixStrategie {
 	public void setChoix(Combo choix) {
 		this.choix = choix;
 	}
+	public void disableMe(){
+		this.choix.setEnabled(false);
+	}
 	
 }

@@ -108,7 +108,8 @@ public class BattleVue implements Observer {
 	}
 		void makeCombat() {
 		try {
-
+			lancerComb.setEnabled(false);
+			choixStrategie.disableMe();
 			this.model.Combat(choixStrategie.getChoix().getSelectionIndex()+1);
 		} catch (IllegalAccessException | IllegalArgumentException
 				| InvocationTargetException e) {

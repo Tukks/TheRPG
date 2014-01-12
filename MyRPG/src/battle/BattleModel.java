@@ -20,7 +20,7 @@ public class BattleModel extends Observable {
 	public BattleModel(Personnage perso, Enemy enemy) {
 		this.perso = perso;
 		this.enemy = enemy;
-		setVal("debut by Model");
+		//setVal("debut by Model");
 		this.pdvPersoMax = perso.getPointDeVie();
 	}
 	
