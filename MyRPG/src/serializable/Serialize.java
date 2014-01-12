@@ -21,80 +21,90 @@ import chargementDynamique.ChargementDynamiqueJar;
  * The Class Serialize.
  */
 public class Serialize implements VisitorRPG {
-	
+
 	/** The fichier out. */
 	FileOutputStream fichierOUT;
-	
+
 	/** The fichier in. */
 	FileInputStream fichierIN;
-	
+
 	/** The ois. */
 	ObjectInputStream ois;
-	
+
 	/** The oos. */
 	ObjectOutputStream oos;
 
 	/**
 	 * Instantiates a new serialize.
-	 *
+	 * 
 	 * 
 	 * Instantiates a new serialize for load
-	 *
-	 * @param fichierIN the fichier in
-	 * @throws IOException Signals that an I/O exception has occurred.
+	 * 
+	 * @param fichierIN
+	 *            the fichier in
+	 * @throws IOException
+	 *             Signals that an I/O exception has occurred.
 	 */
-	 
+
 	public Serialize(FileInputStream fichierIN) throws IOException {
 		// TODO Auto-generated constructor stub
-		
-		this.fichierIN = fichierIN; 
-		//this.oos = new ObjectOutputStream(fichierOUT);
+
+		this.fichierIN = fichierIN;
+		// this.oos = new ObjectOutputStream(fichierOUT);
 		this.ois = new ObjectInputStream(fichierIN);
-		
+
 	}
 
 	/**
 	 * Instantiates a new serialize for Save
-	 *
-	 * @param fichierOUT the fichier out
-	 * @throws IOException Signals that an I/O exception has occurred.
+	 * 
+	 * @param fichierOUT
+	 *            the fichier out
+	 * @throws IOException
+	 *             Signals that an I/O exception has occurred.
 	 */
 	public Serialize(FileOutputStream fichierOUT) throws IOException {
 		// TODO Auto-generated constructor stub
-		//fichierOUT = new FileOutputStream("./SaveJeux.ser");
-		this.fichierOUT = fichierOUT; 
-		//this.oos = new ObjectOutputStream(fichierOUT);
+		// fichierOUT = new FileOutputStream("./SaveJeux.ser");
+		this.fichierOUT = fichierOUT;
+		// this.oos = new ObjectOutputStream(fichierOUT);
 		this.oos = new ObjectOutputStream(fichierOUT);
-		
+
 	}
-	public Serialize(){
-		
+
+	public Serialize() {
+
 	}
-	/* (non-Javadoc)
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see serializable.VisitorRPG#visiter(battle.Enemy)
 	 */
 	@Override
 	public void visiter(Enemy e) {
 		// TODO Auto-generated method stub
-		
+
 		try {
 			FileOutputStream fichier = new FileOutputStream("enemy.ser");
-			
+
 			ObjectOutputStream oos = new ObjectOutputStream(fichier);
-			
+
 			oos.writeObject(e);
-			
+
 			oos.flush();
-			
+
 			oos.close();
-		fichier.close();
+			fichier.close();
 		} catch (java.io.IOException io) {
-			//io.printStackTrace();
+			// io.printStackTrace();
 			System.out.println("rater");
 		}
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see serializable.VisitorRPG#devisiteEnemy()
 	 */
 	@Override
@@ -102,12 +112,12 @@ public class Serialize implements VisitorRPG {
 
 		try {
 			FileInputStream fichier = new FileInputStream("enemy.ser");
-			
+
 			ObjectInputStream ois = new ObjectInputStream(fichier);
 			return (Enemy) ois.readObject();
 
 		} catch (java.io.IOException e) {
-			
+
 			return new Enemy();
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
@@ -116,7 +126,9 @@ public class Serialize implements VisitorRPG {
 
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see serializable.VisitorRPG#visiter(personnage.Personnage)
 	 */
 	@Override
@@ -135,7 +147,6 @@ public class Serialize implements VisitorRPG {
 
 			oos.flush();
 
-			
 			oos.close();
 			fichierOUT.close();
 		} catch (java.io.IOException e) {
@@ -144,7 +155,9 @@ public class Serialize implements VisitorRPG {
 
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see serializable.VisitorRPG#visiter(objet.Item)
 	 */
 	@Override
@@ -161,16 +174,21 @@ public class Serialize implements VisitorRPG {
 		}
 	}
 
-	/* (non-Javadoc)
-	 * @see serializable.VisitorRPG#visiter(chargementDynamique.ChargementDynamique)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * serializable.VisitorRPG#visiter(chargementDynamique.ChargementDynamique)
 	 */
 	@Override
 	public void visiter(ChargementDynamique cd) throws IOException {
 		oos.writeUTF(cd.getFichier().getPath());
-		
+
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see serializable.VisitorRPG#devisiteChargementDynamique()
 	 */
 	@SuppressWarnings("unchecked")
@@ -199,12 +217,15 @@ public class Serialize implements VisitorRPG {
 		return null;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see serializable.VisitorRPG#devisitePersonnage()
 	 */
 	@Override
 	public Personnage devisitePersonnage() throws InstantiationException,
-	IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+			IllegalAccessException, IllegalArgumentException,
+			InvocationTargetException {
 		try {
 			Personnage p;
 			Item i;
@@ -226,12 +247,12 @@ public class Serialize implements VisitorRPG {
 			potion = this.devisiteChargementDynamique();
 
 			i = new Item(arme, armure, potion);
-			//Get class de personnage
+			// Get class de personnage
 			classPersonnage = this.devisiteChargementDynamique();
-//recreer Pers
+			// recreer Pers
 			p = Personnage.getInstance();
 			p.init(i, classPersonnage, ois.readUTF());
-		
+
 			ois.close();
 			fichierIN.close();
 			return p;
@@ -245,8 +266,9 @@ public class Serialize implements VisitorRPG {
 
 	/**
 	 * Checks if is class.
-	 *
-	 * @param path the path
+	 * 
+	 * @param path
+	 *            the path
 	 * @return true, if is class
 	 */
 	private boolean isClass(String path) {
@@ -258,7 +280,9 @@ public class Serialize implements VisitorRPG {
 
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see serializable.VisitorRPG#devisiteItem()
 	 */
 	@Override
@@ -276,31 +300,40 @@ public class Serialize implements VisitorRPG {
 		return null;
 
 	}
-	
+
 	/**
 	 * The main method.
-	 *
-	 * @param args the arguments
-	 * @throws ClassNotFoundException the class not found exception
-	 * @throws InstantiationException the instantiation exception
-	 * @throws IllegalAccessException the illegal access exception
-	 * @throws IllegalArgumentException the illegal argument exception
-	 * @throws InvocationTargetException the invocation target exception
-	 * @throws NoSuchMethodException the no such method exception
-	 * @throws SecurityException the security exception
-	 * @throws IOException Signals that an I/O exception has occurred.
+	 * 
+	 * @param args
+	 *            the arguments
+	 * @throws ClassNotFoundException
+	 *             the class not found exception
+	 * @throws InstantiationException
+	 *             the instantiation exception
+	 * @throws IllegalAccessException
+	 *             the illegal access exception
+	 * @throws IllegalArgumentException
+	 *             the illegal argument exception
+	 * @throws InvocationTargetException
+	 *             the invocation target exception
+	 * @throws NoSuchMethodException
+	 *             the no such method exception
+	 * @throws SecurityException
+	 *             the security exception
+	 * @throws IOException
+	 *             Signals that an I/O exception has occurred.
 	 */
 	public static void main(String[] args) throws ClassNotFoundException,
-	InstantiationException, IllegalAccessException,
-	IllegalArgumentException, InvocationTargetException,
-	NoSuchMethodException, SecurityException, IOException {
-		
-		
+			InstantiationException, IllegalAccessException,
+			IllegalArgumentException, InvocationTargetException,
+			NoSuchMethodException, SecurityException, IOException {
+
 		ChargementDynamiqueJar epee = new ChargementDynamiqueJar(
 				"./Plugin/Epee.jar");
 		ChargementDynamiqueJar bouclier = new ChargementDynamiqueJar(
 				"./Plugin/Bouclier.jar");
-		ChargementDynamiqueJar potion = new ChargementDynamiqueJar("./Plugin/Elixir.jar");
+		ChargementDynamiqueJar potion = new ChargementDynamiqueJar(
+				"./Plugin/Elixir.jar");
 		epee.ChargermentJar();
 		bouclier.ChargermentJar();
 		potion.ChargermentJar();
@@ -310,17 +343,16 @@ public class Serialize implements VisitorRPG {
 		cd.ChargermentJar();
 		Personnage p = Personnage.getInstance();
 		p.init(item, cd, "Le gueurier");
-		/*FileOutputStream fichierOUT = new FileOutputStream("./SaveJeux.ser");
-		Serialize save = new Serialize(fichierOUT);
-		save.visiter(p);*/
+		/*
+		 * FileOutputStream fichierOUT = new FileOutputStream("./SaveJeux.ser");
+		 * Serialize save = new Serialize(fichierOUT); save.visiter(p);
+		 */
 		FileInputStream fichierIN = new FileInputStream("./SaveJeux.ser");
 
 		Serialize load = new Serialize(fichierIN);
 
-		
 		Personnage p1 = load.devisitePersonnage();
 		System.out.println(p1.getNom());
-	
 
 	}
 }

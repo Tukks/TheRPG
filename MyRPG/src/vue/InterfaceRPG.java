@@ -209,20 +209,31 @@ private WatchDir watchDirectories;
 			@Override
 			public void handleEvent(Event arg0) {
 				// TODO Auto-generated method stub
-				display.close();
-				try {
-					watchDirectories.setContinu(false);
-					threadCD.interrupt();
-					new HomeRPG();
-				} catch (InstantiationException | IllegalAccessException
-						| ClassNotFoundException | IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
+				
+				    	
+						try {
+							/*
+							 * A reparer
+							 */
+							fenetre.close();
+							display.close();
+							
+							watchDirectories.setContinu(false);
+							threadCD.interrupt();
+							new HomeRPG();
+						} catch (InstantiationException | IllegalAccessException
+								| ClassNotFoundException | IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+				    }
 			
-		};
+				
+			};
 	}
+	
+		
+	
 	private Listener listenerSave(){
 		return new Listener(){
 
@@ -294,8 +305,7 @@ private WatchDir watchDirectories;
 					e1.printStackTrace();
 				}
 
-				// à changer
-				//threadCD.stop();
+				
 				display.close();
 
 				

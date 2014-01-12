@@ -27,7 +27,7 @@ import util.PathManager;
 
 public class HomeRPG {
 
-	private static Display display = new Display();
+	private static Display display = new Display();// new Display();
 	private ImageData cursor_Image = new ImageData(PathManager.cursorImg);
 
 	public HomeRPG() throws InstantiationException, IllegalAccessException,
@@ -58,11 +58,7 @@ public class HomeRPG {
 		buttonCharger.setLocation(new Point(315, 300));
 		buttonCharger.setFont(new Font(display, "Arial", 14, SWT.NONE));
 		buttonCharger.addListener(SWT.Selection,listenCharger);
-		Button buttonSupprimer = new Button(fenetre, SWT.PUSH);
-		buttonSupprimer.setText("Supprimer un personnage");
-		buttonSupprimer.setSize(new Point(400, 45));
-		buttonSupprimer.setLocation(new Point(315, 350));
-		buttonSupprimer.setFont(new Font(display, "Arial", 14, SWT.NONE));
+		
 
 		centrerSurEcran(display, fenetre);
 		fenetre.open();

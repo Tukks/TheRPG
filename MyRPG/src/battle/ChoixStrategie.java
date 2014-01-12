@@ -4,16 +4,19 @@ import java.awt.event.MouseAdapter;
 import java.util.LinkedList;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Text;
 
 import chargementDynamique.ChargementDynamique;
 import util.PathManager;
@@ -25,12 +28,13 @@ public class ChoixStrategie {
 	private String valSelection = "";
 	private ChargementDynamique items;
 	private Combo choix;
-	
+	private Shell shell;
 	public ChoixStrategie(Shell shell, ChargementDynamique items) {
 		// TODO Auto-generated constructor stub
 		/*
 		 * Set de l'interface de definition de Strategie
 		 */
+		this.shell = shell;
 		GridData gridData = new GridData();
 		thisGroup = new Group(shell, SWT.FLAT);
 		thisGroup.setText("Definir Strategie");
@@ -39,22 +43,20 @@ public class ChoixStrategie {
 		thisGroup.setLayoutData(gridData);
 		thisGroup.setSize(new Point(850,150));
 		thisGroup.setLocation(new Point(150, 10));
+		thisGroup.setLayout(new RowLayout(SWT.VERTICAL));
+
 		this.items = items;
 		this.isPotionOrAttaque();
 	}
 	public void isPotionOrAttaque(){
 		if(items.getTypeItem() == "Potion" && !items.getNameItem().contains("auto")){
+			Text text = new Text(thisGroup, SWT.NONE);
+		    text.setText("Definir quand utiliser la Potion, en pourcentage par rapport au point de vie du Personnage : ");
+		    text.setSize(850,15);
+		    text.setLocation(15, 15);
+		    text.setBackgroundImage(thisGroup.getBackgroundImage());
 			choix = new Combo(thisGroup,SWT.DROP_DOWN | SWT.READ_ONLY );
-			choix.addMouseListener(new org.eclipse.swt.events.MouseAdapter() {
 
-				@Override
-				public void mouseDown(MouseEvent arg0) {
-					// TODO Auto-generated method stub
-					super.mouseDown(arg0);
-					//pourcentagePdvPerso = (int) choix.getSelectionIndex();
-				}
-			
-			});
 			for(Integer i =1 ; i <= 100; i++){
 				
 				choix.add(i.toString());
@@ -65,6 +67,13 @@ public class ChoixStrategie {
 		}else if(items.getTypeItem() == "Potion" && items.getNameItem().contains("auto")){
 			
 		}else if(items.getTypeItem() == "Poison" && !items.getNameItem().contains("auto")){
+			
+	
+			Text text = new Text(thisGroup, SWT.NONE);
+		    text.setText("Definir quand utiliser le Poison, en pourcentage par rapport au point de vie du Personnage : ");
+		    text.setSize(850,15);
+		    text.setLocation(15, 15);
+		    text.setBackgroundImage(thisGroup.getBackgroundImage());
 			choix = new Combo(thisGroup,SWT.DROP_DOWN | SWT.READ_ONLY );
 			for(Integer i =1 ; i <= 100; i++){
 				

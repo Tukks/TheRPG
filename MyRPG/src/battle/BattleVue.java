@@ -108,8 +108,8 @@ public class BattleVue implements Observer {
 	}
 		void makeCombat() {
 		try {
-			this.model.Combat(choixStrategie.getChoix().getSelectionIndex());
 
+			this.model.Combat(choixStrategie.getChoix().getSelectionIndex()+1);
 		} catch (IllegalAccessException | IllegalArgumentException
 				| InvocationTargetException e) {
 			// TODO Auto-generated catch block
