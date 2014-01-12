@@ -87,7 +87,7 @@ public class Serialize implements VisitorRPG {
 			oos.flush();
 			
 			oos.close();
-			fichierOUT.close();
+		fichier.close();
 		} catch (java.io.IOException io) {
 			//io.printStackTrace();
 			System.out.println("rater");

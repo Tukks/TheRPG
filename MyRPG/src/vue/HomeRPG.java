@@ -102,7 +102,6 @@ public class HomeRPG {
 					Serialize load = new Serialize(fichierIN);
 					Serialize enemy = new Serialize();
 					Personnage p1 = load.devisitePersonnage();
-					System.out.println(p1.getNom());
 					Enemy e = enemy.devisiteEnemy();
 					//System.out.println(p1.getDefense());
 					//Enemy e = new Enemy();

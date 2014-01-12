@@ -25,6 +25,7 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Listener;
+import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 
 import battle.BattleControleur;
@@ -74,11 +75,11 @@ private WatchDir watchDirectories;
 	private GroupCaracteristiquesPerso gCarac;
 	private GroupApercuPerso gAppercu;
 	private Personnage perso;
-
+	Shell fenetre;
 	public InterfaceRPG() throws InstantiationException,
 			IllegalAccessException, ClassNotFoundException, IOException {
 
-		Shell fenetre = createFrame();
+		fenetre = createFrame();
 
 		// création du perso de base
 		perso = Personnage.getInstance();
@@ -142,6 +143,10 @@ private WatchDir watchDirectories;
 		Button save = new Button(fenetre, SWT.NONE);
 		save.setText("Sauvergarder");
 		save.addListener(SWT.Selection, listenerSave());
+		//Boutton pour retour en arriere
+		Button retour = new Button(fenetre, SWT.NONE);
+		retour.setText("Retour");
+		retour.addListener(SWT.Selection, listenerRetour());
 		centrerSurEcran(display, fenetre);
 
 		fenetre.addListener(SWT.Close, new Listener() {
@@ -198,6 +203,26 @@ private WatchDir watchDirectories;
 	public void setgCarac(GroupCaracteristiquesPerso gCarac) {
 		this.gCarac = gCarac;
 	}
+	private Listener listenerRetour(){
+		return new Listener(){
+
+			@Override
+			public void handleEvent(Event arg0) {
+				// TODO Auto-generated method stub
+				display.close();
+				try {
+					watchDirectories.setContinu(false);
+					threadCD.interrupt();
+					new HomeRPG();
+				} catch (InstantiationException | IllegalAccessException
+						| ClassNotFoundException | IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			
+		};
+	}
 	private Listener listenerSave(){
 		return new Listener(){
 
@@ -230,7 +255,10 @@ private WatchDir watchDirectories;
 					Serialize save;
 					save = new Serialize(fichierOUT);
 					save.visiter(perso);
-					System.out.println("Fichier Save");
+					MessageBox mb = new MessageBox(fenetre,SWT.ICON_INFORMATION);
+					mb.setMessage("Personnage bien sauvergardé sous le nom SaveJeux.ser");
+					mb.open();
+					
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
