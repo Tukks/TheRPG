@@ -43,6 +43,7 @@ public class ListFile {
 	public ArrayList<File> listFichier() {
 		File file = new File(root);
 
+		@SuppressWarnings({ "unchecked", "rawtypes" })
 		ArrayList<File> listFiles = new ArrayList(Arrays.asList(file.listFiles(filtre)));
 
 		for (int i = 0; i < listFiles.size(); i++) {
@@ -62,6 +63,7 @@ public class ListFile {
 	 */
 	public ArrayList<File> listeDir(String root) {
 		File file = new File(root);
+		@SuppressWarnings({ "unchecked", "rawtypes" })
 		ArrayList<File> nListFiles = new ArrayList(Arrays.asList(file
 				.listFiles(filtre)));
 		return nListFiles;
@@ -75,6 +77,7 @@ public class ListFile {
 	 */
 	public int nombreFichier() {
 		File file = new File(root);
+		@SuppressWarnings({ "unchecked", "rawtypes" })
 		ArrayList<File> listFiles = new ArrayList(Arrays.asList(file
 				.listFiles()));
 		int cpt = 0;

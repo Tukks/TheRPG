@@ -9,8 +9,6 @@ import personnage.Personnage;
 
 public class RunMVCBattle {
 
-	private String start_value = "DEBUT";
-
 	public RunMVCBattle(Personnage perso, Enemy enemy) {
 		BattleModel model = new BattleModel(perso, enemy);
 		// model.lancerCombat();

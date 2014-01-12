@@ -7,7 +7,6 @@ import java.util.List;
 import objet.Item;
 import serializable.VisitorRPG;
 import chargementDynamique.ChargementDynamique;
-import chargementDynamique.ListenerChargementDyn;
 
 public class Personnage implements Serializable {
 

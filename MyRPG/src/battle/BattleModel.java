@@ -1,12 +1,10 @@
 package battle;
 
 import java.lang.reflect.InvocationTargetException;
-import java.net.MalformedURLException;
-import java.util.ArrayList;
+
 import java.util.Observable;
 
-import objet.Item;
-import chargementDynamique.ChargementDynamiqueJar;
+
 import personnage.Personnage;
 
 public class BattleModel extends Observable {

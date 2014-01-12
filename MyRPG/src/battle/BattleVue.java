@@ -1,42 +1,29 @@
 package battle;
 
-import java.awt.TextArea;
-import java.io.Console;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.io.PrintStream;
+
 import java.lang.reflect.InvocationTargetException;
 import java.util.Observable;
 import java.util.Observer;
-import java.util.concurrent.ThreadLocalRandom;
 
-import objet.Item;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.graphics.Cursor;
-import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
-import org.eclipse.swt.internal.ole.win32.DVTARGETDEVICE;
-import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.layout.GridLayout;
+
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
-import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.ProgressBar;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
-import personnage.Personnage;
 import util.PathManager;
-import vue.HomeRPG;
 
 public class BattleVue implements Observer {
 	private ImageData cursor_Image = new ImageData(PathManager.cursorImg);
@@ -71,7 +58,6 @@ public class BattleVue implements Observer {
 		 */
 		progressbarEnemy = new ProgressBar(shell, SWT.HORIZONTAL | SWT.SMOOTH);
 		progressbarPerso = new ProgressBar(shell, SWT.HORIZONTAL | SWT.SMOOTH);
-
 		progressbarEnemy.setSize(new Point(150, 25));
 		progressbarEnemy.setLocation(new Point(850, 450));
 		progressbarPerso.setSize(new Point(150, 25));
@@ -149,11 +135,8 @@ public class BattleVue implements Observer {
 			// long time = System.currentTimeMillis() + 1000;
 			// while(System.currentTimeMillis() < time) {}
 			model.setText("");
-			try {
-				Thread.sleep(1000);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
+			 long time = System.currentTimeMillis() + 1000;
+             while(System.currentTimeMillis() < time) {}
 
 		}
 

@@ -3,15 +3,12 @@ package battle;
 
 
 import org.eclipse.swt.SWT;
-
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Combo;
-
 import org.eclipse.swt.widgets.Group;
-import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
@@ -24,6 +21,7 @@ public class ChoixStrategie {
 	
 	private ChargementDynamique items;
 	private Combo choix;
+	@SuppressWarnings("unused")
 	private Shell shell;
 	public ChoixStrategie(Shell shell, ChargementDynamique items) {
 		// TODO Auto-generated constructor stub

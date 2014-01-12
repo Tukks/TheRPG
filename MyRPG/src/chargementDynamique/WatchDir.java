@@ -42,24 +42,49 @@ import java.util.*;
 
 import chargementDynamique.ListenerChargementDyn;
 
+// TODO: Auto-generated Javadoc
 /**
  * Example to watch a directory (or tree) for changes to files.
  */
 
 public class WatchDir extends Thread{
 
+	/** The watcher. */
 	private final WatchService watcher;
+	
+	/** The keys. */
 	private final Map<WatchKey,Path> keys;
+	
+	/** The recursive. */
 	private final boolean recursive;
+	
+	/** The trace. */
 	private boolean trace = false;
+	
+	/** The lcd. */
 	ListenerChargementDyn lcd ;
+	
+	/** The dir. */
 	final Path dir;
+	
+	/** The continu. */
 	public volatile boolean continu = true;
+	
+	/**
+	 * Cast.
+	 *
+	 * @param <T> the generic type
+	 * @param event the event
+	 * @return the watch event
+	 */
 	@SuppressWarnings("unchecked")
 	static <T> WatchEvent<T> cast(WatchEvent<?> event) {
 		return (WatchEvent<T>)event;
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Thread#run()
+	 */
 	public void run() {
 		while(continu){
 		try {
@@ -72,16 +97,29 @@ public class WatchDir extends Thread{
 		}
 	}
 
+	/**
+	 * Checks if is continu.
+	 *
+	 * @return true, if is continu
+	 */
 	public boolean isContinu() {
 		return continu;
 	}
 
+	/**
+	 * Sets the continu.
+	 *
+	 * @param continu the new continu
+	 */
 	public void setContinu(boolean continu) {
 		this.continu = continu;
 	}
 
 	/**
-	 * Register the given directory with the WatchService
+	 * Register the given directory with the WatchService.
+	 *
+	 * @param dir the dir
+	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	private void register(Path dir) throws IOException {
 		WatchKey key = dir.register(watcher, ENTRY_CREATE, ENTRY_DELETE, ENTRY_MODIFY);
@@ -101,6 +139,9 @@ public class WatchDir extends Thread{
 	/**
 	 * Register the given directory, and all its sub-directories, with the
 	 * WatchService.
+	 *
+	 * @param start the start
+	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	private void registerAll(final Path start) throws IOException {
 		// register directory and sub-directories
@@ -116,10 +157,14 @@ public class WatchDir extends Thread{
 	}
 
 	/**
-	 * Creates a WatchService and registers the given directory
-	 * @throws ClassNotFoundException 
-	 * @throws IllegalAccessException 
-	 * @throws InstantiationException 
+	 * Creates a WatchService and registers the given directory.
+	 *
+	 * @param dir the dir
+	 * @param recursive the recursive
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws InstantiationException the instantiation exception
+	 * @throws IllegalAccessException the illegal access exception
+	 * @throws ClassNotFoundException the class not found exception
 	 */
 	public WatchDir(Path dir, boolean recursive) throws IOException, InstantiationException, IllegalAccessException, ClassNotFoundException {
 		this.watcher = FileSystems.getDefault().newWatchService();
@@ -141,11 +186,12 @@ public class WatchDir extends Thread{
 	}
 
 	/**
-	 * Process all events for keys queued to the watcher
-	 * @throws ClassNotFoundException 
-	 * @throws IllegalAccessException 
-	 * @throws InstantiationException 
-	 * @throws MalformedURLException 
+	 * Process all events for keys queued to the watcher.
+	 *
+	 * @throws MalformedURLException the malformed url exception
+	 * @throws InstantiationException the instantiation exception
+	 * @throws IllegalAccessException the illegal access exception
+	 * @throws ClassNotFoundException the class not found exception
 	 */
 	void processEvents() throws MalformedURLException, InstantiationException, IllegalAccessException, ClassNotFoundException {
 		for (;;) {
@@ -165,6 +211,7 @@ public class WatchDir extends Thread{
 				}
 
 				for (WatchEvent<?> event: key.pollEvents()) {
+					@SuppressWarnings("rawtypes")
 					WatchEvent.Kind kind = event.kind();
 
 					// TBD - provide example of how OVERFLOW event is handled
@@ -215,15 +262,28 @@ public class WatchDir extends Thread{
 		}
 	}
 	
+	/**
+	 * Usage.
+	 */
 	static void usage() {
 		System.err.println("usage: java WatchDir [-r] dir");
 		System.exit(-1);
 	}
 
+	/**
+	 * Gets the lcd.
+	 *
+	 * @return the lcd
+	 */
 	public ListenerChargementDyn getLcd() {
 		return lcd;
 	}
 
+	/**
+	 * Sets the lcd.
+	 *
+	 * @param lcd the new lcd
+	 */
 	public void setLcd(ListenerChargementDyn lcd) {
 		this.lcd = lcd;
 	}

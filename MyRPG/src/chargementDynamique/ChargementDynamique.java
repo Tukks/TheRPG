@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package chargementDynamique;
 
 import java.io.File;
@@ -7,10 +10,9 @@ import java.lang.reflect.Method;
 import java.net.URLClassLoader;
 import java.security.SecureClassLoader;
 import java.util.ArrayList;
-import java.util.Enumeration;
+
 import java.util.List;
-import java.util.jar.JarEntry;
-import java.util.jar.JarFile;
+
 
 import serializable.VisitorRPG;
 import annot.Classe;
