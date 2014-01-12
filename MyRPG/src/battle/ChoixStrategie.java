@@ -1,18 +1,15 @@
 package battle;
 
-import java.awt.event.MouseAdapter;
-import java.util.LinkedList;
+
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.custom.StyledText;
-import org.eclipse.swt.events.MouseEvent;
-import org.eclipse.swt.events.MouseListener;
+
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Combo;
+
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Shell;
@@ -24,8 +21,7 @@ import util.PathManager;
 public class ChoixStrategie {
 	
 	private Group thisGroup;
-	private List listeDesArmes;
-	private String valSelection = "";
+	
 	private ChargementDynamique items;
 	private Combo choix;
 	private Shell shell;
@@ -62,13 +58,12 @@ public class ChoixStrategie {
 				choix.add(i.toString());
 			}
 			choix.setSize(new Point(50,50));
-			choix.setLocation(20, 10);
+			choix.setLocation(20, 30);
 			
 		}else if(items.getTypeItem() == "Potion" && items.getNameItem().contains("auto")){
 			
 		}else if(items.getTypeItem() == "Poison" && !items.getNameItem().contains("auto")){
 			
-	
 			Text text = new Text(thisGroup, SWT.NONE);
 		    text.setText("Definir quand utiliser le Poison, en pourcentage par rapport au point de vie du Personnage : ");
 		    text.setSize(850,15);

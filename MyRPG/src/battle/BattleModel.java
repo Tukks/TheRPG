@@ -56,7 +56,8 @@ public class BattleModel extends Observable {
 		this.enemy = enemy;
 	}
 	public void Combat(int pdvMinPerso) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException{
-		while(combatFinish(enemy,perso)){
+		
+		while(this.combatFinish(enemy,perso)){
 			int PourcentPerso = (int)((this.getPerso().getPointDeVie() * 100.0f) /pdvPersoMax);
 			
 			if(PourcentPerso < pdvMinPerso  && perso.getItem().getPotion().getTypeItem() == "Potion" && utilisePotion < 2 && !perso.getItem().getPotion().getNameItem().contains("auto")){ //a definir par l'utilisateur plus tard
@@ -96,6 +97,7 @@ public class BattleModel extends Observable {
 			
 			//a traiter enemy et perso == 0 pv
 		}
+		
 	}
 	public boolean combatFinish(Enemy enemy, Personnage perso){
 		
@@ -133,6 +135,9 @@ public class BattleModel extends Observable {
 	}
 	public void setText(String t){
 		text = t;
-	} 
+	}
+
+
+	
 }
 
