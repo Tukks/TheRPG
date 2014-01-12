@@ -8,6 +8,7 @@ import java.io.PrintStream;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.concurrent.ThreadLocalRandom;
 
 import objet.Item;
 
@@ -46,16 +47,24 @@ public class BattleVue implements Observer {
 	ProgressBar progressbarPerso;
 	double pdvEnemyMax;
 	double pdvPersoMax;
+	Shell shell;
+	Group thisGroup;
+	ChoixStrategie choixStrategie;
+	
 	public BattleVue(BattleModel model) {
 		this.model = model;
 		model.addObserver(this);
 		pdvEnemyMax = model.getEnemy().getPdv();
 		pdvPersoMax = model.getPerso().getPointDeVie();
-		Shell shell = new Shell(dis, SWT.CLOSE | SWT.MIN);
+		shell = new Shell(dis, SWT.CLOSE | SWT.MIN);
 		shell.setSize(1024, 700);
 		Cursor cursor1 = new Cursor(dis, cursor_Image, 1, 1);
 		shell.setCursor(cursor1);
 		
+		choixStrategie = new ChoixStrategie(shell, model.getPerso().getItem().getPotion());
+		/*
+		 * Set des Bar de vie des perso
+		 */
 		progressbarEnemy = new ProgressBar(shell, SWT.HORIZONTAL
 				| SWT.SMOOTH);
 		progressbarPerso = new ProgressBar(shell, SWT.HORIZONTAL
@@ -67,10 +76,13 @@ public class BattleVue implements Observer {
 		progressbarPerso.setLocation(new Point(10, 450));
 		progressbarPerso.setSelection(100);
 		progressbarEnemy.setSelection(100);
+		/*
+		 * set du suivi de combat
+		 */
 		st = new StyledText(shell, SWT.V_SCROLL | SWT.WRAP | SWT.BORDER | SWT.READ_ONLY);
 		st.setSize(new Point(1000, 200));
 		st.setLocation(new Point(10,475 ));
-	
+		st.setVisible(true);
 		lancerComb = new Button(shell, SWT.NONE);
 		lancerComb.setLocation(new Point(10,0));
 		lancerComb.setSize(new Point(100,20));
@@ -96,7 +108,7 @@ public class BattleVue implements Observer {
 	}
 		void makeCombat() {
 		try {
-			this.model.Combat();
+			this.model.Combat(choixStrategie.getChoix().getSelectionIndex());
 
 		} catch (IllegalAccessException | IllegalArgumentException
 				| InvocationTargetException e) {
@@ -117,26 +129,31 @@ public class BattleVue implements Observer {
 		};
 
 	}
-
+	
 	@Override
 	public void update(Observable obs, Object obj) {
-		if (!st.isDisposed()) {
-			st.append(model.getText());
-			
-			int percentEnemie = (int)((model.getEnemy().getPdv() * 100.0f) /pdvEnemyMax);
-			int percentPerso = (int)((model.getPerso().getPointDeVie() * 100.0f) /pdvPersoMax);
+		if(!st.isDisposed()){
+		    		
+		    		st.append(model.getText());
+					int percentEnemie = (int)((model.getEnemy().getPdv() * 100.0f) /pdvEnemyMax);
+					int percentPerso = (int)((model.getPerso().getPointDeVie() * 100.0f) /pdvPersoMax);
 
-			progressbarEnemy.setSelection(percentEnemie) ;
-			progressbarPerso.setSelection(percentPerso) ;
-			st.setTopIndex(st.getLineCount() - 1);
-
-			st.redraw();
-			long time = System.currentTimeMillis() + 1000; 
-			while(System.currentTimeMillis() < time) {}
+					progressbarEnemy.setSelection(percentEnemie) ;
+					progressbarPerso.setSelection(percentPerso) ;
+					st.setTopIndex(st.getLineCount() - 1);
+					st.redraw();
+					long time = System.currentTimeMillis() + 1000; 
+					while(System.currentTimeMillis() < time) {}	
+					model.setText("");
+		        // do any work that updates the screen
+		        // e.g., call browser.setURL(...);
+		    
+		
 		}
-	}
-
-	// pour initialiser textfield
+    
+}
+	
+// pour initialiser textfield
 	public void setValue(int t) {
 		text.setText("" + t);
 	}

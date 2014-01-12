@@ -1,6 +1,8 @@
 package vue;
 
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Cursor;
@@ -15,6 +17,12 @@ import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
 
+import battle.BattleControleur;
+import battle.BattleModel;
+import battle.BattleVue;
+import battle.Enemy;
+import personnage.Personnage;
+import serializable.Serialize;
 import util.PathManager;
 
 public class HomeRPG {
@@ -49,7 +57,7 @@ public class HomeRPG {
 		buttonCharger.setSize(new Point(400, 45));
 		buttonCharger.setLocation(new Point(315, 300));
 		buttonCharger.setFont(new Font(display, "Arial", 14, SWT.NONE));
-
+		buttonCharger.addListener(SWT.Selection,listenCharger);
 		Button buttonSupprimer = new Button(fenetre, SWT.PUSH);
 		buttonSupprimer.setText("Supprimer un personnage");
 		buttonSupprimer.setSize(new Point(400, 45));
@@ -76,6 +84,45 @@ public class HomeRPG {
 					new InterfaceRPG();
 				} catch (InstantiationException | IllegalAccessException
 						| ClassNotFoundException | IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		}
+		
+	};
+	Listener listenCharger = new Listener() {
+
+		@Override
+		public void handleEvent(Event arg0) {
+	
+				try {
+					display.close();
+					//mettre un explorateur de fichier pour choisir la sauvegarde a charger
+					FileInputStream fichierIN = new FileInputStream("./SaveJeux.ser");
+					Serialize load = new Serialize(fichierIN);
+					Serialize enemy = new Serialize();
+					Personnage p1 = load.devisitePersonnage();
+					System.out.println(p1.getNom());
+					Enemy e = enemy.devisiteEnemy();
+					//System.out.println(p1.getDefense());
+					//Enemy e = new Enemy();
+					BattleModel model = new BattleModel(p1, e);
+					BattleVue vue = new BattleVue(model);
+					
+					BattleControleur controleur = new BattleControleur();
+
+					controleur.addModel(model);
+					controleur.addVue(vue);
+					controleur.initModel("");
+					vue.addControleur(controleur);
+				} catch (InstantiationException | IllegalAccessException
+						| IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IllegalArgumentException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (InvocationTargetException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}

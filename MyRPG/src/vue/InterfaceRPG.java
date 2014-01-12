@@ -1,5 +1,7 @@
 package vue;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.nio.file.Path;
@@ -31,6 +33,7 @@ import battle.BattleVue;
 import battle.Enemy;
 import battle.RunMVCBattle;
 import personnage.Personnage;
+import serializable.Serialize;
 import util.PathManager;
 import vue.groupItems.GroupArmes;
 import vue.groupItems.GroupArmures;
@@ -51,6 +54,7 @@ public class InterfaceRPG implements Observer {
 	private LinkedList<ChargementDynamique> classes;
 	private LinkedList<ChargementDynamique> items;
 	private List listeItems;
+	Enemy e = new Enemy();
 private WatchDir watchDirectories;
 	public int getSizeListeClasses() {
 		return sizeListeClasses;
@@ -134,7 +138,10 @@ private WatchDir watchDirectories;
 		Button button = new Button(fenetre, SWT.NONE);
 		button.setText("Lancer");
 		button.addListener(SWT.Selection, getListener());
-
+		//bouton pour sauvergarder 
+		Button save = new Button(fenetre, SWT.NONE);
+		save.setText("Sauvergarder");
+		save.addListener(SWT.Selection, listenerSave());
 		centrerSurEcran(display, fenetre);
 
 		fenetre.addListener(SWT.Close, new Listener() {
@@ -191,7 +198,49 @@ private WatchDir watchDirectories;
 	public void setgCarac(GroupCaracteristiquesPerso gCarac) {
 		this.gCarac = gCarac;
 	}
+	private Listener listenerSave(){
+		return new Listener(){
 
+			@Override
+			public void handleEvent(Event arg0) {
+				// TODO Auto-generated method stub
+				FileOutputStream fichierOUT;
+				Item item = new Item(
+						listenerCD.getClassForNamePluginItem(gArmes
+								.getValSelection()),
+						listenerCD.getClassForNamePluginItem(gArmures
+								.getValSelection()),
+						listenerCD.getClassForNamePluginItem(gPotions
+								.getValSelection()));
+				try {
+					perso.init(item,
+							listenerCD
+							.getClassForNamePluginClasse(gClasses.getValSelection()),
+									gAppercu.getNomPerso());
+				} catch (IllegalAccessException | IllegalArgumentException
+						| InvocationTargetException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				try {
+					Serialize enemy = new Serialize();
+					enemy.visiter(e);
+					fichierOUT = new FileOutputStream("./SaveJeux.ser");
+			
+					Serialize save;
+					save = new Serialize(fichierOUT);
+					save.visiter(perso);
+					System.out.println("Fichier Save");
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+			}
+			
+		};
+	
+	}
 	private Listener getListener() {
 		return new Listener() {
 			@Override
@@ -221,9 +270,10 @@ private WatchDir watchDirectories;
 				//threadCD.stop();
 				display.close();
 
-				Enemy e = new Enemy();
+				
 				BattleModel model = new BattleModel(perso, e);
 				BattleVue vue = new BattleVue(model);
+				
 				BattleControleur controleur = new BattleControleur();
 
 				controleur.addModel(model);

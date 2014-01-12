@@ -14,14 +14,16 @@ public class BattleModel extends Observable {
 	Personnage perso;
 	Enemy enemy;
 	String text = new String();
+	int pdvPersoMax;
  int utilisePotion = 0;
  int utilisePoison = 0;
 	public BattleModel(Personnage perso, Enemy enemy) {
 		this.perso = perso;
 		this.enemy = enemy;
-		
 		setVal("debut by Model");
+		this.pdvPersoMax = perso.getPointDeVie();
 	}
+	
 	
 	public void setVal(String text) { // mode PULL
 		this.text = text;
@@ -53,9 +55,11 @@ public class BattleModel extends Observable {
 	public void setEnemy(Enemy enemy) {
 		this.enemy = enemy;
 	}
-	public void Combat() throws IllegalAccessException, IllegalArgumentException, InvocationTargetException{
+	public void Combat(int pdvMinPerso) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException{
 		while(combatFinish(enemy,perso)){
-			if(perso.getPointDeVie() < 100  && perso.getItem().getPotion().getTypeItem() == "Potion" && utilisePotion < 2){ //a definir par l'utilisateur plus tard
+			int PourcentPerso = (int)((this.getPerso().getPointDeVie() * 100.0f) /pdvPersoMax);
+			
+			if(PourcentPerso < pdvMinPerso  && perso.getItem().getPotion().getTypeItem() == "Potion" && utilisePotion < 2 && !perso.getItem().getPotion().getNameItem().contains("auto")){ //a definir par l'utilisateur plus tard
 				int soin = (int) perso.getItem().getPotion().getMethodForName("soigne").invoke(perso.getItem().getPotion().getClassInstancie());
 				perso.setPointDeVie(perso.getPointDeVie() + soin);
 				utilisePotion++;
@@ -69,7 +73,7 @@ public class BattleModel extends Observable {
 				text = "\n Le personnage utilise une potion auto et gagne : " + soin + " il a donc : " +perso.getPointDeVie() +" pv";
 				setChanged();
 				notifyObservers();
-			}else if(perso.getPointDeVie() < 300 && perso.getItem().getPotion().getTypeItem() == "Poison" && utilisePoison < 2){
+			}else if(PourcentPerso < pdvMinPerso && perso.getItem().getPotion().getTypeItem() == "Poison" && utilisePoison < 2 && !perso.getItem().getPotion().getNameItem().contains("auto")){
 				int degat = (int) perso.getItem().getPotion().getMethodForName("enlevePv").invoke(perso.getItem().getPotion().getClassInstancie());
 				enemy.setPdv(enemy.getPdv() + degat);	
 				utilisePoison++;
@@ -87,7 +91,7 @@ public class BattleModel extends Observable {
 			}
 				enemy.setPdv(enemy.getPdv() - perso.getForceDeFrappe());
 				perso.setPointDeVie(perso.getPointDeVie() - pdvEnleverPerso(enemy.getAttaque()));
-						
+				
 			
 			
 			//a traiter enemy et perso == 0 pv
@@ -97,7 +101,7 @@ public class BattleModel extends Observable {
 		
 		if(enemy.getPdv() > 0 && perso.getPointDeVie() > 0){
 			
-			text = "\n Il reste a l'enemie " + enemy.getPdv() + " et au perso " + perso.getPointDeVie();
+			text += "\n Il reste a l'enemie " + enemy.getPdv() + " et au perso " + perso.getPointDeVie();
 			setChanged();
 			notifyObservers();
 			return true;
@@ -127,6 +131,8 @@ public class BattleModel extends Observable {
 	String getText(){
 		return text;
 	}
-	
+	public void setText(String t){
+		text = t;
+	} 
 }
 
