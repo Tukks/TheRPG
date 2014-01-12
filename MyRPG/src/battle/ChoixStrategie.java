@@ -87,8 +87,13 @@ public class ChoixStrategie {
 			//do nothing
 		}
 	}
-	public Combo getChoix() {
-		return choix;
+	public int getChoix() {
+		
+	if(choix != null){
+		return choix.getSelectionIndex()+1;
+	}else{
+		return 0;
+	}
 	}
 	public void setChoix(Combo choix) {
 		this.choix = choix;

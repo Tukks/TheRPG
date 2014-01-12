@@ -2,6 +2,7 @@ package battle;
 
 import java.awt.TextArea;
 import java.io.Console;
+import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintStream;
@@ -34,6 +35,7 @@ import org.eclipse.swt.widgets.Text;
 
 import personnage.Personnage;
 import util.PathManager;
+import vue.HomeRPG;
 
 public class BattleVue implements Observer {
 	private ImageData cursor_Image = new ImageData(PathManager.cursorImg);
@@ -109,8 +111,8 @@ public class BattleVue implements Observer {
 		void makeCombat() {
 		try {
 			lancerComb.setEnabled(false);
-			choixStrategie.disableMe();
-			this.model.Combat(choixStrategie.getChoix().getSelectionIndex()+1);
+			
+			this.model.Combat(choixStrategie.getChoix());
 		} catch (IllegalAccessException | IllegalArgumentException
 				| InvocationTargetException e) {
 			// TODO Auto-generated catch block
@@ -124,8 +126,8 @@ public class BattleVue implements Observer {
 			@Override
 			public void handleEvent(Event arg0) {
 				// TODO Auto-generated method stub
-				System.out.println("hey");
 				makeCombat();
+				
 			}
 		};
 
@@ -161,7 +163,6 @@ public class BattleVue implements Observer {
 
 	// le controleur utilise la vue pour initialiser le model
 	public void addModel(BattleModel m) {
-		System.out.println("View      : adding model");
 		this.setModel(m);
 	}
 

@@ -9,7 +9,6 @@ public class BattleControleur implements Listener {
 	BattleVue vue;
 
 	public BattleControleur() {
-		System.out.println("Controleur()");
 	}
 
 	@Override
