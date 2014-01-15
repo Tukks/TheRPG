@@ -174,27 +174,7 @@ public final class ListenerChargementDyn extends Observable {
 		this.sizePlug = lf.nombreFichier();
 	}
 
-	/**
-	 * The main method.
-	 *
-	 * @param args the arguments
-	 * @throws InstantiationException the instantiation exception
-	 * @throws IllegalAccessException the illegal access exception
-	 * @throws ClassNotFoundException the class not found exception
-	 * @throws IllegalArgumentException the illegal argument exception
-	 * @throws InvocationTargetException the invocation target exception
-	 * @throws IOException Signals that an I/O exception has occurred.
-	 */
-	public static void main(String[] args) throws InstantiationException,
-			IllegalAccessException, ClassNotFoundException,
-			IllegalArgumentException, InvocationTargetException, IOException {
-		// ListenerChargementDyn lcd = new ListenerChargementDyn("./Plugin");
-		Path dir = Paths.get("./Plugin");
-		WatchDir WD = new WatchDir(dir, false);
-		WD.start();
-
-		// lcd.getPluginClasse().get(0).getListMethode().get(0).invoke(lcd.getPluginClasse().get(0).getClassInstancie());
-	}
+	
 
 	/**
 	 * Checks if is item.
@@ -257,7 +237,7 @@ public final class ListenerChargementDyn extends Observable {
 		}
 		return lcd;
 	}
-
+	
 	/**
 	 * Gets the class for name plugin classe.
 	 *

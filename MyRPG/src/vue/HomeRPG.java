@@ -14,6 +14,7 @@ import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.DirectoryDialog;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.FileDialog;
@@ -63,6 +64,7 @@ public class HomeRPG {
 		buttonCharger.setFont(new Font(display, "Arial", 14, SWT.NONE));
 		buttonCharger.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent event) {
+				
 				FileDialog charge = new FileDialog(fenetre);
 				
 				charge.setText("Chargement du perso");

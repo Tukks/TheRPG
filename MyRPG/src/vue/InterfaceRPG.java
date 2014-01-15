@@ -20,6 +20,7 @@ import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.DirectoryDialog;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.List;
@@ -73,6 +74,10 @@ private WatchDir watchDirectories;
 	private GroupApercuPerso gAppercu;
 	private Personnage perso;
 	Shell fenetre;
+	private InterfaceRPG newI;
+	public InterfaceRPG(InterfaceRPG i){
+		 newI = i;
+	}
 	public InterfaceRPG() throws InstantiationException,
 			IllegalAccessException, ClassNotFoundException, IOException {
 
@@ -82,11 +87,11 @@ private WatchDir watchDirectories;
 		perso = Personnage.getInstance();
 
 		GridData gridData = getGridData();
-
+		
 		Path dir = Paths.get("./Plugin");
-		watchDirectories = new WatchDir(dir, false);
+		watchDirectories = new WatchDir(dir, true);
 		listenerCD = ListenerChargementDyn.getInstance();
-
+		
 		threadCD = new Thread(watchDirectories);
 		threadCD.start();
 
@@ -230,7 +235,10 @@ private WatchDir watchDirectories;
 	}
 	
 		
-	
+	public void close(){
+		fenetre.close();
+		display.close();
+	}
 	private Listener listenerSave(){
 		return new Listener(){
 
