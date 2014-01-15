@@ -1,13 +1,11 @@
 package serializable;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.lang.reflect.InvocationTargetException;
-import java.net.MalformedURLException;
 
 import objet.Item;
 import personnage.Personnage;
@@ -113,6 +111,7 @@ public class Serialize implements VisitorRPG {
 		try {
 			FileInputStream fichier = new FileInputStream("enemy.ser");
 
+			@SuppressWarnings("resource")
 			ObjectInputStream ois = new ObjectInputStream(fichier);
 			return (Enemy) ois.readObject();
 
@@ -191,7 +190,6 @@ public class Serialize implements VisitorRPG {
 	 * 
 	 * @see serializable.VisitorRPG#devisiteChargementDynamique()
 	 */
-	@SuppressWarnings("unchecked")
 	@Override
 	public ChargementDynamique devisiteChargementDynamique()
 			throws InstantiationException, IllegalAccessException {
@@ -288,7 +286,6 @@ public class Serialize implements VisitorRPG {
 	@Override
 	public Item devisiteItem() {
 		try {
-			@SuppressWarnings("resource")
 			ObjectInputStream ois = new ObjectInputStream(fichierIN);
 			return (Item) ois.readObject();
 
@@ -301,58 +298,5 @@ public class Serialize implements VisitorRPG {
 
 	}
 
-	/**
-	 * The main method.
-	 * 
-	 * @param args
-	 *            the arguments
-	 * @throws ClassNotFoundException
-	 *             the class not found exception
-	 * @throws InstantiationException
-	 *             the instantiation exception
-	 * @throws IllegalAccessException
-	 *             the illegal access exception
-	 * @throws IllegalArgumentException
-	 *             the illegal argument exception
-	 * @throws InvocationTargetException
-	 *             the invocation target exception
-	 * @throws NoSuchMethodException
-	 *             the no such method exception
-	 * @throws SecurityException
-	 *             the security exception
-	 * @throws IOException
-	 *             Signals that an I/O exception has occurred.
-	 */
-	public static void main(String[] args) throws ClassNotFoundException,
-			InstantiationException, IllegalAccessException,
-			IllegalArgumentException, InvocationTargetException,
-			NoSuchMethodException, SecurityException, IOException {
-
-		ChargementDynamiqueJar epee = new ChargementDynamiqueJar(
-				"./Plugin/Epee.jar");
-		ChargementDynamiqueJar bouclier = new ChargementDynamiqueJar(
-				"./Plugin/Bouclier.jar");
-		ChargementDynamiqueJar potion = new ChargementDynamiqueJar(
-				"./Plugin/Elixir.jar");
-		epee.ChargermentJar();
-		bouclier.ChargermentJar();
-		potion.ChargermentJar();
-		Item item = new Item(epee, bouclier, potion);
-		ChargementDynamiqueJar cd = new ChargementDynamiqueJar(
-				"./Plugin/Guerrier.jar");
-		cd.ChargermentJar();
-		Personnage p = Personnage.getInstance();
-		p.init(item, cd, "Le gueurier");
-		/*
-		 * FileOutputStream fichierOUT = new FileOutputStream("./SaveJeux.ser");
-		 * Serialize save = new Serialize(fichierOUT); save.visiter(p);
-		 */
-		FileInputStream fichierIN = new FileInputStream("./SaveJeux.ser");
-
-		Serialize load = new Serialize(fichierIN);
-
-		Personnage p1 = load.devisitePersonnage();
-		System.out.println(p1.getNom());
-
-	}
+	
 }

@@ -119,7 +119,7 @@ public class BattleModel extends Observable {
 			return false;
 		}
 		System.out.println("Erreur exception");
-		return false;
+		return true;
 	}
 	public int pdvEnleverPerso(int attaque){
 		if(perso.getDefense() > attaque){

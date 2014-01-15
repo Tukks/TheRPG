@@ -141,9 +141,6 @@ public class HomeRPG {
 		shell.setLocation(new Point(x, y));
 	}
 
-	public static void main(String[] args) throws InstantiationException,
-			IllegalAccessException, ClassNotFoundException, IOException {
-		new HomeRPG();
-	}
+	
 
 }

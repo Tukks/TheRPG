@@ -153,7 +153,6 @@ public class BattleVue implements Observer {
 	}
 
 	public void addControleur(BattleControleur ncontroleur) {
-		System.out.println("View      : adding controller");
 		if (!lancerComb.isDisposed()) {
 			lancerComb.addListener(SWT.Selection, ncontroleur);
 		}

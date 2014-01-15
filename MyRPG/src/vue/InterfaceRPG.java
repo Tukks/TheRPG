@@ -1,6 +1,5 @@
 package vue;
 
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
@@ -32,7 +31,6 @@ import battle.BattleControleur;
 import battle.BattleModel;
 import battle.BattleVue;
 import battle.Enemy;
-import battle.RunMVCBattle;
 import personnage.Personnage;
 import serializable.Serialize;
 import util.PathManager;
@@ -43,7 +41,6 @@ import vue.groupItems.GroupPotions;
 import vue.groupPerso.GroupApercuPerso;
 import vue.groupPerso.GroupCaracteristiquesPerso;
 import chargementDynamique.ChargementDynamique;
-import chargementDynamique.ChargementDynamiqueJar;
 import chargementDynamique.ListenerChargementDyn;
 import chargementDynamique.WatchDir;
 
@@ -217,10 +214,10 @@ private WatchDir watchDirectories;
 							 */
 							fenetre.close();
 							display.close();
-							
+							new HomeRPG();
 							watchDirectories.setContinu(false);
 							threadCD.interrupt();
-							new HomeRPG();
+
 						} catch (InstantiationException | IllegalAccessException
 								| ClassNotFoundException | IOException e) {
 							// TODO Auto-generated catch block
