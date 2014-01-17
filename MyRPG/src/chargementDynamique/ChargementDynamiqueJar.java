@@ -51,6 +51,7 @@ public class ChargementDynamiqueJar extends ChargementDynamique {
 			classCharged = cl.loadClass(getNomClasse(jar));
 			classInstancie = classCharged.newInstance();
 			this.listAllMethod();
+			jar.close();
 		} catch (IOException e) {
 			return false;
 		}

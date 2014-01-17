@@ -2,6 +2,7 @@ package personnage;
 
 import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Modifier;
 import java.util.List;
 
 import objet.Item;
@@ -45,6 +46,8 @@ public class Personnage implements Serializable {
 		this.item = item;
 		this.nom = nom;
 		this.classPerso = classPerso;
+		int m = this.classPerso.getMethodForName("getPdv").getModifiers();
+		System.out.println(Modifier.isPublic(m));
 		pointDeVie =(int) this.classPerso.getMethodForName("getPdv").invoke(this.classPerso.getClassInstancie());
 		forceDeFrappe =(int) this.classPerso.getMethodForName("getForce").invoke(this.classPerso.getClassInstancie()) +
 				(int) this.item.getArme().getMethodForName("getForce").invoke(this.item.getArme().getClassInstancie());
