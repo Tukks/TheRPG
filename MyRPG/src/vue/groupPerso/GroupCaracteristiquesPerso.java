@@ -58,27 +58,51 @@ public class GroupCaracteristiquesPerso implements Observer {
 		thisGroup.setBackgroundImage(new Image(fenetre.getDisplay(),
 				PathManager.bgGroup));
 
-		force = new Label(thisGroup, SWT.CENTER);
-		force.setText("Force :       ");
-		pdv = new Label(thisGroup, SWT.CENTER);
-		pdv.setText("Points de vie :      ");
-		def = new Label(thisGroup, SWT.CENTER);
-		def.setText("Defense :      ");
-
-		lClasse = new Label(thisGroup, SWT.CENTER);
-		lClasse.setText("Classe : ");
-
-		lArme = new Label(thisGroup, SWT.CENTER);
-		lArme.setText("Arme : ");
-
-		lArmure = new Label(thisGroup, SWT.CENTER);
-		lArmure.setText("Armure : ");
-
 		nomPerso = new Text(thisGroup, SWT.SINGLE);
 		nomPerso.setTextLimit(50);
 		nomPerso.setText("Saisir le nom du perso");
 		nomPerso.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
-		nomPerso.setFont(new Font(fenetre.getDisplay(), "Arial", 11, SWT.NORMAL));
+		nomPerso.setFont(new Font(fenetre.getDisplay(), "Arial", 12, SWT.NORMAL));
+	
+		pdv = new Label(thisGroup, SWT.CENTER);
+		pdv.setText("Points de vie :      ");
+		pdv.setFont(new Font(fenetre.getDisplay(), "Arial", 12,
+				SWT.ITALIC));
+		pdv.setBackgroundImage(new Image(fenetre.getDisplay(),
+				PathManager.bgGroup));
+		force = new Label(thisGroup, SWT.CENTER);
+		force.setText("Force :       ");
+		force.setFont(new Font(fenetre.getDisplay(), "Arial", 12,
+				SWT.ITALIC));
+		force.setBackgroundImage(new Image(fenetre.getDisplay(),
+				PathManager.bgGroup));
+		def = new Label(thisGroup, SWT.CENTER);
+		def.setText("Defense :      ");
+		def.setFont(new Font(fenetre.getDisplay(), "Arial", 12,
+				SWT.ITALIC));
+		def.setBackgroundImage(new Image(fenetre.getDisplay(),
+				PathManager.bgGroup));
+		lClasse = new Label(thisGroup, SWT.CENTER);
+		lClasse.setText("Classe : ");
+		lClasse.setFont(new Font(fenetre.getDisplay(), "Arial", 12,
+				SWT.ITALIC));
+		lClasse.setBackgroundImage(new Image(fenetre.getDisplay(),
+				PathManager.bgGroup));
+
+		lArme = new Label(thisGroup, SWT.CENTER);
+		lArme.setText("Arme : ");
+		lArme.setFont(new Font(fenetre.getDisplay(), "Arial", 12,
+				SWT.ITALIC));
+		lArme.setBackgroundImage(new Image(fenetre.getDisplay(),
+				PathManager.bgGroup));
+
+		lArmure = new Label(thisGroup, SWT.CENTER);
+		lArmure.setText("Armure : ");
+		lArmure.setFont(new Font(fenetre.getDisplay(), "Arial", 12,
+				SWT.ITALIC));
+		lArmure.setBackgroundImage(new Image(fenetre.getDisplay(),
+				PathManager.bgGroup));
+
 	}
 
 	public String getNomPerso() {
@@ -151,7 +175,7 @@ public class GroupCaracteristiquesPerso implements Observer {
 		int tmpDef = d + defTmp;
 		int tmpAtt = f + attTmp;
 		pdv.setText("Point de vie : " + Integer.toString(pv));
-		def.setText("defense : " + Integer.toString(tmpDef));
+		def.setText("Defense : " + Integer.toString(tmpDef));
 		force.setText("Force : " + Integer.toString( tmpAtt));
 		// rafraichissement des labels
 		lClasse.pack();
