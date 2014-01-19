@@ -129,6 +129,7 @@ public class InterfaceRPG implements Observer {
 		gArmes.addObserver(gCarac);
 		gArmures.addObserver(gCarac);
 		gClasses.addObserver(gArmes);
+		gClasses.addObserver(gArmures);
 		// FIN GROUPES
 
 		// curseur

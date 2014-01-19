@@ -15,8 +15,12 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Shell;
 
+import annot.Classe;
+import annot.Item;
+import annot.TypeItem;
 import util.PathManager;
 import chargementDynamique.ChargementDynamique;
+import chargementDynamique.ListenerChargementDyn;
 
 public class GroupArmures extends Observable implements Observer {
 
@@ -38,7 +42,7 @@ public class GroupArmures extends Observable implements Observer {
 		thisGroup.setLayout(new GridLayout());
 		thisGroup.setBackgroundImage(new Image(fenetre.getDisplay(),
 				PathManager.bgGroup));
-		FillList();
+		
 		addListener();
 
 		if (listeDesArmures.getItemCount() == 0)
@@ -75,11 +79,44 @@ public class GroupArmures extends Observable implements Observer {
 	}
 
 	@Override
-	public void update(Observable arg0, Object arg1) {
+	public void update(final Observable arg0, final Object arg1) {
 		Display.getDefault().syncExec(new Runnable() {
 			public void run() {
-				listeDesArmures.add(armures.getLast().getNameClasse());
-				listeDesArmures.pack();
+				
+				if (arg0 instanceof ListenerChargementDyn) {
+					listeDesArmures.add(armures.getLast().getNameClasse());
+					listeDesArmures.pack();
+
+				} else if (arg0 instanceof GroupClasses) {
+					listeDesArmures.setEnabled(true);
+					listeDesArmures.removeAll();
+					ChargementDynamique cd = (ChargementDynamique) arg1;
+					Classe Classe = (Classe) cd.getClassCharged()
+							.getAnnotations()[0];
+					String ClassString = Classe.nom();
+
+					for (ChargementDynamique arme : armures) {
+						Item item = (Item) arme.getClassCharged()
+								.getAnnotations()[0];
+						String[] itemFor = item.classe().split(",");
+
+						if (item.classe().equalsIgnoreCase("all")
+								&& item.type() == TypeItem.Armure) {
+							listeDesArmures.add(arme.getNameItem());
+
+						}
+						for (int i = 0; i < itemFor.length; i++) {
+							if (itemFor[i].equalsIgnoreCase(ClassString) && item.type() == TypeItem.Armure) {
+								
+								listeDesArmures.add(arme.getNameItem());
+							}
+						}
+
+					}
+
+					listeDesArmures.pack();
+				}
+
 			}
 		});
 	}
