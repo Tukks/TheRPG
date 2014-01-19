@@ -10,11 +10,11 @@ import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
+import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Group;
@@ -61,16 +61,25 @@ public class GroupClasses extends Observable implements Observer {
 			}
 		});
 
-		photoPerso.setLocation(new Point(50, 50));
+		photoPerso.setBackgroundImage(new Image(fenetre.getDisplay(),
+				PathManager.bgGroup));
 
 		thisGroup.setText("Choisir une classe de personnage");
-		thisGroup.setLayout(new GridLayout());
+		FillLayout fl = new FillLayout(SWT.VERTICAL);
+		fl.marginHeight = 10;
+		fl.marginWidth = 55;
+		fl.spacing = 5;
+
+		thisGroup.setLayout(fl);
 		thisGroup.setBackgroundImage(new Image(fenetre.getDisplay(),
 				PathManager.bgGroup));
 		addListener();
 
 		fillList();
-
+		listeDesClasses.setBackgroundImage(new Image(fenetre.getDisplay(),
+				PathManager.bgGroup));
+		listeDesClasses.setFont(new Font(shell.getDisplay(), "Arial", 14,
+				SWT.NONE));
 		if (listeDesClasses.getItemCount() == 0)
 			listeDesClasses.setEnabled(false);
 	}

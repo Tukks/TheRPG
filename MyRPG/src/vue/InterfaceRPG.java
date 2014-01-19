@@ -17,9 +17,11 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
+import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.List;
@@ -44,9 +46,9 @@ import chargementDynamique.ChargementDynamique;
 import chargementDynamique.ListenerChargementDyn;
 import chargementDynamique.WatchDir;
 
-public class InterfaceRPG implements Observer, Cloneable {
+public class InterfaceRPG implements Observer {
 
-	public static Display display = new Display();
+	public static Display display = new Display();;
 	private ImageData cursor_Image = new ImageData(PathManager.cursorImg);
 	private List listeClasses;
 	private LinkedList<ChargementDynamique> classes;
@@ -54,6 +56,15 @@ public class InterfaceRPG implements Observer, Cloneable {
 	private List listeItems;
 	Enemy e = new Enemy();
 	private WatchDir watchDirectories;
+
+	public int getSizeListeClasses() {
+		return sizeListeClasses;
+	}
+
+	public void setSizeListeClasses(int sizeListeClasses) {
+		this.sizeListeClasses = sizeListeClasses;
+	}
+
 	protected int sizeListeClasses;
 	private GroupClasses gClasses;
 	private GroupArmes gArmes;
@@ -66,6 +77,10 @@ public class InterfaceRPG implements Observer, Cloneable {
 	private Personnage perso;
 	Shell fenetre;
 	private InterfaceRPG newI;
+
+	public InterfaceRPG(InterfaceRPG i) {
+		newI = i;
+	}
 
 	public InterfaceRPG() throws InstantiationException,
 			IllegalAccessException, ClassNotFoundException, IOException {
@@ -112,6 +127,16 @@ public class InterfaceRPG implements Observer, Cloneable {
 		gCarac = new GroupCaracteristiquesPerso(fenetre, gridData, perso,
 				gClasses, gArmures, gArmes);
 
+		// compo button
+		Composite cButton = new Composite(fenetre, SWT.NO_BACKGROUND);
+		FillLayout rowlayout = new FillLayout(SWT.VERTICAL);
+		rowlayout.spacing = 10;
+		rowlayout.marginHeight = 15;
+		rowlayout.marginWidth = 15;
+
+		cButton.setLayout(rowlayout);
+		cButton.setLayoutData(gridData);
+
 		gClasses.addObserver(gCarac);
 		gArmes.addObserver(gCarac);
 		gArmures.addObserver(gCarac);
@@ -128,26 +153,30 @@ public class InterfaceRPG implements Observer, Cloneable {
 		fenetre.setBackgroundImage(bg_Image);
 
 		// bouton lancer jeu
-		Button button = new Button(fenetre, SWT.NONE);
+		Button button = new Button(cButton, SWT.FLAT);
 		button.setText("Lancer");
 		button.addListener(SWT.Selection, getListener());
 		// bouton pour sauvergarder
-		Button save = new Button(fenetre, SWT.NONE);
+		Button save = new Button(cButton, SWT.FLAT);
 		save.setText("Sauvergarder");
 		save.addListener(SWT.Selection, listenerSave());
 		// Boutton pour retour en arriere
-		Button retour = new Button(fenetre, SWT.NONE);
+		Button retour = new Button(cButton, SWT.FLAT);
 		retour.setText("Retour");
 		retour.addListener(SWT.Selection, listenerRetour());
 		centrerSurEcran(display, fenetre);
 
 		fenetre.addListener(SWT.Close, new Listener() {
 			public void handleEvent(Event event) {
+				// stopper le thread
+			}
+		});
+		fenetre.addListener(SWT.Close, new Listener() {
+			public void handleEvent(Event event) {
 				watchDirectories.setContinu(false);
 				threadCD.interrupt();
 			}
 		});
-
 		fenetre.open();
 
 		while (!fenetre.isDisposed())
@@ -210,14 +239,21 @@ public class InterfaceRPG implements Observer, Cloneable {
 
 				fenetre.close();
 				display.close();
-
-				try {
-					new HomeRPG();
-				} catch (InstantiationException | IllegalAccessException
-						| ClassNotFoundException | IOException e) {
-					// TODO Auto-generated catch block
-
-				}
+				watchDirectories.setContinu(false);
+				threadCD.interrupt();
+				// fenetre.close();
+				Display.getDefault().syncExec(new Runnable() {
+					public void run() {
+						try {
+							new HomeRPG();
+						} catch (InstantiationException
+								| IllegalAccessException
+								| ClassNotFoundException | IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+				});
 
 			}
 
@@ -327,7 +363,7 @@ public class InterfaceRPG implements Observer, Cloneable {
 		return gridData;
 	}
 
-	public Shell createFrame() {
+	private Shell createFrame() {
 		Shell fenetre = new Shell(display, SWT.CLOSE | SWT.MIN);
 		fenetre.setSize(1024, 700);
 
@@ -362,21 +398,5 @@ public class InterfaceRPG implements Observer, Cloneable {
 					listeItems.add(items.getLast().getNameItem());
 			}
 		});
-	}
-
-	public Shell getFenetre() {
-		return fenetre;
-	}
-
-	public void setFenetre(Shell fenetre) {
-		this.fenetre = fenetre;
-	}
-
-	public int getSizeListeClasses() {
-		return sizeListeClasses;
-	}
-
-	public void setSizeListeClasses(int sizeListeClasses) {
-		this.sizeListeClasses = sizeListeClasses;
 	}
 }
