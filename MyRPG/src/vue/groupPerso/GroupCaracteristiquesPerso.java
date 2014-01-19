@@ -1,5 +1,6 @@
 package vue.groupPerso;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -16,6 +17,7 @@ import util.PathManager;
 import vue.groupItems.GroupArmes;
 import vue.groupItems.GroupArmures;
 import vue.groupItems.GroupClasses;
+import chargementDynamique.ChargementDynamique;
 
 public class GroupCaracteristiquesPerso implements Observer {
 
@@ -74,10 +76,23 @@ public class GroupCaracteristiquesPerso implements Observer {
 		lArme.setText("Arme : " + gArmes.getValSelection());
 		lArmure.setText("Armure : " + gArmures.getValSelection());
 
-		int[] carac = (int[]) arg;
-		int pv = carac[0];
-		int d = carac[1];
-		int f = carac[2];
+		int pv = 0;
+		int d = 0;
+		int f = 0;
+		try {
+			pv = (int) ((ChargementDynamique) arg).getMethodForName("getPdv")
+					.invoke(((ChargementDynamique) arg).getClassInstancie());
+			d = (int) ((ChargementDynamique) arg)
+					.getMethodForName("getDefense").invoke(
+							((ChargementDynamique) arg).getClassInstancie());
+			f = (int) ((ChargementDynamique) arg).getMethodForName("getForce")
+					.invoke(((ChargementDynamique) arg).getClassInstancie());
+
+		} catch (IllegalAccessException | IllegalArgumentException
+				| InvocationTargetException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		pdv.setText(Integer.toString(pv));
 		def.setText(Integer.toString(d));

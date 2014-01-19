@@ -76,34 +76,9 @@ public class GroupClasses extends Observable implements Observer {
 				valSelection = listeDesClasses.getItem(listeDesClasses
 						.getSelectionIndex());
 
-				int[] carac = new int[3];
+				notifyObservers(lcd.getClassForNamePluginClasse(valSelection));
 
-				try {
-					carac[0] = (int) lcd
-							.getClassForNamePluginClasse(valSelection)
-							.getMethodForName("getPdv")
-							.invoke(lcd.getClassForNamePluginClasse(
-									valSelection).getClassInstancie());
-
-					carac[1] = (int) lcd
-							.getClassForNamePluginClasse(valSelection)
-							.getMethodForName("getDefense")
-							.invoke(lcd.getClassForNamePluginClasse(
-									valSelection).getClassInstancie());
-
-					carac[2] = (int) lcd
-							.getClassForNamePluginClasse(valSelection)
-							.getMethodForName("getForce")
-							.invoke(lcd.getClassForNamePluginClasse(
-									valSelection).getClassInstancie());
-
-				} catch (IllegalAccessException | IllegalArgumentException
-						| InvocationTargetException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-
-				notifyObservers(carac);
+				// notifyObservers(carac);
 				setChanged();
 
 				try {
