@@ -2,14 +2,30 @@ package memento;
 
 import vue.InterfaceRPG;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class Memento.
+ */
 public class Memento {
-	  private InterfaceRPG state;
+	  
+  	/** The state. */
+  	private InterfaceRPG state;
 	   
-	  public Memento(InterfaceRPG state){
+	  /**
+  	 * Instantiates a new memento.
+  	 *
+  	 * @param state the state
+  	 */
+  	public Memento(InterfaceRPG state){
 	    this.state = state;
 	  }
 	 
-	  public InterfaceRPG getState() {
+	  /**
+  	 * Gets the state.
+  	 *
+  	 * @return the state
+  	 */
+  	public InterfaceRPG getState() {
 	    return state;
 	  }
 	}
