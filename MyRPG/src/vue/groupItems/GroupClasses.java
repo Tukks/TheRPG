@@ -1,5 +1,6 @@
 package vue.groupItems;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.LinkedList;
 import java.util.Observable;
 import java.util.Observer;
@@ -17,6 +18,7 @@ import org.eclipse.swt.widgets.Shell;
 
 import util.PathManager;
 import chargementDynamique.ChargementDynamique;
+import chargementDynamique.ListenerChargementDyn;
 
 public class GroupClasses extends Observable implements Observer {
 
@@ -25,12 +27,14 @@ public class GroupClasses extends Observable implements Observer {
 	private List listeDesClasses;
 	private Shell shell;
 	private String valSelection = "";
+	private ListenerChargementDyn lcd;
 
 	public GroupClasses(Shell fenetre, LinkedList<ChargementDynamique> classes,
-			GridData gridData) {
+			GridData gridData, ListenerChargementDyn listenerCD) {
 
 		this.setShell(fenetre);
 		this.classes = classes;
+		lcd = listenerCD;
 		thisGroup = new Group(fenetre, SWT.FLAT);
 		thisGroup.setLayoutData(gridData);
 
@@ -57,9 +61,36 @@ public class GroupClasses extends Observable implements Observer {
 				super.mouseDown(arg0);
 				// on récup la valeur selectionnée
 				valSelection = listeDesClasses.getItem(listeDesClasses
-					.getSelectionIndex());
-				
-				notifyObservers();
+						.getSelectionIndex());
+
+				int[] carac = new int[3];
+
+				try {
+					carac[0] = (int) lcd
+							.getClassForNamePluginClasse(valSelection)
+							.getMethodForName("getPdv")
+							.invoke(lcd.getClassForNamePluginClasse(
+									valSelection).getClassInstancie());
+
+					carac[1] = (int) lcd
+							.getClassForNamePluginClasse(valSelection)
+							.getMethodForName("getDefense")
+							.invoke(lcd.getClassForNamePluginClasse(
+									valSelection).getClassInstancie());
+
+					carac[2] = (int) lcd
+							.getClassForNamePluginClasse(valSelection)
+							.getMethodForName("getForce")
+							.invoke(lcd.getClassForNamePluginClasse(
+									valSelection).getClassInstancie());
+
+				} catch (IllegalAccessException | IllegalArgumentException
+						| InvocationTargetException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+				notifyObservers(carac);
 				setChanged();
 			}
 		});

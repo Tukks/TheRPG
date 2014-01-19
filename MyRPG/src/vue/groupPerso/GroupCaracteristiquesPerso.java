@@ -28,6 +28,12 @@ public class GroupCaracteristiquesPerso implements Observer {
 	private GroupArmures gArmures;
 	private GroupClasses gClasses;
 
+	private Label force;
+
+	private Label pdv;
+
+	private Label def;
+
 	public GroupCaracteristiquesPerso(Shell fenetre, GridData gridData,
 			Personnage perso, GroupClasses gClasses, GroupArmures gArmures,
 			GroupArmes gArmes) {
@@ -43,12 +49,12 @@ public class GroupCaracteristiquesPerso implements Observer {
 		thisGroup.setBackgroundImage(new Image(fenetre.getDisplay(),
 				PathManager.bgGroup));
 
-		new Label(thisGroup, SWT.CENTER).setText("Force : "
-				+ Integer.toString(perso.getForceDeFrappe()));
-		new Label(thisGroup, SWT.CENTER).setText("Points de vie : "
-				+ Integer.toString(perso.getPointDeVie()));
-		new Label(thisGroup, SWT.CENTER).setText("Defense : "
-				+ Integer.toString(perso.getDefense()));
+		force = new Label(thisGroup, SWT.CENTER);
+		force.setText("Force :       ");
+		pdv = new Label(thisGroup, SWT.CENTER);
+		pdv.setText("Points de vie :      ");
+		def = new Label(thisGroup, SWT.CENTER);
+		def.setText("Defense :      ");
 
 		lClasse = new Label(thisGroup, SWT.CENTER);
 		lClasse.setText("Classe : ");
@@ -62,10 +68,21 @@ public class GroupCaracteristiquesPerso implements Observer {
 
 	@Override
 	public void update(Observable o, Object arg) {
+
 		// maj des labels
 		lClasse.setText("Classe : " + gClasses.getValSelection());
 		lArme.setText("Arme : " + gArmes.getValSelection());
 		lArmure.setText("Armure : " + gArmures.getValSelection());
+
+		int[] carac = (int[]) arg;
+		int pv = carac[0];
+		int d = carac[1];
+		int f = carac[2];
+
+		pdv.setText(Integer.toString(pv));
+		def.setText(Integer.toString(d));
+		force.setText(Integer.toString(f));
+
 		// rafraichissement des labels
 		lClasse.pack();
 		lArme.pack();

@@ -20,7 +20,6 @@ import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.widgets.DirectoryDialog;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.List;
@@ -28,10 +27,6 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 
-import battle.BattleControleur;
-import battle.BattleModel;
-import battle.BattleVue;
-import battle.Enemy;
 import personnage.Personnage;
 import serializable.Serialize;
 import util.PathManager;
@@ -41,6 +36,10 @@ import vue.groupItems.GroupClasses;
 import vue.groupItems.GroupPotions;
 import vue.groupPerso.GroupApercuPerso;
 import vue.groupPerso.GroupCaracteristiquesPerso;
+import battle.BattleControleur;
+import battle.BattleModel;
+import battle.BattleVue;
+import battle.Enemy;
 import chargementDynamique.ChargementDynamique;
 import chargementDynamique.ListenerChargementDyn;
 import chargementDynamique.WatchDir;
@@ -54,7 +53,8 @@ public class InterfaceRPG implements Observer {
 	private LinkedList<ChargementDynamique> items;
 	private List listeItems;
 	Enemy e = new Enemy();
-private WatchDir watchDirectories;
+	private WatchDir watchDirectories;
+
 	public int getSizeListeClasses() {
 		return sizeListeClasses;
 	}
@@ -75,9 +75,11 @@ private WatchDir watchDirectories;
 	private Personnage perso;
 	Shell fenetre;
 	private InterfaceRPG newI;
-	public InterfaceRPG(InterfaceRPG i){
-		 newI = i;
+
+	public InterfaceRPG(InterfaceRPG i) {
+		newI = i;
 	}
+
 	public InterfaceRPG() throws InstantiationException,
 			IllegalAccessException, ClassNotFoundException, IOException {
 
@@ -87,11 +89,11 @@ private WatchDir watchDirectories;
 		perso = Personnage.getInstance();
 
 		GridData gridData = getGridData();
-		
+
 		Path dir = Paths.get("./Plugin");
 		watchDirectories = new WatchDir(dir, true);
 		listenerCD = ListenerChargementDyn.getInstance();
-		
+
 		threadCD = new Thread(watchDirectories);
 		threadCD.start();
 
@@ -104,7 +106,7 @@ private WatchDir watchDirectories;
 		// **** création des groupes ****
 
 		// 1 > liste des classes
-		gClasses = new GroupClasses(fenetre, classes, gridData);
+		gClasses = new GroupClasses(fenetre, classes, gridData, listenerCD);
 		listenerCD.addObserver(gClasses);
 
 		// 2 > saisie nom du perso + apperçu perso
@@ -141,11 +143,11 @@ private WatchDir watchDirectories;
 		Button button = new Button(fenetre, SWT.NONE);
 		button.setText("Lancer");
 		button.addListener(SWT.Selection, getListener());
-		//bouton pour sauvergarder 
+		// bouton pour sauvergarder
 		Button save = new Button(fenetre, SWT.NONE);
 		save.setText("Sauvergarder");
 		save.addListener(SWT.Selection, listenerSave());
-		//Boutton pour retour en arriere
+		// Boutton pour retour en arriere
 		Button retour = new Button(fenetre, SWT.NONE);
 		retour.setText("Retour");
 		retour.addListener(SWT.Selection, listenerRetour());
@@ -205,42 +207,41 @@ private WatchDir watchDirectories;
 	public void setgCarac(GroupCaracteristiquesPerso gCarac) {
 		this.gCarac = gCarac;
 	}
-	private Listener listenerRetour(){
-		return new Listener(){
+
+	private Listener listenerRetour() {
+		return new Listener() {
 
 			@Override
 			public void handleEvent(Event arg0) {
 				// TODO Auto-generated method stub
-				
-				    	
-						try {
-							/*
-							 * A reparer
-							 */
-							fenetre.close();
-							display.close();
-							new HomeRPG();
-							watchDirectories.setContinu(false);
-							threadCD.interrupt();
 
-						} catch (InstantiationException | IllegalAccessException
-								| ClassNotFoundException | IOException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-				    }
-			
-				
-			};
+				try {
+					/*
+					 * A reparer
+					 */
+					fenetre.close();
+					display.close();
+					new HomeRPG();
+					watchDirectories.setContinu(false);
+					threadCD.interrupt();
+
+				} catch (InstantiationException | IllegalAccessException
+						| ClassNotFoundException | IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+
+		};
 	}
-	
-		
-	public void close(){
+
+	public void close() {
 		fenetre.close();
 		display.close();
 	}
-	private Listener listenerSave(){
-		return new Listener(){
+
+	private Listener listenerSave() {
+		return new Listener() {
 
 			@Override
 			public void handleEvent(Event arg0) {
@@ -254,10 +255,9 @@ private WatchDir watchDirectories;
 						listenerCD.getClassForNamePluginItem(gPotions
 								.getValSelection()));
 				try {
-					perso.init(item,
-							listenerCD
-							.getClassForNamePluginClasse(gClasses.getValSelection()),
-									gAppercu.getNomPerso());
+					perso.init(item, listenerCD
+							.getClassForNamePluginClasse(gClasses
+									.getValSelection()), gAppercu.getNomPerso());
 				} catch (IllegalAccessException | IllegalArgumentException
 						| InvocationTargetException e1) {
 					// TODO Auto-generated catch block
@@ -267,24 +267,26 @@ private WatchDir watchDirectories;
 					Serialize enemy = new Serialize();
 					enemy.visiter(e);
 					fichierOUT = new FileOutputStream("./SaveJeux.ser");
-			
+
 					Serialize save;
 					save = new Serialize(fichierOUT);
 					save.visiter(perso);
-					MessageBox mb = new MessageBox(fenetre,SWT.ICON_INFORMATION);
+					MessageBox mb = new MessageBox(fenetre,
+							SWT.ICON_INFORMATION);
 					mb.setMessage("Personnage bien sauvergardé sous le nom SaveJeux.ser");
 					mb.open();
-					
+
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				
+
 			}
-			
+
 		};
-	
+
 	}
+
 	private Listener getListener() {
 		return new Listener() {
 			@Override
@@ -300,34 +302,27 @@ private WatchDir watchDirectories;
 								.getValSelection()));
 
 				try {
-					perso.init(item,
-							listenerCD
-							.getClassForNamePluginClasse(gClasses.getValSelection()),
-									gAppercu.getNomPerso());
+					perso.init(item, listenerCD
+							.getClassForNamePluginClasse(gClasses
+									.getValSelection()), gAppercu.getNomPerso());
 				} catch (IllegalAccessException | IllegalArgumentException
 						| InvocationTargetException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 
-				
 				display.close();
 
-				
 				BattleModel model = new BattleModel(perso, e);
 				BattleVue vue = new BattleVue(model);
-				
+
 				BattleControleur controleur = new BattleControleur();
 
 				controleur.addModel(model);
 				controleur.addVue(vue);
 				controleur.initModel("texte de base (init) - DEBUT");
 				vue.addControleur(controleur);
-				
-				
-				
-				
-				
+
 			}
 
 		};
@@ -369,7 +364,7 @@ private WatchDir watchDirectories;
 
 	@Override
 	public void update(Observable arg0, Object arg1) {
-		
+
 		Display.getDefault().syncExec(new Runnable() {
 			public void run() {
 				if (classes.size() != sizeListeClasses)
