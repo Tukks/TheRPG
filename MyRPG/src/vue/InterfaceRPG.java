@@ -99,7 +99,7 @@ public class InterfaceRPG implements Observer {
 
 		items = listenerCD.getPluginItem();
 		classes = listenerCD.getPluginClasse();
-
+		// recu
 		// récupération de la taille de la liste
 		setSizeListeClasses(classes.size());
 
