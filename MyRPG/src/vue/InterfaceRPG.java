@@ -225,13 +225,14 @@ public class InterfaceRPG implements Observer {
 					/*
 					 * A reparer
 					 */
+				
+					fenetre.close();
+			display.close();
+			watchDirectories.setContinu(false);
+			threadCD.interrupt();
 					//fenetre.close();
 					Display.getDefault().syncExec(new Runnable() {
 						public void run() {
-							fenetre.close();
-					display.close();
-					watchDirectories.setContinu(false);
-					threadCD.interrupt();
 					try {
 						new HomeRPG();
 					} catch (InstantiationException | IllegalAccessException
