@@ -119,4 +119,12 @@ public class GroupArmes extends Observable implements Observer {
 
 	}
 
+	public LinkedList<ChargementDynamique> getItems() {
+		return items;
+	}
+
+	public void setItems(LinkedList<ChargementDynamique> items) {
+		this.items = items;
+	}
+
 }

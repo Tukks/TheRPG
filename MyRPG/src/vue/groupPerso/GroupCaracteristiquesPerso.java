@@ -42,6 +42,7 @@ public class GroupCaracteristiquesPerso implements Observer {
 	int pv = 0;
 	int d = 0;
 	int f = 0;
+
 	public GroupCaracteristiquesPerso(Shell fenetre, GridData gridData,
 			Personnage perso, GroupClasses gClasses, GroupArmures gArmures,
 			GroupArmes gArmes) {
@@ -86,12 +87,12 @@ public class GroupCaracteristiquesPerso implements Observer {
 
 	@Override
 	public void update(Observable o, Object arg) {
-
+		int defTmp = 0;
+		int attTmp = 0;
 		if (o instanceof GroupClasses) {
 			// maj des labels
 			lClasse.setText("Classe : " + gClasses.getValSelection());
 
-			
 			try {
 				pv = (int) ((ChargementDynamique) arg).getMethodForName(
 						"getPdv").invoke(
@@ -109,16 +110,49 @@ public class GroupCaracteristiquesPerso implements Observer {
 				e.printStackTrace();
 			}
 
-			pdv.setText("Point de vie : " +Integer.toString(pv));
-			def.setText("defense : " + Integer.toString(d));
-			force.setText("Force : " + Integer.toString(f));
-		}else if (o instanceof GroupArmures) {
+		} else if (o instanceof GroupArmures) {
 			lArmure.setText("Armure : " + gArmures.getValSelection());
-			
+			for (int i = 0; i < gArmures.getArmures().size(); i++) {
+				if (gArmures.getArmures().get(i).getNameItem()
+						.equalsIgnoreCase(gArmures.getValSelection())) {
+					try {
+						defTmp = (int) gArmures
+								.getArmures()
+								.get(i)
+								.getMethodForName("getDefense")
+								.invoke(gArmures.getArmures().get(i)
+										.getClassInstancie());
+					} catch (IllegalAccessException | IllegalArgumentException
+							| InvocationTargetException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}
+		}else if (o instanceof GroupArmes) {
+			lArme.setText("Arme : " + gArmes.getValSelection());
+			for (int i = 0; i < gArmes.getItems().size(); i++) {
+				if (gArmes.getItems().get(i).getNameItem()
+						.equalsIgnoreCase(gArmes.getValSelection())) {
+					try {
+						attTmp = (int) gArmes.getItems()
+								.get(i)
+								.getMethodForName("getForce")
+								.invoke(gArmes.getItems().get(i)
+										.getClassInstancie());
+					} catch (IllegalAccessException | IllegalArgumentException
+							| InvocationTargetException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}
 		}
-		
-		lArme.setText("Arme : " + gArmes.getValSelection());
-		
+		int tmpDef = d + defTmp;
+		int tmpAtt = f + attTmp;
+		pdv.setText("Point de vie : " + Integer.toString(pv));
+		def.setText("defense : " + Integer.toString(tmpDef));
+		force.setText("Force : " + Integer.toString( tmpAtt));
 		// rafraichissement des labels
 		lClasse.pack();
 		lArme.pack();
