@@ -57,8 +57,9 @@ public class GroupCaracteristiquesPerso implements Observer {
 		thisGroup.setLayout(new GridLayout());
 		thisGroup.setBackgroundImage(new Image(fenetre.getDisplay(),
 				PathManager.bgGroup));
+		thisGroup.setFont(new Font(fenetre.getDisplay(), "Arial", 12, SWT.BOLD));
 
-		nomPerso = new Text(thisGroup, SWT.SINGLE);
+		nomPerso = new Text(thisGroup, SWT.BORDER);
 		nomPerso.setTextLimit(50);
 		nomPerso.setText("Saisir le nom du perso");
 		nomPerso.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));

@@ -45,7 +45,7 @@ public class GroupClasses extends Observable implements Observer {
 		thisGroup = new Group(fenetre, SWT.FLAT);
 		thisGroup.setLayoutData(gridData);
 
-		listeDesClasses = new List(thisGroup, SWT.SINGLE);
+		listeDesClasses = new List(thisGroup, SWT.BORDER);
 
 		// Color blue = shell.getDisplay().getSystemColor(SWT.T);
 		// listeDesClasses.setBackground(blue);
@@ -65,6 +65,7 @@ public class GroupClasses extends Observable implements Observer {
 				PathManager.bgGroup));
 
 		thisGroup.setText("Choisir une classe de personnage");
+		thisGroup.setFont(new Font(fenetre.getDisplay(), "Arial", 12, SWT.BOLD));
 		FillLayout fl = new FillLayout(SWT.VERTICAL);
 		fl.marginHeight = 10;
 		fl.marginWidth = 55;

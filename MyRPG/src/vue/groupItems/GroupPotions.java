@@ -7,7 +7,9 @@ import java.util.Observer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Display;
@@ -36,16 +38,26 @@ public class GroupPotions implements Observer {
 		thisGroup = new Group(fenetre, SWT.FLAT);
 		thisGroup.setLayoutData(gridData);
 
-		listeDesPotions = new List(thisGroup, SWT.SINGLE);
+		listeDesPotions = new List(thisGroup, SWT.BORDER);
 
 		thisGroup.setText("Choisir une potion");
-		thisGroup.setLayout(new GridLayout());
+		thisGroup.setFont(new Font(fenetre.getDisplay(), "Arial", 12, SWT.BOLD));
+		FillLayout fl = new FillLayout(SWT.VERTICAL);
+		fl.marginHeight = 10;
+		fl.marginWidth = 55;
+		fl.spacing = 5;
+		thisGroup.setLayout(fl);
 		thisGroup.setBackgroundImage(new Image(fenetre.getDisplay(),
 				PathManager.bgGroup));
 
 		FillList();
 		addListener();
 
+		listeDesPotions.setBackgroundImage(new Image(fenetre.getDisplay(),
+				PathManager.bgGroup));
+		listeDesPotions.setFont(new Font(fenetre.getDisplay(), "Arial", 12,
+				SWT.NONE));
+		
 		if (listeDesPotions.getItemCount() == 0)
 			listeDesPotions.setEnabled(false);
 

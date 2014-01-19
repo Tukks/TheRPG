@@ -157,9 +157,9 @@ public class InterfaceRPG implements Observer {
 		button.setFont(new Font(display, "Arial", 14, SWT.NONE));
 		button.addListener(SWT.Selection, getListener());
 
-		// bouton pour sauvergarder
+		// bouton pour sauvegarder
 		Button save = new Button(cButton, SWT.FLAT);
-		save.setText("Sauvergarder");
+		save.setText("Sauvegarder");
 		save.setFont(new Font(display, "Arial", 14, SWT.NONE));
 		save.addListener(SWT.Selection, listenerSave());
 
