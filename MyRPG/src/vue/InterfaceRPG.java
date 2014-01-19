@@ -13,6 +13,7 @@ import objet.Item;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Cursor;
+import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.graphics.Point;
@@ -155,14 +156,19 @@ public class InterfaceRPG implements Observer {
 		// bouton lancer jeu
 		Button button = new Button(cButton, SWT.FLAT);
 		button.setText("Lancer");
+		button.setFont(new Font(display, "Arial", 14, SWT.NONE));
 		button.addListener(SWT.Selection, getListener());
+
 		// bouton pour sauvergarder
 		Button save = new Button(cButton, SWT.FLAT);
 		save.setText("Sauvergarder");
+		save.setFont(new Font(display, "Arial", 14, SWT.NONE));
 		save.addListener(SWT.Selection, listenerSave());
+
 		// Boutton pour retour en arriere
 		Button retour = new Button(cButton, SWT.FLAT);
 		retour.setText("Retour");
+		retour.setFont(new Font(display, "Arial", 14, SWT.NONE));
 		retour.addListener(SWT.Selection, listenerRetour());
 		centrerSurEcran(display, fenetre);
 
