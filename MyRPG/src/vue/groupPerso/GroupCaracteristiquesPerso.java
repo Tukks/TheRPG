@@ -71,33 +71,37 @@ public class GroupCaracteristiquesPerso implements Observer {
 	@Override
 	public void update(Observable o, Object arg) {
 
-		// maj des labels
-		lClasse.setText("Classe : " + gClasses.getValSelection());
-		lArme.setText("Arme : " + gArmes.getValSelection());
-		lArmure.setText("Armure : " + gArmures.getValSelection());
+		if (o instanceof GroupClasses) {
+			// maj des labels
+			lClasse.setText("Classe : " + gClasses.getValSelection());
 
-		int pv = 0;
-		int d = 0;
-		int f = 0;
-		try {
-			pv = (int) ((ChargementDynamique) arg).getMethodForName("getPdv")
-					.invoke(((ChargementDynamique) arg).getClassInstancie());
-			d = (int) ((ChargementDynamique) arg)
-					.getMethodForName("getDefense").invoke(
-							((ChargementDynamique) arg).getClassInstancie());
-			f = (int) ((ChargementDynamique) arg).getMethodForName("getForce")
-					.invoke(((ChargementDynamique) arg).getClassInstancie());
+			int pv = 0;
+			int d = 0;
+			int f = 0;
+			try {
+				pv = (int) ((ChargementDynamique) arg).getMethodForName(
+						"getPdv").invoke(
+						((ChargementDynamique) arg).getClassInstancie());
+				d = (int) ((ChargementDynamique) arg).getMethodForName(
+						"getDefense").invoke(
+						((ChargementDynamique) arg).getClassInstancie());
+				f = (int) ((ChargementDynamique) arg).getMethodForName(
+						"getForce").invoke(
+						((ChargementDynamique) arg).getClassInstancie());
 
-		} catch (IllegalAccessException | IllegalArgumentException
-				| InvocationTargetException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			} catch (IllegalAccessException | IllegalArgumentException
+					| InvocationTargetException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+			pdv.setText(Integer.toString(pv));
+			def.setText(Integer.toString(d));
+			force.setText(Integer.toString(f));
 		}
 
-		pdv.setText(Integer.toString(pv));
-		def.setText(Integer.toString(d));
-		force.setText(Integer.toString(f));
-
+		lArme.setText("Arme : " + gArmes.getValSelection());
+		lArmure.setText("Armure : " + gArmures.getValSelection());
 		// rafraichissement des labels
 		lClasse.pack();
 		lArme.pack();
