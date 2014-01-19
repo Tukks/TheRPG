@@ -89,19 +89,7 @@ public class ListFile {
 		return cpt;
 
 	}
-	
-	/**
-	 * The main method.
-	 *
-	 * @param args the arguments
-	 */
-	public static void main(String[] args) {
-		ListFile fil = new ListFile(".", "class");
-		for (int i = 0; i < fil.listFichier().size(); i++) {
-			System.out.println(fil.listFichier().get(i));
-		}
 
-	}
 
 	/**
 	 * The Class Filtre.

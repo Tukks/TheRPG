@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 
 import objet.Item;
 import personnage.Personnage;
@@ -22,9 +23,11 @@ public class Serialize implements VisitorRPG {
 
 	/** The fichier out. */
 	FileOutputStream fichierOUT;
-
+	static boolean isFichier = true;
 	/** The fichier in. */
 	FileInputStream fichierIN;
+	ArrayList<String> pluginNotAvailable = new ArrayList<String>();
+	
 
 	/** The ois. */
 	ObjectInputStream ois;
@@ -193,6 +196,7 @@ public class Serialize implements VisitorRPG {
 	@Override
 	public ChargementDynamique devisiteChargementDynamique()
 			throws InstantiationException, IllegalAccessException {
+		
 		// TODO Auto-generated method stub
 		try {
 			String tmp;
@@ -208,9 +212,14 @@ public class Serialize implements VisitorRPG {
 				return tmpJar;
 			}
 		} catch (java.io.IOException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
+			
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
+		}finally{
+			isFichier = false;
+			
+
 		}
 		return null;
 	}
@@ -220,6 +229,7 @@ public class Serialize implements VisitorRPG {
 	 * 
 	 * @see serializable.VisitorRPG#devisitePersonnage()
 	 */
+	@SuppressWarnings("finally")
 	@Override
 	public Personnage devisitePersonnage() throws InstantiationException,
 			IllegalAccessException, IllegalArgumentException,
@@ -249,16 +259,20 @@ public class Serialize implements VisitorRPG {
 			classPersonnage = this.devisiteChargementDynamique();
 			// recreer Pers
 			p = Personnage.getInstance();
-			p.init(i, classPersonnage, ois.readUTF());
-
-			ois.close();
-			fichierIN.close();
-			return p;
-
+			if(isFichier == false){
+				p.init(i, classPersonnage, ois.readUTF());
+			
+				ois.close();
+				fichierIN.close();
+				return p;
+			}
 		} catch (java.io.IOException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
+		}finally{
+			System.out.println("perso");
+			return null;
 		}
-		return null;
+	//	return null;
 
 	}
 
@@ -297,6 +311,12 @@ public class Serialize implements VisitorRPG {
 		return null;
 
 	}
+	public ArrayList<String> getPluginNotAvailable() {
+		return pluginNotAvailable;
+	}
 
+	public void setPluginNotAvailable(ArrayList<String> pluginNotAvailable) {
+		this.pluginNotAvailable = pluginNotAvailable;
+	}
 	
 }

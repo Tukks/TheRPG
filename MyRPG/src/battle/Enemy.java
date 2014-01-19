@@ -15,6 +15,7 @@ public class Enemy implements Serializable{
 	int attaque;
 	int nbrPotion;
 	int defense;
+	
 	boolean reculer = false;
 	
 	public Enemy() {
@@ -82,6 +83,12 @@ public class Enemy implements Serializable{
 	}
 	public void setDefense(int defense) {
 		this.defense = defense;
+	}
+	public boolean isReculer() {
+		return reculer;
+	}
+	public void setReculer(boolean reculer) {
+		this.reculer = reculer;
 	}
 	public static long getSerialversionuid() {
 		return serialVersionUID;

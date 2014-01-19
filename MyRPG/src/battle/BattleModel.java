@@ -1,9 +1,10 @@
 package battle;
 
 import java.lang.reflect.InvocationTargetException;
-
 import java.util.Observable;
 
+
+import java.util.Random;
 
 import personnage.Personnage;
 
@@ -88,11 +89,26 @@ public class BattleModel extends Observable {
 				setChanged();
 				notifyObservers();
 			}
-				enemy.setPdv(enemy.getPdv() - perso.getForceDeFrappe());
+				if(!enemy.isReculer() || perso.getClassPerso().getNameClasse().equalsIgnoreCase("Archer")){
+					enemy.setPdv(enemy.getPdv() - perso.getForceDeFrappe());
+					int i = generateRand(0, 1);
+					if( i == 1){
+						enemy.setReculer(true);
+					}else{
+						enemy.setReculer(false);
+					}
+				}else{
+					enemy.setPdv(enemy.getPdv() - (int)(perso.getForceDeFrappe() * 0.5));
+					text = "\n l'enemie est loin, vous infligez 50% de dégat en moins";
+					int i = generateRand(0, 1);
+					if( i == 1){
+						enemy.setReculer(true);
+					}else{
+						enemy.setReculer(false);
+					}
+				}
 				perso.setPointDeVie(perso.getPointDeVie() - pdvEnleverPerso(enemy.getAttaque()));
 				
-			
-			
 			//a traiter enemy et perso == 0 pv
 		}
 		
@@ -123,7 +139,11 @@ public class BattleModel extends Observable {
 	}
 	public int pdvEnleverPerso(int attaque){
 		if(perso.getDefense() > attaque){
+			text +="\n L'enemie " + enemy.getNom() + " n'a pas assez de force pour vous battre";
+			text +="\n L'enemie " + enemy.getNom() + " prend un SuperAttaque qui lui fait gagner 1 en attaque";
+			enemy.setAttaque(enemy.getAttaque() + 1);
 			return 0;
+		
 		}else{
 			return attaque - perso.getDefense();
 		}
@@ -135,7 +155,11 @@ public class BattleModel extends Observable {
 		text = t;
 	}
 
-
+	int generateRand(int min, int max){
+		Random rand = new Random();
+		int nombreAleatoire = rand.nextInt(max - min + 1) + min;
+		return nombreAleatoire;
+	}
 	
 }
 

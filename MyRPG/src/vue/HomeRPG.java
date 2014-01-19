@@ -19,6 +19,7 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Listener;
+import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 
 import battle.BattleControleur;
@@ -34,7 +35,7 @@ public class HomeRPG {
 	private static Display display = new Display();// new Display();
 	private ImageData cursor_Image = new ImageData(PathManager.cursorImg);
 	private Shell fenetre;
-	
+
 	public HomeRPG() throws InstantiationException, IllegalAccessException,
 			ClassNotFoundException, IOException {
 
@@ -64,34 +65,42 @@ public class HomeRPG {
 		buttonCharger.setFont(new Font(display, "Arial", 14, SWT.NONE));
 		buttonCharger.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent event) {
-				
+
 				FileDialog charge = new FileDialog(fenetre);
-				
+
 				charge.setText("Chargement du perso");
 				charge.setFilterPath("../MyRpg");
 				String[] filterExt = { "*.ser", "*.*" };
 				charge.setFilterExtensions(filterExt);
 				String select = charge.open();
-				if(select != null){
+				if (select != null) {
 					try {
-						display.close();
-						//mettre un explorateur de fichier pour choisir la sauvegarde a charger
+						// mettre un explorateur de fichier pour choisir la
+						// sauvegarde a charger
 						FileInputStream fichierIN = new FileInputStream(select);
 						Serialize load = new Serialize(fichierIN);
 						Serialize enemy = new Serialize();
 						Personnage p1 = load.devisitePersonnage();
 						Enemy e = enemy.devisiteEnemy();
-						//System.out.println(p1.getDefense());
-						//Enemy e = new Enemy();
-						BattleModel model = new BattleModel(p1, e);
-						BattleVue vue = new BattleVue(model);
-						
-						BattleControleur controleur = new BattleControleur();
+						// System.out.println(p1.getDefense());
+						// Enemy e = new Enemy();
+						if (p1 != null) {
+							BattleModel model = new BattleModel(p1, e);
+							BattleVue vue = new BattleVue(model);
 
-						controleur.addModel(model);
-						controleur.addVue(vue);
-						controleur.initModel("");
-						vue.addControleur(controleur);
+							BattleControleur controleur = new BattleControleur();
+
+							controleur.addModel(model);
+							controleur.addVue(vue);
+							controleur.initModel("");
+							vue.addControleur(controleur);
+							display.close();
+
+						} else {
+							MessageBox b  = new MessageBox(fenetre, SWT.OK );
+							b.setMessage("il manque des plugins pour le bon déroulement du chargement");
+							b.open();
+						}
 					} catch (InstantiationException | IllegalAccessException
 							| IOException e) {
 						// TODO Auto-generated catch block
@@ -103,7 +112,7 @@ public class HomeRPG {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-					
+
 				}
 			}
 		});
@@ -122,17 +131,17 @@ public class HomeRPG {
 
 		@Override
 		public void handleEvent(Event arg0) {
-	
-				try {
-					display.close();
-					new InterfaceRPG();
-				} catch (InstantiationException | IllegalAccessException
-						| ClassNotFoundException | IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+
+			try {
+				display.close();
+				new InterfaceRPG();
+			} catch (InstantiationException | IllegalAccessException
+					| ClassNotFoundException | IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
-		
+
 	};
 
 	public static void centrerSurEcran(Display display, Shell shell) {
@@ -142,7 +151,5 @@ public class HomeRPG {
 		int y = (rect.height - size.y) / 2;
 		shell.setLocation(new Point(x, y));
 	}
-
-	
 
 }
