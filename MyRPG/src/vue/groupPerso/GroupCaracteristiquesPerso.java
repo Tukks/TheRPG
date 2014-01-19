@@ -5,12 +5,14 @@ import java.util.Observable;
 import java.util.Observer;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Text;
 
 import personnage.Personnage;
 import util.PathManager;
@@ -35,6 +37,8 @@ public class GroupCaracteristiquesPerso implements Observer {
 	private Label pdv;
 
 	private Label def;
+
+	private Text nomPerso;
 
 	public GroupCaracteristiquesPerso(Shell fenetre, GridData gridData,
 			Personnage perso, GroupClasses gClasses, GroupArmures gArmures,
@@ -66,6 +70,16 @@ public class GroupCaracteristiquesPerso implements Observer {
 
 		lArmure = new Label(thisGroup, SWT.CENTER);
 		lArmure.setText("Armure : ");
+
+		nomPerso = new Text(thisGroup, SWT.SINGLE);
+		nomPerso.setTextLimit(50);
+		nomPerso.setText("Saisir le nom du perso");
+		nomPerso.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+		nomPerso.setFont(new Font(fenetre.getDisplay(), "Arial", 11, SWT.NORMAL));
+	}
+
+	public String getNomPerso() {
+		return nomPerso.getText();
 	}
 
 	@Override
