@@ -13,7 +13,6 @@ import java.util.ArrayList;
 
 import java.util.List;
 
-
 import serializable.VisitorRPG;
 import annot.Classe;
 import annot.Item;
@@ -22,40 +21,46 @@ import annot.Item;
 /**
  * The Class ChargementDynamique.
  */
-public abstract class ChargementDynamique extends SecureClassLoader implements Serializable{ /** The Constant serialVersionUID. */
+public abstract class ChargementDynamique extends SecureClassLoader implements
+		Serializable {
+	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 5093773612781441090L;
-// faire
+	// faire
 
 	/** The cl. */
-URLClassLoader cl;
-	
+	URLClassLoader cl;
+
 	/** The class charged. */
 	Class<?> classCharged;
-	
+
 	/** The nom class. */
 	String nomClass;
-	
+
 	/** The class instancie. */
-	transient Object classInstancie; //a reconstruire a la deserialization
-	
+	transient Object classInstancie; // a reconstruire a la deserialization
+
 	/** The list methode. */
 	List<Method> listMethode = new ArrayList<Method>();
-	
+
 	/** The fichier. */
 	File fichier;
-	
+
 	/** The jar. */
 	public java.util.jar.JarFile jar;
 
 	/**
 	 * Rebuild class.
-	 *
-	 * @param classCharged the class charged
+	 * 
+	 * @param classCharged
+	 *            the class charged
 	 * @return the chargement dynamique
-	 * @throws InstantiationException the instantiation exception
-	 * @throws IllegalAccessException the illegal access exception
+	 * @throws InstantiationException
+	 *             the instantiation exception
+	 * @throws IllegalAccessException
+	 *             the illegal access exception
 	 */
-	public static ChargementDynamique rebuildClass(Object classCharged) throws InstantiationException, IllegalAccessException{
+	public static ChargementDynamique rebuildClass(Object classCharged)
+			throws InstantiationException, IllegalAccessException {
 		ChargementDynamique newClass = new ChargementDynamique() {
 
 			private static final long serialVersionUID = 1L;
@@ -65,14 +70,12 @@ URLClassLoader cl;
 		newClass.setClassInstancie(cc);
 		newClass.listAllMethod();
 		return newClass;
-		
+
 	}
-	
-	
-	
+
 	/**
 	 * Gets the class instancie.
-	 *
+	 * 
 	 * @return the class instancie
 	 */
 	public Object getClassInstancie() {
@@ -81,18 +84,17 @@ URLClassLoader cl;
 
 	/**
 	 * Sets the class instancie.
-	 *
-	 * @param classInstancie the new class instancie
+	 * 
+	 * @param classInstancie
+	 *            the new class instancie
 	 */
 	public void setClassInstancie(Object classInstancie) {
 		this.classInstancie = classInstancie;
 	}
 
-	
-
 	/**
 	 * Gets the type item.
-	 *
+	 * 
 	 * @return the type item
 	 */
 	public String getTypeItem() {
@@ -103,7 +105,7 @@ URLClassLoader cl;
 
 	/**
 	 * Gets the name item.
-	 *
+	 * 
 	 * @return the name item
 	 */
 	public String getNameItem() {
@@ -113,7 +115,7 @@ URLClassLoader cl;
 
 	/**
 	 * Gets the name classe.
-	 *
+	 * 
 	 * @return the name classe
 	 */
 	public String getNameClasse() {
@@ -122,10 +124,15 @@ URLClassLoader cl;
 
 	}
 
+	public String getIcoClasse() {
+		return this.classCharged.getAnnotation(Classe.class).ico();
+	}
+
 	/**
 	 * Gets the method for name.
-	 *
-	 * @param name the name
+	 * 
+	 * @param name
+	 *            the name
 	 * @return Method
 	 */
 	public Method getMethodForName(String name) {
@@ -151,7 +158,7 @@ URLClassLoader cl;
 
 	/**
 	 * Gets the cl.
-	 *
+	 * 
 	 * @return the cl
 	 */
 	public URLClassLoader getCl() {
@@ -160,8 +167,9 @@ URLClassLoader cl;
 
 	/**
 	 * Sets the cl.
-	 *
-	 * @param cl the new cl
+	 * 
+	 * @param cl
+	 *            the new cl
 	 */
 	public void setCl(URLClassLoader cl) {
 		this.cl = cl;
@@ -169,7 +177,7 @@ URLClassLoader cl;
 
 	/**
 	 * Gets the class charged.
-	 *
+	 * 
 	 * @return the class charged
 	 */
 	public Class<?> getClassCharged() {
@@ -178,8 +186,9 @@ URLClassLoader cl;
 
 	/**
 	 * Sets the class charged.
-	 *
-	 * @param classCharged the new class charged
+	 * 
+	 * @param classCharged
+	 *            the new class charged
 	 */
 	public void setClassCharged(Class<?> classCharged) {
 		this.classCharged = classCharged;
@@ -187,7 +196,7 @@ URLClassLoader cl;
 
 	/**
 	 * Gets the nom class.
-	 *
+	 * 
 	 * @return the nom class
 	 */
 	public String getNomClass() {
@@ -196,8 +205,9 @@ URLClassLoader cl;
 
 	/**
 	 * Sets the nom class.
-	 *
-	 * @param nomClass the new nom class
+	 * 
+	 * @param nomClass
+	 *            the new nom class
 	 */
 	public void setNomClass(String nomClass) {
 		this.nomClass = nomClass;
@@ -205,7 +215,7 @@ URLClassLoader cl;
 
 	/**
 	 * Gets the list methode.
-	 *
+	 * 
 	 * @return the list methode
 	 */
 	public List<Method> getListMethode() {
@@ -214,8 +224,9 @@ URLClassLoader cl;
 
 	/**
 	 * Sets the list methode.
-	 *
-	 * @param listMethode the new list methode
+	 * 
+	 * @param listMethode
+	 *            the new list methode
 	 */
 	public void setListMethode(List<Method> listMethode) {
 		this.listMethode = listMethode;
@@ -223,7 +234,7 @@ URLClassLoader cl;
 
 	/**
 	 * Gets the fichier.
-	 *
+	 * 
 	 * @return the fichier
 	 */
 	public File getFichier() {
@@ -232,20 +243,23 @@ URLClassLoader cl;
 
 	/**
 	 * Sets the fichier.
-	 *
-	 * @param fichier the new fichier
+	 * 
+	 * @param fichier
+	 *            the new fichier
 	 */
 	public void setFichier(File fichier) {
 		this.fichier = fichier;
 	}
-	
+
 	/**
 	 * Accept.
-	 *
-	 * @param visitor the visitor
-	 * @throws IOException Signals that an I/O exception has occurred.
+	 * 
+	 * @param visitor
+	 *            the visitor
+	 * @throws IOException
+	 *             Signals that an I/O exception has occurred.
 	 */
-	public void accept(VisitorRPG visitor) throws IOException{
+	public void accept(VisitorRPG visitor) throws IOException {
 		visitor.visiter(this);
 	}
 }
