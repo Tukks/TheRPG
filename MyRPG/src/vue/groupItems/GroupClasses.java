@@ -78,7 +78,7 @@ public class GroupClasses extends Observable implements Observer {
 		fillList();
 		listeDesClasses.setBackgroundImage(new Image(fenetre.getDisplay(),
 				PathManager.bgGroup));
-		listeDesClasses.setFont(new Font(shell.getDisplay(), "Arial", 14,
+		listeDesClasses.setFont(new Font(shell.getDisplay(), "Arial", 12,
 				SWT.NONE));
 		if (listeDesClasses.getItemCount() == 0)
 			listeDesClasses.setEnabled(false);

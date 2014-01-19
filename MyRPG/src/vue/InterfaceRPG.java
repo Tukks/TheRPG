@@ -37,7 +37,6 @@ import vue.groupItems.GroupArmes;
 import vue.groupItems.GroupArmures;
 import vue.groupItems.GroupClasses;
 import vue.groupItems.GroupPotions;
-import vue.groupPerso.GroupApercuPerso;
 import vue.groupPerso.GroupCaracteristiquesPerso;
 import battle.BattleControleur;
 import battle.BattleModel;
@@ -74,9 +73,8 @@ public class InterfaceRPG implements Observer {
 	private ListenerChargementDyn listenerCD;
 	private Thread threadCD;
 	private GroupCaracteristiquesPerso gCarac;
-	private GroupApercuPerso gAppercu;
 	private Personnage perso;
-	Shell fenetre;
+	private Shell fenetre;
 	private InterfaceRPG newI;
 
 	public InterfaceRPG(InterfaceRPG i) {
