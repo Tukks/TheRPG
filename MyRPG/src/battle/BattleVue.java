@@ -6,6 +6,7 @@ import java.util.Observable;
 import java.util.Observer;
 
 
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.graphics.Cursor;
@@ -13,7 +14,6 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
-
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
@@ -124,7 +124,8 @@ public class BattleVue implements Observer {
 	@Override
 	public void update(Observable obs, Object obj) {
 		if (!st.isDisposed()) {
-
+			Display.getDefault().syncExec(new Runnable() {
+				public void run() {
 			st.append(model.getText());
 			int percentEnemie = (int) ((model.getEnemy().getPdv() * 100.0f) / pdvEnemyMax);
 			int percentPerso = (int) ((model.getPerso().getPointDeVie() * 100.0f) / pdvPersoMax);
@@ -137,7 +138,8 @@ public class BattleVue implements Observer {
 			model.setText("");
 			 long time = System.currentTimeMillis() + 1000;
              while(System.currentTimeMillis() < time) {}
-
+				}
+			});
 		}
 
 	}

@@ -13,7 +13,7 @@ public class Main {
 	public static void main(String[] args) throws InstantiationException,
 			IllegalAccessException, ClassNotFoundException, IOException {
 		new HomeRPG();
-		/*InterfaceRPG i = new InterfaceRPG();
+		InterfaceRPG i = new InterfaceRPG();
 		Originator originator = new Originator();
 	    originator.setState(i);
 	    Memento memento = originator.createMemento();
@@ -27,6 +27,6 @@ public class Main {
 	    i.close();
 	   InterfaceRPG newz = new InterfaceRPG(originator.getState());
 		   System.out.println( i.getgArmes().getValSelection());
-*/
+
 	}
 }
