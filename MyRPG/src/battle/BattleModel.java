@@ -33,8 +33,12 @@ public class BattleModel extends Observable {
 		notifyObservers();
 	}
 
-	public String getImage() {
+	public String getImagePerso() {
 		return perso.getClassPerso().getIcoClasse();
+	}
+
+	public String getImageEnnemi() {
+		return enemy.getImgEn();
 	}
 
 	/**

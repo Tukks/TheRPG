@@ -42,7 +42,9 @@ public class BattleVue implements Observer {
 	private Shell shell;
 	private ChoixStrategie choixStrategie;
 	private Canvas photoPerso;
+	private Canvas photoEnnemi;
 	protected Image persoImage;
+	protected Image ennemImage;
 
 	private Composite composite;
 
@@ -70,7 +72,7 @@ public class BattleVue implements Observer {
 		progressbarEnemy = new ProgressBar(shell, SWT.HORIZONTAL | SWT.SMOOTH);
 		progressbarPerso = new ProgressBar(shell, SWT.HORIZONTAL | SWT.SMOOTH);
 		progressbarEnemy.setSize(new Point(150, 25));
-		progressbarEnemy.setLocation(new Point(850, 450));
+		progressbarEnemy.setLocation(new Point(860, 450));
 		progressbarPerso.setSize(new Point(150, 25));
 		progressbarPerso.setLocation(new Point(10, 450));
 		progressbarPerso.setSelection(100);
@@ -90,9 +92,10 @@ public class BattleVue implements Observer {
 		st.setSize(1000, 200);
 		st.setVisible(true);
 
-		persoImage = new Image(shell.getDisplay(), model.getImage());
+		persoImage = new Image(shell.getDisplay(), model.getImagePerso());
+		ennemImage = new Image(shell.getDisplay(), model.getImageEnnemi());
 
-		photoPerso = new Canvas(shell, SWT.BORDER);
+		photoPerso = new Canvas(shell, SWT.COLOR_BLACK);
 		photoPerso.addPaintListener(new PaintListener() {
 			public void paintControl(final PaintEvent event) {
 				if (persoImage != null) {
@@ -102,9 +105,25 @@ public class BattleVue implements Observer {
 				}
 			}
 		});
+		photoPerso.setSize(200, 150);
+		photoPerso.setLocation(10, 260);
+		photoPerso.setBackgroundImage(new Image(shell.getDisplay(),
+				PathManager.bgGroup));
 
-		photoPerso.setSize(150, 150);
-		photoPerso.setLocation(0, 200);
+		photoEnnemi = new Canvas(shell, SWT.COLOR_BLACK);
+		photoEnnemi.addPaintListener(new PaintListener() {
+			public void paintControl(final PaintEvent event) {
+				if (ennemImage != null) {
+					GC gc = event.gc;
+					gc.drawImage(ennemImage, 0, 0);
+					gc.dispose();
+				}
+			}
+		});
+		photoEnnemi.setSize(200, 150);
+		photoEnnemi.setLocation(810, 260);
+		photoEnnemi.setBackgroundImage(new Image(shell.getDisplay(),
+				PathManager.bgGroup));
 
 		lancerComb = new Button(shell, SWT.NONE);
 		lancerComb.setLocation(new Point(17, 50));
