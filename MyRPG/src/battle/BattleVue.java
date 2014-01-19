@@ -8,6 +8,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Cursor;
+import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.graphics.Point;
@@ -88,8 +89,10 @@ public class BattleVue implements Observer {
 		
 		
 		lancerComb = new Button(shell, SWT.NONE);
-		lancerComb.setLocation(new Point(10, 0));
-		lancerComb.setSize(new Point(100, 20));
+		lancerComb.setLocation(new Point(17, 50));
+		lancerComb.setSize(new Point(120, 60));
+		lancerComb.setFont(new Font(shell.getDisplay(), "Arial", 12,
+				SWT.NONE));
 		lancerComb.setText("Lancer combat");
 		
 		// text.insert("creation text field");
@@ -147,7 +150,6 @@ public class BattleVue implements Observer {
 					progressbarPerso.setSelection(percentPerso);
 					st.setTopIndex(st.getLineCount() - 1);
 					st.redraw();
-					
 					composite.redraw();
 
 					// long time = System.currentTimeMillis() + 1000;
