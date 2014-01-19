@@ -14,13 +14,20 @@ public class BattleControleur implements Listener {
 	@Override
 	public void handleEvent(Event e) {
 		model.lancerCombat();
-		System.out.println("Controller: acting on Model");
 	}
 
+	/**
+	 * @param bm
+	 *            Battle Model
+	 */
 	public void addModel(BattleModel bm) {
 		this.model = bm;
 	}
 
+	/**
+	 * @param bv
+	 *            Battle Vue
+	 */
 	public void addVue(BattleVue bv) {
 		this.vue = bv;
 	}

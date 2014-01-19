@@ -6,7 +6,6 @@ public class RunMVCBattle {
 
 	public RunMVCBattle(Personnage perso, Enemy enemy) {
 		BattleModel model = new BattleModel(perso, enemy);
-		// model.lancerCombat();
 
 		BattleVue vue = new BattleVue(model);
 
@@ -18,9 +17,7 @@ public class RunMVCBattle {
 
 		vue.addControleur(controleur);
 		vue.addModel(model);
-		
+
 	}
 
-	
-	
 }

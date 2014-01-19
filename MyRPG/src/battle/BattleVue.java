@@ -1,11 +1,8 @@
 package battle;
 
-
 import java.lang.reflect.InvocationTargetException;
 import java.util.Observable;
 import java.util.Observer;
-
-
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StyledText;
@@ -27,7 +24,6 @@ import util.PathManager;
 
 public class BattleVue implements Observer {
 	private ImageData cursor_Image = new ImageData(PathManager.cursorImg);
-
 	private BattleModel model; // en mode PULL
 	private Display dis = new Display();
 	private Button lancerComb;
@@ -41,6 +37,11 @@ public class BattleVue implements Observer {
 	Group thisGroup;
 	ChoixStrategie choixStrategie;
 
+	/**
+	 * Construction de la vue, avec les progress bars, encarts, boutons
+	 * 
+	 * @param model
+	 */
 	public BattleVue(BattleModel model) {
 		this.model = model;
 		model.addObserver(this);
@@ -54,7 +55,7 @@ public class BattleVue implements Observer {
 		choixStrategie = new ChoixStrategie(shell, model.getPerso().getItem()
 				.getPotion());
 		/*
-		 * Set des Bar de vie des perso
+		 * Set des Bars de vie des persos
 		 */
 		progressbarEnemy = new ProgressBar(shell, SWT.HORIZONTAL | SWT.SMOOTH);
 		progressbarPerso = new ProgressBar(shell, SWT.HORIZONTAL | SWT.SMOOTH);
@@ -65,7 +66,7 @@ public class BattleVue implements Observer {
 		progressbarPerso.setSelection(100);
 		progressbarEnemy.setSelection(100);
 		/*
-		 * set du suivi de combat
+		 * Set du suivi de combat
 		 */
 		st = new StyledText(shell, SWT.V_SCROLL | SWT.WRAP | SWT.BORDER
 				| SWT.READ_ONLY);
@@ -96,14 +97,15 @@ public class BattleVue implements Observer {
 		dis.dispose();
 	}
 
+	/**
+	 * Lancement du combat, avec la méthode "combat" du Model
+	 */
 	void makeCombat() {
 		try {
 			lancerComb.setEnabled(false);
-
 			this.model.Combat(choixStrategie.getChoix());
 		} catch (IllegalAccessException | IllegalArgumentException
 				| InvocationTargetException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -113,12 +115,10 @@ public class BattleVue implements Observer {
 
 			@Override
 			public void handleEvent(Event arg0) {
-				// TODO Auto-generated method stub
 				makeCombat();
 
 			}
 		};
-
 	}
 
 	@Override
@@ -126,30 +126,39 @@ public class BattleVue implements Observer {
 		if (!st.isDisposed()) {
 			Display.getDefault().syncExec(new Runnable() {
 				public void run() {
-			st.append(model.getText());
-			int percentEnemie = (int) ((model.getEnemy().getPdv() * 100.0f) / pdvEnemyMax);
-			int percentPerso = (int) ((model.getPerso().getPointDeVie() * 100.0f) / pdvPersoMax);
-			progressbarEnemy.setSelection(percentEnemie);
-			progressbarPerso.setSelection(percentPerso);
-			st.setTopIndex(st.getLineCount() - 1);
-			st.redraw();
-			// long time = System.currentTimeMillis() + 1000;
-			// while(System.currentTimeMillis() < time) {}
-			model.setText("");
-			 long time = System.currentTimeMillis() + 1000;
-             while(System.currentTimeMillis() < time) {}
+					st.append(model.getText());
+					int percentEnemie = (int) ((model.getEnemy().getPdv() * 100.0f) / pdvEnemyMax);
+					int percentPerso = (int) ((model.getPerso().getPointDeVie() * 100.0f) / pdvPersoMax);
+					progressbarEnemy.setSelection(percentEnemie);
+					progressbarPerso.setSelection(percentPerso);
+					st.setTopIndex(st.getLineCount() - 1);
+					st.redraw();
+					// long time = System.currentTimeMillis() + 1000;
+					// while(System.currentTimeMillis() < time) {}
+					model.setText("");
+					long time = System.currentTimeMillis() + 1000;
+					while (System.currentTimeMillis() < time) {
+					}
 				}
 			});
 		}
 
 	}
 
-	// pour initialiser textfield
+	/**
+	 * pour initialiser textfield
+	 * 
+	 * @param t
+	 */
 	public void setValue(int t) {
 		text.setText("" + t);
 	}
 
-	// le controleur utilise la vue pour initialiser le model
+	/**
+	 * le controleur utilise la vue pour initialiser le model
+	 * 
+	 * @param m
+	 */
 	public void addModel(BattleModel m) {
 		this.setModel(m);
 	}
@@ -160,6 +169,12 @@ public class BattleVue implements Observer {
 		}
 	}
 
+	/**
+	 * Centrage des éléments avec les outils SWT
+	 * 
+	 * @param display
+	 * @param shell
+	 */
 	public static void centrerSurEcran(Display display, Shell shell) {
 		Rectangle rect = display.getClientArea();
 		Point size = shell.getSize();
@@ -176,8 +191,4 @@ public class BattleVue implements Observer {
 	public void setModel(BattleModel model) {
 		this.model = model;
 	}
-
-	// public static void main(String args[]) {
-	// new BattleVue();
-	// }
 }
