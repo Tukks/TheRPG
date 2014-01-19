@@ -138,9 +138,18 @@ public class BattleModel extends Observable {
 			setChanged();
 			notifyObservers();
 			return false;
+		}else if(enemy.getPdv() <= 0 && perso.getPointDeVie() <= 0){
+			if(enemy.getPdv() < perso.getPointDeVie()){
+				text +="\n Le perso " + perso.getNom() + " a Gagner";
+			}else{
+				text +="\n L'enemie " + enemy.getNom() + " a Gagner";
+			}
+			setChanged();
+			notifyObservers();
+			return false;
 		}
 		System.out.println("Erreur exception");
-		return true;
+		return false;
 	}
 	public int pdvEnleverPerso(int attaque){
 		if(perso.getDefense() > attaque){
