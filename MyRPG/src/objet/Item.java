@@ -15,22 +15,15 @@ public class Item implements Serializable{
 	private static final long serialVersionUID = -2613658683071421393L;
 	
 	/** The Arme. */
-	ChargementDynamique Arme;
+	private ChargementDynamique Arme;
 	
 	/** The Armure. */
-	ChargementDynamique Armure;
+	private ChargementDynamique Armure;
 	
 	/** The Potion. */
-	ChargementDynamique Potion;
+	private ChargementDynamique Potion;
 	
-	/**
-	 * Select.
-	 *
-	 * @return the int
-	 */
-	public int select(){
-		return 1;
-	}
+	
 
 	/**
 	 * Instantiates a new item.

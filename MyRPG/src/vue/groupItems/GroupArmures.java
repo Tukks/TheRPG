@@ -72,13 +72,6 @@ public class GroupArmures extends Observable implements Observer {
 		});
 	}
 
-	private void FillList() {
-		for (ChargementDynamique armure : armures) {
-			if (armure.getTypeItem() == "Armure")
-				listeDesArmures.add(armure.getNameItem());
-		}
-	}
-
 	@Override
 	public void update(final Observable arg0, final Object arg1) {
 		Display.getDefault().syncExec(new Runnable() {

@@ -19,25 +19,25 @@ public class Personnage implements Serializable {
 	private static final long serialVersionUID = 707821524617984045L;
 	
 	/** The nom. */
-	String nom;
+	private String nom;
 	
 	/** The item. */
-	Item item;
+	private Item item;
 	
 	/** The class perso. */
-	ChargementDynamique classPerso;
+	private ChargementDynamique classPerso;
 	
 	/** The pers. */
 	private static Personnage pers;
 	// coeff multiplicateur
 	/** The point de vie. */
-	int pointDeVie;
+	private int pointDeVie;
 	
 	/** The force de frappe. */
-	int forceDeFrappe;
+	private int forceDeFrappe;
 	
 	/** The defense. */
-	int defense;
+	private int defense;
 
 
 	/**
@@ -90,15 +90,7 @@ public class Personnage implements Serializable {
 		
 	}
 	
-	/**
-	 * Combattre.
-	 *
-	 * @param item the item
-	 * @return the int
-	 */
-	public int combattre(List<Item> item) {
-		return 0;
-	}
+	
 
 	/**
 	 * Accept.

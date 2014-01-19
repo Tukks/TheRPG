@@ -30,15 +30,15 @@ public class BattleVue implements Observer {
 	private BattleModel model; // en mode PULL
 	private Display dis = new Display();
 	private Button lancerComb;
-	private Text text;
-	StyledText st;
-	ProgressBar progressbarEnemy;
-	ProgressBar progressbarPerso;
-	double pdvEnemyMax;
-	double pdvPersoMax;
-	Shell shell;
+	private Text st;
+	
+	private ProgressBar progressbarEnemy;
+	private ProgressBar progressbarPerso;
+	private double pdvEnemyMax;
+	private double pdvPersoMax;
+	private Shell shell;
 	Group thisGroup;
-	ChoixStrategie choixStrategie;
+	private ChoixStrategie choixStrategie;
 
 	private Composite composite;
 
@@ -75,24 +75,23 @@ public class BattleVue implements Observer {
 		 */
 
 		composite = new Composite(shell, SWT.BORDER);
-		Color couleur = new Color(shell.getDisplay(), 131, 133, 131);
+		Color couleur = new Color(shell.getDisplay(),255,255,255);
 		composite.setBackground(couleur);
 		composite.setSize(1000, 200);
 		composite.setLocation(10, 475);
 		RowLayout rowlayout = new RowLayout();
-
-		composite.setLayout(rowlayout);
-
-		st = new StyledText(composite, SWT.V_SCROLL | SWT.WRAP | SWT.BORDER
+		st = new Text(composite, SWT.V_SCROLL  | SWT.BORDER
 				| SWT.READ_ONLY);
-		// st.setSize(new Point(1000, 200));
-		// st.setLocation(new Point(10, 475));
+		composite.setLayout(rowlayout);
+		st.setSize(1000,200);
 		st.setVisible(true);
+		
+		
 		lancerComb = new Button(shell, SWT.NONE);
 		lancerComb.setLocation(new Point(10, 0));
 		lancerComb.setSize(new Point(100, 20));
 		lancerComb.setText("Lancer combat");
-		text = new Text(shell, SWT.SINGLE);
+		
 		// text.insert("creation text field");
 		lancerComb.addListener(SWT.Selection, getListener());
 		// model.addObserver(this);
@@ -115,7 +114,7 @@ public class BattleVue implements Observer {
 	/**
 	 * Lancement du combat, avec la méthode "combat" du Model
 	 */
-	void makeCombat() {
+	private void makeCombat() {
 		try {
 			lancerComb.setEnabled(false);
 			this.model.Combat(choixStrategie.getChoix());
@@ -148,7 +147,7 @@ public class BattleVue implements Observer {
 					progressbarPerso.setSelection(percentPerso);
 					st.setTopIndex(st.getLineCount() - 1);
 					st.redraw();
-
+					
 					composite.redraw();
 
 					// long time = System.currentTimeMillis() + 1000;
@@ -169,7 +168,7 @@ public class BattleVue implements Observer {
 	 * @param t
 	 */
 	public void setValue(int t) {
-		text.setText("" + t);
+		st.setText("" + t);
 	}
 
 	/**
