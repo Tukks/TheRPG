@@ -8,9 +8,12 @@ import java.util.Observer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.events.PaintEvent;
+import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.List;
@@ -28,6 +31,8 @@ public class GroupClasses extends Observable implements Observer {
 	private Shell shell;
 	private String valSelection = "";
 	private ListenerChargementDyn lcd;
+	private Canvas photoPerso;
+	protected Image persoImage;
 
 	public GroupClasses(Shell fenetre, LinkedList<ChargementDynamique> classes,
 			GridData gridData, ListenerChargementDyn listenerCD) {
@@ -39,6 +44,14 @@ public class GroupClasses extends Observable implements Observer {
 		thisGroup.setLayoutData(gridData);
 
 		listeDesClasses = new List(thisGroup, SWT.SINGLE);
+		photoPerso = new Canvas(thisGroup, SWT.BORDER);
+		photoPerso.addPaintListener(new PaintListener() {
+			public void paintControl(final PaintEvent event) {
+				if (persoImage != null) {
+					event.gc.drawImage(persoImage, 0, 0);
+				}
+			}
+		});
 
 		thisGroup.setText("Choisir une classe de personnage");
 		thisGroup.setLayout(new GridLayout());
@@ -92,8 +105,24 @@ public class GroupClasses extends Observable implements Observer {
 
 				notifyObservers(carac);
 				setChanged();
+
+				try {
+					addPhotoPerso();
+				} catch (IllegalAccessException | IllegalArgumentException
+						| InvocationTargetException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		});
+	}
+
+	protected void addPhotoPerso() throws IllegalAccessException,
+			IllegalArgumentException, InvocationTargetException {
+		String fileName = lcd.getClassForNamePluginClasse(valSelection)
+				.getIcoClasse();
+		persoImage = new Image(shell.getDisplay(), fileName);
+
 	}
 
 	private void fillList() {

@@ -1,5 +1,8 @@
 package vue.groupPerso;
 
+import java.util.Observable;
+import java.util.Observer;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
@@ -18,7 +21,7 @@ import org.eclipse.swt.widgets.Text;
 
 import util.PathManager;
 
-public class GroupApercuPerso {
+public class GroupApercuPerso implements Observer {
 
 	private Group thisGroup;
 	private Canvas photoPerso;
@@ -47,7 +50,13 @@ public class GroupApercuPerso {
 		thisGroup.setLayout(new GridLayout());
 		thisGroup.setBackgroundImage(new Image(fenetre.getDisplay(),
 				PathManager.bgGroup));
-		addPhotoApercu();
+		// addPhotoApercu();
+		addPhoto();
+
+	}
+
+	private void addPhoto() {
+		// TODO Auto-generated method stub
 
 	}
 
@@ -104,6 +113,12 @@ public class GroupApercuPerso {
 				}
 			}
 		});
+	}
+
+	@Override
+	public void update(Observable o, Object arg) {
+		// TODO Auto-generated method stub
+
 	}
 
 }

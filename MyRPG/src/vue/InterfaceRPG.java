@@ -110,7 +110,7 @@ public class InterfaceRPG implements Observer {
 		listenerCD.addObserver(gClasses);
 
 		// 2 > saisie nom du perso + apperçu perso
-		gAppercu = new GroupApercuPerso(fenetre, gridData);
+		// gAppercu = new GroupApercuPerso(fenetre, gridData);
 
 		// 4 > armes
 		gArmes = new GroupArmes(fenetre, items, gridData);
