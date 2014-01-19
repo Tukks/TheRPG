@@ -40,38 +40,15 @@ public abstract class ChargementDynamique extends SecureClassLoader implements
 	transient Object classInstancie; // a reconstruire a la deserialization
 
 	/** The list methode. */
-	List<Method> listMethode = new ArrayList<Method>();
+	private List<Method> listMethode = new ArrayList<Method>();
 
 	/** The fichier. */
 	File fichier;
 
 	/** The jar. */
-	public java.util.jar.JarFile jar;
+	java.util.jar.JarFile jar;
 
-	/**
-	 * Rebuild class.
-	 * 
-	 * @param classCharged
-	 *            the class charged
-	 * @return the chargement dynamique
-	 * @throws InstantiationException
-	 *             the instantiation exception
-	 * @throws IllegalAccessException
-	 *             the illegal access exception
-	 */
-	public static ChargementDynamique rebuildClass(Object classCharged)
-			throws InstantiationException, IllegalAccessException {
-		ChargementDynamique newClass = new ChargementDynamique() {
-
-			private static final long serialVersionUID = 1L;
-		};
-		Class<?> cc = (Class<?>) classCharged;
-		newClass.setClassCharged(cc);
-		newClass.setClassInstancie(cc);
-		newClass.listAllMethod();
-		return newClass;
-
-	}
+	
 
 	/**
 	 * Gets the class instancie.
@@ -150,7 +127,7 @@ public abstract class ChargementDynamique extends SecureClassLoader implements
 	/**
 	 * List all method.
 	 */
-	public void listAllMethod() {
+	void listAllMethod() {
 		for (int i = 0; i < classCharged.getDeclaredMethods().length; i++) {
 			listMethode.add(classCharged.getDeclaredMethods()[i]);
 		}

@@ -62,13 +62,13 @@ public class WatchDir extends Thread{
 	private boolean trace = false;
 	
 	/** The lcd. */
-	ListenerChargementDyn lcd ;
+	private ListenerChargementDyn lcd ;
 	
 	/** The dir. */
-	final Path dir;
+	private final Path dir;
 	
 	/** The continu. */
-	public volatile boolean continu = true;
+	private volatile boolean continu = true;
 	
 	/**
 	 * Cast.
@@ -193,7 +193,7 @@ public class WatchDir extends Thread{
 	 * @throws IllegalAccessException the illegal access exception
 	 * @throws ClassNotFoundException the class not found exception
 	 */
-	void processEvents() throws MalformedURLException, InstantiationException, IllegalAccessException, ClassNotFoundException {
+	private void processEvents() throws MalformedURLException, InstantiationException, IllegalAccessException, ClassNotFoundException {
 		for (;;) {
 			if(continu == true){
 				// wait for key to be signalled
@@ -262,13 +262,7 @@ public class WatchDir extends Thread{
 		}
 	}
 	
-	/**
-	 * Usage.
-	 */
-	static void usage() {
-		System.err.println("usage: java WatchDir [-r] dir");
-		System.exit(-1);
-	}
+	
 
 	/**
 	 * Gets the lcd.

@@ -7,13 +7,13 @@ import serializable.VisitorRPG;
 
 public class Enemy implements Serializable {
 	private static final long serialVersionUID = -8487896641271550505L;
-	String nom;
-	int pdv;
-	int attaque;
-	int nbrPotion;
-	int defense;
+	private String nom;
+	private int pdv;
+	private int attaque;
+	private int nbrPotion;
+	private int defense;
 
-	boolean reculer = false;
+	private boolean reculer = false;
 
 	/**
 	 * Création d'un ennemi aléatoire avec des valeurs aléatoires
@@ -31,7 +31,7 @@ public class Enemy implements Serializable {
 	 * 
 	 * @return nom du futur ennemi
 	 */
-	String generateName() {
+	private String generateName() {
 		int i = generateRand(0, 5);
 		switch (i) {
 		case 0:
@@ -59,7 +59,7 @@ public class Enemy implements Serializable {
 	 * @param max
 	 * @return valeur aléatoire
 	 */
-	int generateRand(int min, int max) {
+	private int generateRand(int min, int max) {
 		Random rand = new Random();
 		int nombreAleatoire = rand.nextInt(max - min + 1) + min;
 		return nombreAleatoire;

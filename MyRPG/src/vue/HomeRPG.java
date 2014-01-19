@@ -135,10 +135,15 @@ public class HomeRPG {
 		public void handleEvent(Event arg0) {
 
 			try {
+				fenetre.close();
 				display.close();
+				
 				new InterfaceRPG();
 			} catch (InstantiationException | IllegalAccessException
 					| ClassNotFoundException | IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (Throwable e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}

@@ -5,7 +5,7 @@ import org.eclipse.swt.widgets.Listener;
 
 public class BattleControleur implements Listener {
 
-	BattleModel model;
+	private BattleModel model;
 	BattleVue vue;
 
 	public BattleControleur() {

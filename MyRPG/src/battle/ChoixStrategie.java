@@ -13,7 +13,7 @@ import org.eclipse.swt.widgets.Text;
 import util.PathManager;
 import chargementDynamique.ChargementDynamique;
 
-public class ChoixStrategie {
+class ChoixStrategie {
 
 	private Group thisGroup;
 	private ChargementDynamique items;
@@ -27,7 +27,7 @@ public class ChoixStrategie {
 	 * @param shell
 	 * @param items
 	 */
-	public ChoixStrategie(Shell shell, ChargementDynamique items) {
+	ChoixStrategie(Shell shell, ChargementDynamique items) {
 		/*
 		 * Set de l'interface de definition de Strategie
 		 */
@@ -50,7 +50,7 @@ public class ChoixStrategie {
 	 * Méthode qui décrit la stratégie selon l'item (type.potion) est choisi
 	 * Ainsi si c'est une attaque ou un poison
 	 */
-	public void isPotionOrAttaque() {
+	private void isPotionOrAttaque() {
 		if (items.getTypeItem() == "Potion"
 				&& !items.getNameItem().contains("auto")) {
 			Text text = new Text(thisGroup, SWT.NONE);
@@ -106,8 +106,6 @@ public class ChoixStrategie {
 		this.choix = choix;
 	}
 
-	public void disableMe() {
-		this.choix.setEnabled(false);
-	}
+	
 
 }

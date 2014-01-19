@@ -44,9 +44,9 @@ import chargementDynamique.ChargementDynamique;
 import chargementDynamique.ListenerChargementDyn;
 import chargementDynamique.WatchDir;
 
-public class InterfaceRPG implements Observer {
+public class InterfaceRPG implements Observer, Cloneable {
 
-	public static Display display = new Display();;
+	public static Display display = new Display();
 	private ImageData cursor_Image = new ImageData(PathManager.cursorImg);
 	private List listeClasses;
 	private LinkedList<ChargementDynamique> classes;
@@ -54,15 +54,6 @@ public class InterfaceRPG implements Observer {
 	private List listeItems;
 	Enemy e = new Enemy();
 	private WatchDir watchDirectories;
-
-	public int getSizeListeClasses() {
-		return sizeListeClasses;
-	}
-
-	public void setSizeListeClasses(int sizeListeClasses) {
-		this.sizeListeClasses = sizeListeClasses;
-	}
-
 	protected int sizeListeClasses;
 	private GroupClasses gClasses;
 	private GroupArmes gArmes;
@@ -75,10 +66,6 @@ public class InterfaceRPG implements Observer {
 	private Personnage perso;
 	Shell fenetre;
 	private InterfaceRPG newI;
-
-	public InterfaceRPG(InterfaceRPG i) {
-		newI = i;
-	}
 
 	public InterfaceRPG() throws InstantiationException,
 			IllegalAccessException, ClassNotFoundException, IOException {
@@ -156,15 +143,11 @@ public class InterfaceRPG implements Observer {
 
 		fenetre.addListener(SWT.Close, new Listener() {
 			public void handleEvent(Event event) {
-				// stopper le thread
+				watchDirectories.setContinu(false);
+				threadCD.interrupt();
 			}
 		});
-		fenetre.addListener(SWT.Close, new Listener() {
-		      public void handleEvent(Event event) {
-		    	  watchDirectories.setContinu(false);
-					threadCD.interrupt();
-		      }
-		    });
+
 		fenetre.open();
 
 		while (!fenetre.isDisposed())
@@ -221,29 +204,21 @@ public class InterfaceRPG implements Observer {
 			public void handleEvent(Event arg0) {
 				// TODO Auto-generated method stub
 
-				
-					/*
-					 * A reparer
-					 */
-				
-					fenetre.close();
-			display.close();
-			watchDirectories.setContinu(false);
-			threadCD.interrupt();
-					//fenetre.close();
-					Display.getDefault().syncExec(new Runnable() {
-						public void run() {
-					try {
-						new HomeRPG();
-					} catch (InstantiationException | IllegalAccessException
-							| ClassNotFoundException | IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-					}
-				});
+				/*
+				 * A reparer
+				 */
 
-				
+				fenetre.close();
+				display.close();
+
+				try {
+					new HomeRPG();
+				} catch (InstantiationException | IllegalAccessException
+						| ClassNotFoundException | IOException e) {
+					// TODO Auto-generated catch block
+
+				}
+
 			}
 
 		};
@@ -352,7 +327,7 @@ public class InterfaceRPG implements Observer {
 		return gridData;
 	}
 
-	private Shell createFrame() {
+	public Shell createFrame() {
 		Shell fenetre = new Shell(display, SWT.CLOSE | SWT.MIN);
 		fenetre.setSize(1024, 700);
 
@@ -387,5 +362,21 @@ public class InterfaceRPG implements Observer {
 					listeItems.add(items.getLast().getNameItem());
 			}
 		});
+	}
+
+	public Shell getFenetre() {
+		return fenetre;
+	}
+
+	public void setFenetre(Shell fenetre) {
+		this.fenetre = fenetre;
+	}
+
+	public int getSizeListeClasses() {
+		return sizeListeClasses;
+	}
+
+	public void setSizeListeClasses(int sizeListeClasses) {
+		this.sizeListeClasses = sizeListeClasses;
 	}
 }

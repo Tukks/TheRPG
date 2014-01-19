@@ -22,18 +22,18 @@ import chargementDynamique.ChargementDynamiqueJar;
 public class Serialize implements VisitorRPG {
 
 	/** The fichier out. */
-	FileOutputStream fichierOUT;
-	static boolean isFichier = true;
+	private FileOutputStream fichierOUT;
+	private static boolean isFichier = true;
 	/** The fichier in. */
-	FileInputStream fichierIN;
-	ArrayList<String> pluginNotAvailable = new ArrayList<String>();
+	private FileInputStream fichierIN;
+	private ArrayList<String> pluginNotAvailable = new ArrayList<String>();
 	
 
 	/** The ois. */
-	ObjectInputStream ois;
+	private ObjectInputStream ois;
 
 	/** The oos. */
-	ObjectOutputStream oos;
+	private ObjectOutputStream oos;
 
 	/**
 	 * Instantiates a new serialize.

@@ -12,16 +12,16 @@ import java.util.Arrays;
 /**
  * The Class ListFile.
  */
-public class ListFile {
+class ListFile {
 	
 	/** The root. */
-	String root;
+	private String root;
 	
 	/** The extensions. */
-	String extensions;
+	private String extensions;
 	
 	/** The filtre. */
-	FilenameFilter filtre;
+	private FilenameFilter filtre;
 
 	/**
 	 * Instantiates a new list file.
@@ -29,7 +29,7 @@ public class ListFile {
 	 * @param root the root
 	 * @param extension the extension
 	 */
-	public ListFile(String root, String extension) {
+	ListFile(String root, String extension) {
 		this.root = root;
 		this.extensions = extension;
 		this.filtre = new Filtre();
@@ -40,7 +40,7 @@ public class ListFile {
 	 *
 	 * @return the array list
 	 */
-	public ArrayList<File> listFichier() {
+	ArrayList<File> listFichier() {
 		File file = new File(root);
 
 		@SuppressWarnings({ "unchecked", "rawtypes" })
@@ -61,7 +61,7 @@ public class ListFile {
 	 * @param root the root
 	 * @return the array list
 	 */
-	public ArrayList<File> listeDir(String root) {
+	private ArrayList<File> listeDir(String root) {
 		File file = new File(root);
 		@SuppressWarnings({ "unchecked", "rawtypes" })
 		ArrayList<File> nListFiles = new ArrayList(Arrays.asList(file
@@ -75,7 +75,7 @@ public class ListFile {
 	 *
 	 * @return the int
 	 */
-	public int nombreFichier() {
+	int nombreFichier() {
 		File file = new File(root);
 		@SuppressWarnings({ "unchecked", "rawtypes" })
 		ArrayList<File> listFiles = new ArrayList(Arrays.asList(file

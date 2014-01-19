@@ -77,23 +77,5 @@ public class ChargementDynamiqueClass extends ChargementDynamique {
 
 		return true;
 	}
-	/*
-	 * @Override //au cas ou protected Class<?> findClass(String name) throws
-	 * ClassNotFoundException { byte[] b; b = loadClassData(name);
-	 * 
-	 * // TODO Auto-generated catch block return super.defineClass(name, b, 0,
-	 * b.length); }
-	 * 
-	 * @SuppressWarnings("resource") private byte[] loadClassData(String name){
-	 * InputStream IS;
-	 * 
-	 * try { IS = new FileInputStream(path);
-	 * 
-	 * byte[] plug; plug = new byte[IS.available()]; IS.read(plug);
-	 * 
-	 * return plug; } catch (IOException e) { // TODO Auto-generated catch block
-	 * System.out.println("erreur"); e.printStackTrace(); } return null;
-	 * 
-	 * }
-	 */
+	
 }

@@ -2,10 +2,9 @@ package chargementDynamique;
 
 import java.io.IOException;
 import java.lang.annotation.Annotation;
-import java.lang.reflect.InvocationTargetException;
+
 import java.net.MalformedURLException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+
 import java.util.LinkedList;
 import java.util.Observable;
 
@@ -57,7 +56,7 @@ public final class ListenerChargementDyn extends Observable {
 	 * @throws IllegalAccessException the illegal access exception
 	 * @throws ClassNotFoundException the class not found exception
 	 */
-	public void ChargerAllClass() throws MalformedURLException,
+	private void ChargerAllClass() throws MalformedURLException,
 			InstantiationException, IllegalAccessException,
 			ClassNotFoundException {
 		ListFile lf = new ListFile(folder, "class");
@@ -89,7 +88,7 @@ public final class ListenerChargementDyn extends Observable {
 	 * @throws IllegalAccessException the illegal access exception
 	 * @throws ClassNotFoundException the class not found exception
 	 */
-	public void ChargerClass(String root) throws MalformedURLException,
+	void ChargerClass(String root) throws MalformedURLException,
 			InstantiationException, IllegalAccessException,
 			ClassNotFoundException {
 		System.out.println(this.getPluginClasse().size());
@@ -116,7 +115,7 @@ public final class ListenerChargementDyn extends Observable {
 	 * @throws IllegalAccessException the illegal access exception
 	 * @throws MalformedURLException the malformed url exception
 	 */
-	public void ChargerJar(String root) throws ClassNotFoundException,
+	void ChargerJar(String root) throws ClassNotFoundException,
 			InstantiationException, IllegalAccessException,
 			MalformedURLException {
 		ChargementDynamiqueJar cdc = new ChargementDynamiqueJar(root);
@@ -144,7 +143,7 @@ public final class ListenerChargementDyn extends Observable {
 	 * @throws IllegalAccessException the illegal access exception
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
-	public void ChargerAllJar() throws ClassNotFoundException,
+	private void ChargerAllJar() throws ClassNotFoundException,
 			InstantiationException, IllegalAccessException, IOException {
 		ListFile lf = new ListFile(folder, "jar");
 		for (int i = 0; i < lf.listFichier().size(); i++) {
@@ -168,7 +167,7 @@ public final class ListenerChargementDyn extends Observable {
 	/**
 	 * Count all class.
 	 */
-	public void countAllClass() {
+	private void countAllClass() {
 		ListFile lf = new ListFile(folder, "");
 
 		this.sizePlug = lf.nombreFichier();
@@ -182,7 +181,7 @@ public final class ListenerChargementDyn extends Observable {
 	 * @param cd the cd
 	 * @return the boolean
 	 */
-	public Boolean isItem(ChargementDynamique cd) {
+	private Boolean isItem(ChargementDynamique cd) {
 		// TODO Definir Grace au annotation si c'est un Plugin item
 
 		Annotation[] anno = cd.getClassCharged().getAnnotations();
@@ -201,7 +200,7 @@ public final class ListenerChargementDyn extends Observable {
 	 * @param cd the cd
 	 * @return the boolean
 	 */
-	public Boolean isClass(ChargementDynamique cd) {
+	private Boolean isClass(ChargementDynamique cd) {
 		// TODO Definir Grace au annotation si c'est un Plugin Classe de
 		// personnage
 		Annotation[] anno = cd.getClassCharged().getAnnotations();

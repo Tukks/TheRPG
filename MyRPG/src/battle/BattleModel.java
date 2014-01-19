@@ -8,12 +8,12 @@ import personnage.Personnage;
 
 public class BattleModel extends Observable {
 
-	Personnage perso;
-	Enemy enemy;
-	String text = new String();
-	int pdvPersoMax;
-	int utilisePotion = 0;
-	int utilisePoison = 0;
+	private Personnage perso;
+	private Enemy enemy;
+	private String text = new String();
+	private int pdvPersoMax;
+	private int utilisePotion = 0;
+	private int utilisePoison = 0;
 
 	/**
 	 * @param perso
@@ -36,7 +36,7 @@ public class BattleModel extends Observable {
 	/**
 	 * méthode qui va lancer le combat et activer l'Observable
 	 */
-	public void lancerCombat() { // mode PULL == incrementValue()
+	void lancerCombat() { // mode PULL == incrementValue()
 		setChanged();
 		notifyObservers();
 	}
@@ -70,7 +70,7 @@ public class BattleModel extends Observable {
 	 * @throws IllegalArgumentException
 	 * @throws InvocationTargetException
 	 */
-	public void Combat(int pdvMinPerso) throws IllegalAccessException,
+	void Combat(int pdvMinPerso) throws IllegalAccessException,
 			IllegalArgumentException, InvocationTargetException {
 
 		while (this.combatFinish(enemy, perso)) {
@@ -177,7 +177,7 @@ public class BattleModel extends Observable {
 	 *            personnage lancé dans le combat
 	 * @return un booléen pour connaitre la fin d'un combat
 	 */
-	public boolean combatFinish(Enemy enemy, Personnage perso) {
+	private boolean combatFinish(Enemy enemy, Personnage perso) {
 
 		if (enemy.getPdv() > 0 && perso.getPointDeVie() > 0) {
 
@@ -226,7 +226,7 @@ public class BattleModel extends Observable {
 	 * @param attaque
 	 * @return la nouvelle valeur
 	 */
-	public int pdvEnleverPerso(int attaque) {
+	private int pdvEnleverPerso(int attaque) {
 		if (perso.getDefense() > attaque) {
 			text += "\n L'ennemi " + enemy.getNom()
 					+ " n'a pas assez de force pour vous battre";
@@ -257,7 +257,7 @@ public class BattleModel extends Observable {
 	 *            valeur maximum
 	 * @return valeur aléatoire entre min et max
 	 */
-	int generateRand(int min, int max) {
+	private int generateRand(int min, int max) {
 		Random rand = new Random();
 		int nombreAleatoire = rand.nextInt(max - min + 1) + min;
 		return nombreAleatoire;
