@@ -1,20 +1,20 @@
 package battle;
 
-
 import java.lang.reflect.InvocationTargetException;
 import java.util.Observable;
 import java.util.Observer;
 
-
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StyledText;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Cursor;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
+import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Group;
@@ -40,6 +40,8 @@ public class BattleVue implements Observer {
 	Shell shell;
 	Group thisGroup;
 	ChoixStrategie choixStrategie;
+
+	private Composite composite;
 
 	public BattleVue(BattleModel model) {
 		this.model = model;
@@ -67,10 +69,20 @@ public class BattleVue implements Observer {
 		/*
 		 * set du suivi de combat
 		 */
-		st = new StyledText(shell, SWT.V_SCROLL | SWT.WRAP | SWT.BORDER
+
+		composite = new Composite(shell, SWT.BORDER);
+		Color couleur = new Color(shell.getDisplay(), 131, 133, 131);
+		composite.setBackground(couleur);
+		composite.setSize(1000, 200);
+		composite.setLocation(10, 475);
+		RowLayout rowlayout = new RowLayout();
+
+		composite.setLayout(rowlayout);
+
+		st = new StyledText(composite, SWT.V_SCROLL | SWT.WRAP | SWT.BORDER
 				| SWT.READ_ONLY);
-		st.setSize(new Point(1000, 200));
-		st.setLocation(new Point(10, 475));
+		// st.setSize(new Point(1000, 200));
+		// st.setLocation(new Point(10, 475));
 		st.setVisible(true);
 		lancerComb = new Button(shell, SWT.NONE);
 		lancerComb.setLocation(new Point(10, 0));
@@ -118,7 +130,6 @@ public class BattleVue implements Observer {
 
 			}
 		};
-
 	}
 
 	@Override
@@ -126,18 +137,20 @@ public class BattleVue implements Observer {
 		if (!st.isDisposed()) {
 			Display.getDefault().syncExec(new Runnable() {
 				public void run() {
-			st.append(model.getText());
-			int percentEnemie = (int) ((model.getEnemy().getPdv() * 100.0f) / pdvEnemyMax);
-			int percentPerso = (int) ((model.getPerso().getPointDeVie() * 100.0f) / pdvPersoMax);
-			progressbarEnemy.setSelection(percentEnemie);
-			progressbarPerso.setSelection(percentPerso);
-			st.setTopIndex(st.getLineCount() - 1);
-			st.redraw();
-			// long time = System.currentTimeMillis() + 1000;
-			// while(System.currentTimeMillis() < time) {}
-			model.setText("");
-			 long time = System.currentTimeMillis() + 1000;
-             while(System.currentTimeMillis() < time) {}
+					st.append(model.getText());
+					int percentEnemie = (int) ((model.getEnemy().getPdv() * 100.0f) / pdvEnemyMax);
+					int percentPerso = (int) ((model.getPerso().getPointDeVie() * 100.0f) / pdvPersoMax);
+					progressbarEnemy.setSelection(percentEnemie);
+					progressbarPerso.setSelection(percentPerso);
+					st.setTopIndex(st.getLineCount() - 1);
+					st.redraw();
+					composite.redraw();
+					// long time = System.currentTimeMillis() + 1000;
+					// while(System.currentTimeMillis() < time) {}
+					model.setText("");
+					long time = System.currentTimeMillis() + 1000;
+					while (System.currentTimeMillis() < time) {
+					}
 				}
 			});
 		}

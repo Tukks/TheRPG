@@ -17,10 +17,8 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.List;
-import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
 
 import util.PathManager;
@@ -40,7 +38,7 @@ public class GroupClasses extends Observable implements Observer {
 
 	public GroupClasses(Shell fenetre, LinkedList<ChargementDynamique> classes,
 			GridData gridData, ListenerChargementDyn listenerCD) {
-		
+
 		this.setShell(fenetre);
 		this.classes = classes;
 		lcd = listenerCD;
@@ -48,6 +46,10 @@ public class GroupClasses extends Observable implements Observer {
 		thisGroup.setLayoutData(gridData);
 
 		listeDesClasses = new List(thisGroup, SWT.SINGLE);
+
+		// Color blue = shell.getDisplay().getSystemColor(SWT.T);
+		// listeDesClasses.setBackground(blue);
+
 		photoPerso = new Canvas(thisGroup, SWT.BORDER);
 		photoPerso.addPaintListener(new PaintListener() {
 			public void paintControl(final PaintEvent event) {
@@ -60,7 +62,7 @@ public class GroupClasses extends Observable implements Observer {
 		});
 
 		photoPerso.setLocation(new Point(50, 50));
-		
+
 		thisGroup.setText("Choisir une classe de personnage");
 		thisGroup.setLayout(new GridLayout());
 		thisGroup.setBackgroundImage(new Image(fenetre.getDisplay(),
