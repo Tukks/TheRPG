@@ -10,13 +10,17 @@ import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
+import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.List;
+import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
 
 import util.PathManager;
@@ -36,7 +40,7 @@ public class GroupClasses extends Observable implements Observer {
 
 	public GroupClasses(Shell fenetre, LinkedList<ChargementDynamique> classes,
 			GridData gridData, ListenerChargementDyn listenerCD) {
-
+		
 		this.setShell(fenetre);
 		this.classes = classes;
 		lcd = listenerCD;
@@ -48,11 +52,15 @@ public class GroupClasses extends Observable implements Observer {
 		photoPerso.addPaintListener(new PaintListener() {
 			public void paintControl(final PaintEvent event) {
 				if (persoImage != null) {
-					event.gc.drawImage(persoImage, 0, 0);
+					GC gc = event.gc;
+					gc.drawImage(persoImage, 0, 0);
+					gc.dispose();
 				}
 			}
 		});
 
+		photoPerso.setLocation(new Point(50, 50));
+		
 		thisGroup.setText("Choisir une classe de personnage");
 		thisGroup.setLayout(new GridLayout());
 		thisGroup.setBackgroundImage(new Image(fenetre.getDisplay(),
@@ -63,7 +71,6 @@ public class GroupClasses extends Observable implements Observer {
 
 		if (listeDesClasses.getItemCount() == 0)
 			listeDesClasses.setEnabled(false);
-
 	}
 
 	private void addListener() {
@@ -83,6 +90,7 @@ public class GroupClasses extends Observable implements Observer {
 
 				try {
 					addPhotoPerso();
+					photoPerso.redraw();
 				} catch (IllegalAccessException | IllegalArgumentException
 						| InvocationTargetException e) {
 					// TODO Auto-generated catch block
