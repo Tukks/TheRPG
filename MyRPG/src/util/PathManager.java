@@ -1,5 +1,7 @@
 package util;
 
+import java.io.InputStream;
+
 public class PathManager {
 
 	public static final String classImg = "./img/classe.jpg";

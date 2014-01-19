@@ -91,7 +91,7 @@ public class InterfaceRPG implements Observer {
 
 		GridData gridData = getGridData();
 
-		Path dir = Paths.get("./Plugin");
+		Path dir = Paths.get("C:/Users/giuse_000/Desktop/rpg");
 		watchDirectories = new WatchDir(dir, true);
 		listenerCD = ListenerChargementDyn.getInstance();
 
@@ -248,14 +248,7 @@ public class InterfaceRPG implements Observer {
 				// fenetre.close();
 				Display.getDefault().syncExec(new Runnable() {
 					public void run() {
-						try {
-							new HomeRPG();
-						} catch (InstantiationException
-								| IllegalAccessException
-								| ClassNotFoundException | IOException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
+						new HomeRPG();
 					}
 				});
 

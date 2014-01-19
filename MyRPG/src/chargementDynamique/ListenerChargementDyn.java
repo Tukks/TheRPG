@@ -230,7 +230,7 @@ public final class ListenerChargementDyn extends Observable {
 		if (null == lcd) { // Premier appel
 			synchronized (ListenerChargementDyn.class) {
 				if (null == lcd) {
-					lcd = new ListenerChargementDyn("./Plugin");
+					lcd = new ListenerChargementDyn("C:/Users/giuse_000/Desktop/rpg/Plugin");
 				}
 			}
 		}
