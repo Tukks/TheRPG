@@ -213,11 +213,11 @@ public class Serialize implements VisitorRPG {
 			}
 		} catch (java.io.IOException e) {
 			//e.printStackTrace();
-			
+			isFichier = false;
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}finally{
-			isFichier = false;
+			
 			
 
 		}
@@ -259,9 +259,9 @@ public class Serialize implements VisitorRPG {
 			classPersonnage = this.devisiteChargementDynamique();
 			// recreer Pers
 			p = Personnage.getInstance();
-			if(isFichier == false){
+			if(isFichier == true){
 				p.init(i, classPersonnage, ois.readUTF());
-			
+				System.out.println("hey");
 				ois.close();
 				fichierIN.close();
 				return p;
@@ -269,10 +269,10 @@ public class Serialize implements VisitorRPG {
 		} catch (java.io.IOException e) {
 			//e.printStackTrace();
 		}finally{
-			System.out.println("perso");
-			return null;
+			
+			//return null;
 		}
-	//	return null;
+	return null;
 
 	}
 

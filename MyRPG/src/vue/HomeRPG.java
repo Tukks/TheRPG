@@ -81,10 +81,13 @@ public class HomeRPG {
 						Serialize load = new Serialize(fichierIN);
 						Serialize enemy = new Serialize();
 						Personnage p1 = load.devisitePersonnage();
+						
 						Enemy e = enemy.devisiteEnemy();
 						// System.out.println(p1.getDefense());
 						// Enemy e = new Enemy();
 						if (p1 != null) {
+							display.close();
+							
 							BattleModel model = new BattleModel(p1, e);
 							BattleVue vue = new BattleVue(model);
 
@@ -94,9 +97,8 @@ public class HomeRPG {
 							controleur.addVue(vue);
 							controleur.initModel("");
 							vue.addControleur(controleur);
-							display.close();
-
-						} else {
+							
+					} else {
 							MessageBox b  = new MessageBox(fenetre, SWT.OK );
 							b.setMessage("il manque des plugins pour le bon déroulement du chargement");
 							b.open();

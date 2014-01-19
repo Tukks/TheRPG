@@ -258,7 +258,7 @@ public class InterfaceRPG implements Observer {
 				try {
 					perso.init(item, listenerCD
 							.getClassForNamePluginClasse(gClasses
-									.getValSelection()), gAppercu.getNomPerso());
+									.getValSelection()), gCarac.getNomPerso());
 				} catch (IllegalAccessException | IllegalArgumentException
 						| InvocationTargetException e1) {
 					// TODO Auto-generated catch block
@@ -305,7 +305,7 @@ public class InterfaceRPG implements Observer {
 				try {
 					perso.init(item, listenerCD
 							.getClassForNamePluginClasse(gClasses
-									.getValSelection()), gAppercu.getNomPerso());
+									.getValSelection()), gCarac.getNomPerso());
 				} catch (IllegalAccessException | IllegalArgumentException
 						| InvocationTargetException e1) {
 					// TODO Auto-generated catch block

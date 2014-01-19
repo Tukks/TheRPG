@@ -65,6 +65,7 @@ public class GroupArmures extends Observable implements Observer {
 				super.mouseDown(arg0);
 				valSelection = listeDesArmures.getItem(listeDesArmures
 						.getSelectionIndex());
+				
 				notifyObservers();
 				setChanged();
 			}
@@ -119,6 +120,14 @@ public class GroupArmures extends Observable implements Observer {
 
 			}
 		});
+	}
+
+	public LinkedList<ChargementDynamique> getArmures() {
+		return armures;
+	}
+
+	public void setArmures(LinkedList<ChargementDynamique> armures) {
+		this.armures = armures;
 	}
 
 	public String getValSelection() {

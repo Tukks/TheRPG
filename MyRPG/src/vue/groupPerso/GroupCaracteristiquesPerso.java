@@ -39,7 +39,9 @@ public class GroupCaracteristiquesPerso implements Observer {
 	private Label def;
 
 	private Text nomPerso;
-
+	int pv = 0;
+	int d = 0;
+	int f = 0;
 	public GroupCaracteristiquesPerso(Shell fenetre, GridData gridData,
 			Personnage perso, GroupClasses gClasses, GroupArmures gArmures,
 			GroupArmes gArmes) {
@@ -89,9 +91,7 @@ public class GroupCaracteristiquesPerso implements Observer {
 			// maj des labels
 			lClasse.setText("Classe : " + gClasses.getValSelection());
 
-			int pv = 0;
-			int d = 0;
-			int f = 0;
+			
 			try {
 				pv = (int) ((ChargementDynamique) arg).getMethodForName(
 						"getPdv").invoke(
@@ -109,13 +109,16 @@ public class GroupCaracteristiquesPerso implements Observer {
 				e.printStackTrace();
 			}
 
-			pdv.setText(Integer.toString(pv));
-			def.setText(Integer.toString(d));
-			force.setText(Integer.toString(f));
+			pdv.setText("Point de vie : " +Integer.toString(pv));
+			def.setText("defense : " + Integer.toString(d));
+			force.setText("Force : " + Integer.toString(f));
+		}else if (o instanceof GroupArmures) {
+			lArmure.setText("Armure : " + gArmures.getValSelection());
+			
 		}
-
+		
 		lArme.setText("Arme : " + gArmes.getValSelection());
-		lArmure.setText("Armure : " + gArmures.getValSelection());
+		
 		// rafraichissement des labels
 		lClasse.pack();
 		lArme.pack();

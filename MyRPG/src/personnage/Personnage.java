@@ -44,6 +44,7 @@ public class Personnage implements Serializable {
 	 * Instantiates a new personnage.
 	 */
 	private Personnage() {
+		nom = "";
 		pointDeVie = 0;
 		forceDeFrappe = 0;
 		defense = 0;
