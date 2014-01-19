@@ -34,7 +34,7 @@ public abstract class ChargementDynamique extends SecureClassLoader implements
 	Class<?> classCharged;
 
 	/** The nom class. */
-	String nomClass;
+	private String nomClass;
 
 	/** The class instancie. */
 	transient Object classInstancie; // a reconstruire a la deserialization
@@ -134,7 +134,7 @@ public abstract class ChargementDynamique extends SecureClassLoader implements
 	}
 
 	/**
-	 * Gets the cl.
+	 * Gets the classInstancié.
 	 * 
 	 * @return the cl
 	 */

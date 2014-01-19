@@ -18,7 +18,7 @@ public class ChargementDynamiqueClass extends ChargementDynamique {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * Instantiates a new chargement dynamique class.
+	 * Instantiates a new chargement dynamique for class File.
 	 *
 	 * @param fileAccess the file access
 	 * @throws MalformedURLException the malformed url exception
@@ -60,7 +60,7 @@ public class ChargementDynamiqueClass extends ChargementDynamique {
 	}
 	
 	/**
-	 * Chargement class.
+	 * Init du chargement de classe, a faire a chaque nouvel objet créer
 	 *
 	 * @return true, if successful
 	 * @throws InstantiationException the instantiation exception

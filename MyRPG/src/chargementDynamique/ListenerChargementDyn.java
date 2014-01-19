@@ -49,7 +49,7 @@ public final class ListenerChargementDyn extends Observable {
 	}
 
 	/**
-	 * Charger all class.
+	 * Charger all class dans le dossier courant.
 	 *
 	 * @throws MalformedURLException the malformed url exception
 	 * @throws InstantiationException the instantiation exception
@@ -80,7 +80,7 @@ public final class ListenerChargementDyn extends Observable {
 	}
 
 	/**
-	 * Charger class.
+	 * Charger un .class en particulier.
 	 *
 	 * @param root the root
 	 * @throws MalformedURLException the malformed url exception
@@ -107,7 +107,7 @@ public final class ListenerChargementDyn extends Observable {
 	}
 
 	/**
-	 * Charger jar.
+	 * Charger un .jar en particulier.
 	 *
 	 * @param root the root
 	 * @throws ClassNotFoundException the class not found exception

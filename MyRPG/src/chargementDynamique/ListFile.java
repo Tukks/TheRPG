@@ -36,7 +36,7 @@ class ListFile {
 	}
 
 	/**
-	 * List fichier.
+	 * List fichier du root.
 	 *
 	 * @return the array list
 	 */
@@ -56,7 +56,7 @@ class ListFile {
 	}
 
 	/**
-	 * Liste dir.
+	 * Liste directory.
 	 *
 	 * @param root the root
 	 * @return the array list
@@ -71,7 +71,7 @@ class ListFile {
 	}
 	
 	/**
-	 * Nombre fichier.
+	 * Nombre fichier dans root.
 	 *
 	 * @return the int
 	 */

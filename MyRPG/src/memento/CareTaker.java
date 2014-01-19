@@ -4,15 +4,32 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class CareTaker.
+ */
 public class CareTaker {
-	  private List<Memento> statesList = new ArrayList<Memento>();
+	  
+  	/** The states list. */
+  	private List<Memento> statesList = new ArrayList<Memento>();
 	   
 	  
-	  public void addMemento(Memento m) {
+	  /**
+  	 * Adds the memento.
+  	 *
+  	 * @param m the m
+  	 */
+  	public void addMemento(Memento m) {
 	    statesList.add(m);
 	  }
 	 
-	  public Memento getMemento(int index) {
+	  /**
+  	 * Gets the memento.
+  	 *
+  	 * @param index the index
+  	 * @return the memento
+  	 */
+  	public Memento getMemento(int index) {
 	    return statesList.get(index);
 	  }
 	}

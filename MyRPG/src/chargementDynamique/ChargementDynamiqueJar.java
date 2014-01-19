@@ -38,7 +38,7 @@ public class ChargementDynamiqueJar extends ChargementDynamique {
 	}
 
 	/**
-	 * Chargerment jar.
+	 * Init du chargement de jar, a faire a chaque nouvel objet créer
 	 *
 	 * @return true, if successful
 	 * @throws ClassNotFoundException the class not found exception
