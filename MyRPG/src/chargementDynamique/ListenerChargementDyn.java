@@ -2,43 +2,46 @@ package chargementDynamique;
 
 import java.io.IOException;
 import java.lang.annotation.Annotation;
-
 import java.net.MalformedURLException;
-
 import java.util.LinkedList;
 import java.util.Observable;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class ListenerChargementDyn.
- *
+ * 
  * @author giuse_000
  */
 public final class ListenerChargementDyn extends Observable {
 
 	/** The plugin item. */
 	private LinkedList<ChargementDynamique> pluginItem = new LinkedList<ChargementDynamique>();
-	
+
 	/** The plugin classe. */
 	private LinkedList<ChargementDynamique> pluginClasse = new LinkedList<ChargementDynamique>();
-	
+
 	/** The size plug. */
 	private int sizePlug;
-	
+
 	/** The folder. */
 	private String folder;
-	
+
 	/** The lcd. */
 	private static ListenerChargementDyn lcd;
 
 	/**
 	 * Instantiates a new listener chargement dyn.
-	 *
-	 * @param folder the folder
-	 * @throws InstantiationException the instantiation exception
-	 * @throws IllegalAccessException the illegal access exception
-	 * @throws ClassNotFoundException the class not found exception
-	 * @throws IOException Signals that an I/O exception has occurred.
+	 * 
+	 * @param folder
+	 *            the folder
+	 * @throws InstantiationException
+	 *             the instantiation exception
+	 * @throws IllegalAccessException
+	 *             the illegal access exception
+	 * @throws ClassNotFoundException
+	 *             the class not found exception
+	 * @throws IOException
+	 *             Signals that an I/O exception has occurred.
 	 */
 	private ListenerChargementDyn(String folder) throws InstantiationException,
 			IllegalAccessException, ClassNotFoundException, IOException {
@@ -50,11 +53,15 @@ public final class ListenerChargementDyn extends Observable {
 
 	/**
 	 * Charger all class dans le dossier courant.
-	 *
-	 * @throws MalformedURLException the malformed url exception
-	 * @throws InstantiationException the instantiation exception
-	 * @throws IllegalAccessException the illegal access exception
-	 * @throws ClassNotFoundException the class not found exception
+	 * 
+	 * @throws MalformedURLException
+	 *             the malformed url exception
+	 * @throws InstantiationException
+	 *             the instantiation exception
+	 * @throws IllegalAccessException
+	 *             the illegal access exception
+	 * @throws ClassNotFoundException
+	 *             the class not found exception
 	 */
 	private void ChargerAllClass() throws MalformedURLException,
 			InstantiationException, IllegalAccessException,
@@ -76,17 +83,21 @@ public final class ListenerChargementDyn extends Observable {
 			}
 		}
 
-		
 	}
 
 	/**
 	 * Charger un .class en particulier.
-	 *
-	 * @param root the root
-	 * @throws MalformedURLException the malformed url exception
-	 * @throws InstantiationException the instantiation exception
-	 * @throws IllegalAccessException the illegal access exception
-	 * @throws ClassNotFoundException the class not found exception
+	 * 
+	 * @param root
+	 *            the root
+	 * @throws MalformedURLException
+	 *             the malformed url exception
+	 * @throws InstantiationException
+	 *             the instantiation exception
+	 * @throws IllegalAccessException
+	 *             the illegal access exception
+	 * @throws ClassNotFoundException
+	 *             the class not found exception
 	 */
 	void ChargerClass(String root) throws MalformedURLException,
 			InstantiationException, IllegalAccessException,
@@ -101,19 +112,24 @@ public final class ListenerChargementDyn extends Observable {
 		} else if (testIfValide && this.isItem(cdc)) {
 			pluginItem.add(cdc);
 		}
-		
+
 		this.setChanged();
 		this.notifyObservers();
 	}
 
 	/**
 	 * Charger un .jar en particulier.
-	 *
-	 * @param root the root
-	 * @throws ClassNotFoundException the class not found exception
-	 * @throws InstantiationException the instantiation exception
-	 * @throws IllegalAccessException the illegal access exception
-	 * @throws MalformedURLException the malformed url exception
+	 * 
+	 * @param root
+	 *            the root
+	 * @throws ClassNotFoundException
+	 *             the class not found exception
+	 * @throws InstantiationException
+	 *             the instantiation exception
+	 * @throws IllegalAccessException
+	 *             the illegal access exception
+	 * @throws MalformedURLException
+	 *             the malformed url exception
 	 */
 	void ChargerJar(String root) throws ClassNotFoundException,
 			InstantiationException, IllegalAccessException,
@@ -126,22 +142,24 @@ public final class ListenerChargementDyn extends Observable {
 
 		} else if (testIfValide && this.isItem(cdc)) {
 			pluginItem.add(cdc);
-			
 
 		}
 		this.setChanged();
 		this.notifyObservers();
 
-
 	}
 
 	/**
 	 * Charger all jar.
-	 *
-	 * @throws ClassNotFoundException the class not found exception
-	 * @throws InstantiationException the instantiation exception
-	 * @throws IllegalAccessException the illegal access exception
-	 * @throws IOException Signals that an I/O exception has occurred.
+	 * 
+	 * @throws ClassNotFoundException
+	 *             the class not found exception
+	 * @throws InstantiationException
+	 *             the instantiation exception
+	 * @throws IllegalAccessException
+	 *             the illegal access exception
+	 * @throws IOException
+	 *             Signals that an I/O exception has occurred.
 	 */
 	private void ChargerAllJar() throws ClassNotFoundException,
 			InstantiationException, IllegalAccessException, IOException {
@@ -160,8 +178,7 @@ public final class ListenerChargementDyn extends Observable {
 				}
 			}
 		}
-		
-		
+
 	}
 
 	/**
@@ -173,12 +190,11 @@ public final class ListenerChargementDyn extends Observable {
 		this.sizePlug = lf.nombreFichier();
 	}
 
-	
-
 	/**
 	 * Checks if is item.
-	 *
-	 * @param cd the cd
+	 * 
+	 * @param cd
+	 *            the cd
 	 * @return the boolean
 	 */
 	private Boolean isItem(ChargementDynamique cd) {
@@ -196,8 +212,9 @@ public final class ListenerChargementDyn extends Observable {
 
 	/**
 	 * Checks if is class.
-	 *
-	 * @param cd the cd
+	 * 
+	 * @param cd
+	 *            the cd
 	 * @return the boolean
 	 */
 	private Boolean isClass(ChargementDynamique cd) {
@@ -217,12 +234,16 @@ public final class ListenerChargementDyn extends Observable {
 
 	/**
 	 * Gets the single instance of ListenerChargementDyn.
-	 *
+	 * 
 	 * @return single instance of ListenerChargementDyn
-	 * @throws InstantiationException the instantiation exception
-	 * @throws IllegalAccessException the illegal access exception
-	 * @throws ClassNotFoundException the class not found exception
-	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws InstantiationException
+	 *             the instantiation exception
+	 * @throws IllegalAccessException
+	 *             the illegal access exception
+	 * @throws ClassNotFoundException
+	 *             the class not found exception
+	 * @throws IOException
+	 *             Signals that an I/O exception has occurred.
 	 */
 	public static ListenerChargementDyn getInstance()
 			throws InstantiationException, IllegalAccessException,
@@ -230,17 +251,18 @@ public final class ListenerChargementDyn extends Observable {
 		if (null == lcd) { // Premier appel
 			synchronized (ListenerChargementDyn.class) {
 				if (null == lcd) {
-					lcd = new ListenerChargementDyn("C:/Users/giuse_000/Desktop/rpg/Plugin");
+					lcd = new ListenerChargementDyn("./Plugin");
 				}
 			}
 		}
 		return lcd;
 	}
-	
+
 	/**
 	 * Gets the class for name plugin classe.
-	 *
-	 * @param name the name
+	 * 
+	 * @param name
+	 *            the name
 	 * @return the class for name plugin classe
 	 */
 	public ChargementDynamique getClassForNamePluginClasse(String name) {
@@ -256,8 +278,9 @@ public final class ListenerChargementDyn extends Observable {
 
 	/**
 	 * Gets the class for name plugin item.
-	 *
-	 * @param name the name
+	 * 
+	 * @param name
+	 *            the name
 	 * @return the class for name plugin item
 	 */
 	public ChargementDynamique getClassForNamePluginItem(String name) {
@@ -273,7 +296,7 @@ public final class ListenerChargementDyn extends Observable {
 
 	/**
 	 * Gets the plugin item.
-	 *
+	 * 
 	 * @return the plugin item
 	 */
 	public LinkedList<ChargementDynamique> getPluginItem() {
@@ -282,8 +305,9 @@ public final class ListenerChargementDyn extends Observable {
 
 	/**
 	 * Sets the plugin item.
-	 *
-	 * @param pluginItem the new plugin item
+	 * 
+	 * @param pluginItem
+	 *            the new plugin item
 	 */
 	public void setPluginItem(LinkedList<ChargementDynamique> pluginItem) {
 		this.pluginItem = pluginItem;
@@ -291,7 +315,7 @@ public final class ListenerChargementDyn extends Observable {
 
 	/**
 	 * Gets the plugin classe.
-	 *
+	 * 
 	 * @return the plugin classe
 	 */
 	public LinkedList<ChargementDynamique> getPluginClasse() {
@@ -300,8 +324,9 @@ public final class ListenerChargementDyn extends Observable {
 
 	/**
 	 * Sets the plugin classe.
-	 *
-	 * @param pluginClasse the new plugin classe
+	 * 
+	 * @param pluginClasse
+	 *            the new plugin classe
 	 */
 	public void setPluginClasse(LinkedList<ChargementDynamique> pluginClasse) {
 		this.pluginClasse = pluginClasse;
@@ -309,7 +334,7 @@ public final class ListenerChargementDyn extends Observable {
 
 	/**
 	 * Gets the folder.
-	 *
+	 * 
 	 * @return the folder
 	 */
 	public String getFolder() {
@@ -318,8 +343,9 @@ public final class ListenerChargementDyn extends Observable {
 
 	/**
 	 * Sets the folder.
-	 *
-	 * @param folder the new folder
+	 * 
+	 * @param folder
+	 *            the new folder
 	 */
 	public void setFolder(String folder) {
 		this.folder = folder;
@@ -327,7 +353,7 @@ public final class ListenerChargementDyn extends Observable {
 
 	/**
 	 * Gets the size plug.
-	 *
+	 * 
 	 * @return the size plug
 	 */
 	public int getSizePlug() {
@@ -336,25 +362,30 @@ public final class ListenerChargementDyn extends Observable {
 
 	/**
 	 * Sets the size plug.
-	 *
-	 * @param sizePlug the new size plug
+	 * 
+	 * @param sizePlug
+	 *            the new size plug
 	 */
 	public void setSizePlug(int sizePlug) {
 		this.sizePlug = sizePlug;
 	}
-	
-	/* (non-Javadoc)
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.util.Observable#setChanged()
 	 */
-	public void setChanged(){
-	    super.setChanged();
+	public void setChanged() {
+		super.setChanged();
 	}
-	
-	/* (non-Javadoc)
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.util.Observable#notifyObservers()
 	 */
-	public void notifyObservers(){
+	public void notifyObservers() {
 		super.notifyObservers();
 	}
-	
+
 }

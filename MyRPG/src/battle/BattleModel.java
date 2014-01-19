@@ -33,6 +33,10 @@ public class BattleModel extends Observable {
 		notifyObservers();
 	}
 
+	public String getImage() {
+		return perso.getClassPerso().getIcoClasse();
+	}
+
 	/**
 	 * méthode qui va lancer le combat et activer l'Observable
 	 */

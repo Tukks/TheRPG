@@ -5,20 +5,22 @@ import java.util.Observable;
 import java.util.Observer;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.custom.StyledText;
+import org.eclipse.swt.events.PaintEvent;
+import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Cursor;
 import org.eclipse.swt.graphics.Font;
+import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
-import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.ProgressBar;
 import org.eclipse.swt.widgets.Shell;
@@ -32,14 +34,15 @@ public class BattleVue implements Observer {
 	private Display dis = new Display();
 	private Button lancerComb;
 	private Text st;
-	
+
 	private ProgressBar progressbarEnemy;
 	private ProgressBar progressbarPerso;
 	private double pdvEnemyMax;
 	private double pdvPersoMax;
 	private Shell shell;
-	Group thisGroup;
 	private ChoixStrategie choixStrategie;
+	private Canvas photoPerso;
+	protected Image persoImage;
 
 	private Composite composite;
 
@@ -63,6 +66,7 @@ public class BattleVue implements Observer {
 		/*
 		 * Set des Bars de vie des persos
 		 */
+
 		progressbarEnemy = new ProgressBar(shell, SWT.HORIZONTAL | SWT.SMOOTH);
 		progressbarPerso = new ProgressBar(shell, SWT.HORIZONTAL | SWT.SMOOTH);
 		progressbarEnemy.setSize(new Point(150, 25));
@@ -76,25 +80,38 @@ public class BattleVue implements Observer {
 		 */
 
 		composite = new Composite(shell, SWT.BORDER);
-		Color couleur = new Color(shell.getDisplay(),255,255,255);
+		Color couleur = new Color(shell.getDisplay(), 255, 255, 255);
 		composite.setBackground(couleur);
 		composite.setSize(1000, 200);
 		composite.setLocation(10, 475);
 		RowLayout rowlayout = new RowLayout();
-		st = new Text(composite, SWT.V_SCROLL  | SWT.BORDER
-				| SWT.READ_ONLY);
+		st = new Text(composite, SWT.V_SCROLL | SWT.BORDER | SWT.READ_ONLY);
 		composite.setLayout(rowlayout);
-		st.setSize(1000,200);
+		st.setSize(1000, 200);
 		st.setVisible(true);
-		
-		
+
+		persoImage = new Image(shell.getDisplay(), model.getImage());
+
+		photoPerso = new Canvas(shell, SWT.BORDER);
+		photoPerso.addPaintListener(new PaintListener() {
+			public void paintControl(final PaintEvent event) {
+				if (persoImage != null) {
+					GC gc = event.gc;
+					gc.drawImage(persoImage, 0, 0);
+					gc.dispose();
+				}
+			}
+		});
+
+		photoPerso.setSize(150, 150);
+		photoPerso.setLocation(0, 200);
+
 		lancerComb = new Button(shell, SWT.NONE);
 		lancerComb.setLocation(new Point(17, 50));
 		lancerComb.setSize(new Point(120, 60));
-		lancerComb.setFont(new Font(shell.getDisplay(), "Arial", 12,
-				SWT.NONE));
+		lancerComb.setFont(new Font(shell.getDisplay(), "Arial", 12, SWT.NONE));
 		lancerComb.setText("Lancer combat");
-		
+
 		// text.insert("creation text field");
 		lancerComb.addListener(SWT.Selection, getListener());
 		// model.addObserver(this);
