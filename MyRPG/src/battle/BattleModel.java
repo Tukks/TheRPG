@@ -133,6 +133,11 @@ public class BattleModel extends Observable {
 			setChanged();
 			notifyObservers();
 			return false;
+		}else if(enemy.getPdv() == 0 && perso.getPointDeVie() == 0){
+			text ="Match Nul, tout les 2 a 0";
+			setChanged();
+			notifyObservers();
+			return false;
 		}
 		System.out.println("Erreur exception");
 		return true;

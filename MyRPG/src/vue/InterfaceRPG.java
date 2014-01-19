@@ -159,7 +159,12 @@ public class InterfaceRPG implements Observer {
 				// stopper le thread
 			}
 		});
-
+		fenetre.addListener(SWT.Close, new Listener() {
+		      public void handleEvent(Event event) {
+		    	  watchDirectories.setContinu(false);
+					threadCD.interrupt();
+		      }
+		    });
 		fenetre.open();
 
 		while (!fenetre.isDisposed())
@@ -216,21 +221,28 @@ public class InterfaceRPG implements Observer {
 			public void handleEvent(Event arg0) {
 				// TODO Auto-generated method stub
 
-				try {
+				
 					/*
 					 * A reparer
 					 */
-					fenetre.close();
+					//fenetre.close();
+					Display.getDefault().syncExec(new Runnable() {
+						public void run() {
+							fenetre.close();
 					display.close();
-					new HomeRPG();
 					watchDirectories.setContinu(false);
 					threadCD.interrupt();
+					try {
+						new HomeRPG();
+					} catch (InstantiationException | IllegalAccessException
+							| ClassNotFoundException | IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					}
+				});
 
-				} catch (InstantiationException | IllegalAccessException
-						| ClassNotFoundException | IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+				
 			}
 
 		};
