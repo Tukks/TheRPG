@@ -121,13 +121,13 @@ public class BattleModel extends Observable {
 			setChanged();
 			notifyObservers();
 			return true;
-		}else if(enemy.getPdv() < 0 && perso.getPointDeVie() > 0){
+		}else if(enemy.getPdv() <= 0 && perso.getPointDeVie() > 0){
 			text = "\n Il reste a l'enemie " + 0 + " et au perso " + perso.getPointDeVie();
 			text +="\n Le perso " + perso.getNom() + " a Gagner";
 			setChanged();
 			notifyObservers();
 			return false;
-		}else if(enemy.getPdv() > 0 && perso.getPointDeVie() < 0){
+		}else if(enemy.getPdv() >= 0 && perso.getPointDeVie() < 0){
 			text ="\n Il reste a l'enemie " + enemy.getPdv() + " et au perso " + 0;
 			text +="\n L'enemie " + enemy.getNom() + " a Gagner";
 			setChanged();
