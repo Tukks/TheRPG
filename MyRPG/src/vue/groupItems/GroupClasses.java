@@ -21,6 +21,7 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Shell;
 
+import annot.Classe;
 import util.PathManager;
 import chargementDynamique.ChargementDynamique;
 import chargementDynamique.ListenerChargementDyn;
@@ -35,7 +36,7 @@ public class GroupClasses extends Observable implements Observer {
 	private ListenerChargementDyn lcd;
 	private Canvas photoPerso;
 	protected Image persoImage;
-
+	private boolean isNew = true;
 	public GroupClasses(Shell fenetre, LinkedList<ChargementDynamique> classes,
 			GridData gridData, ListenerChargementDyn listenerCD) {
 
@@ -75,14 +76,14 @@ public class GroupClasses extends Observable implements Observer {
 		thisGroup.setBackgroundImage(new Image(fenetre.getDisplay(),
 				PathManager.bgGroup));
 		addListener();
-
+		
 		fillList();
 		listeDesClasses.setBackgroundImage(new Image(fenetre.getDisplay(),
 				PathManager.bgGroup));
 		listeDesClasses.setFont(new Font(shell.getDisplay(), "Arial", 12,
 				SWT.NONE));
-		if (listeDesClasses.getItemCount() == 0)
-			listeDesClasses.setEnabled(false);
+		
+			listeDesClasses.setEnabled(true);
 	}
 
 	private void addListener() {
@@ -127,11 +128,35 @@ public class GroupClasses extends Observable implements Observer {
 	}
 
 	@Override
-	public void update(Observable arg0, Object arg1) {
+	public void update(final Observable arg0, Object arg1) {
 		Display.getDefault().syncExec(new Runnable() {
 			public void run() {
-				listeDesClasses.add(classes.getLast().getNameClasse());
-				listeDesClasses.pack();
+				if(arg0 instanceof ListenerChargementDyn){
+					/*Classe classe = null;
+					if(classes.size() != 0){
+					classe = (Classe) classes.getLast().getClassCharged().getAnnotations()[0];
+					}
+					if(isNew != true){		
+						String [] items = listeDesClasses.getItems();
+					if(!classes.getLast().getNameClasse().equalsIgnoreCase(items[items.length-1])){
+					
+					
+					
+					}else if(classe != null){
+						isNew = false;
+						listeDesClasses.add(classes.getLast().getNameClasse());
+						listeDesClasses.pack();
+					}*/
+					if(classes.size() != 0){
+						listeDesClasses.add(classes.getLast().getNameClasse());
+						listeDesClasses.pack();
+						String [] items = listeDesClasses.getItems();
+						if(items[items.length-1].equalsIgnoreCase(listeDesClasses.getItem(items.length-2)) ){
+							listeDesClasses.remove(items[items.length-1]);
+						}
+					}
+					//}
+				}
 			}
 		});
 	}

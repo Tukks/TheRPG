@@ -94,9 +94,14 @@ public class GroupArmures extends Observable implements Observer {
 			public void run() {
 				
 				if (arg0 instanceof ListenerChargementDyn) {
-					listeDesArmures.add(armures.getLast().getNameClasse());
+					if(armures.size()!=0){
+					Item Item = (Item) armures.getLast().getClassCharged()
+							.getAnnotations()[0];
+					if(Item.type() ==TypeItem.Armure){
+					listeDesArmures.add(armures.getLast().getNameItem());
 					listeDesArmures.pack();
-
+					}
+					}
 				} else if (arg0 instanceof GroupClasses) {
 					listeDesArmures.setEnabled(true);
 					listeDesArmures.removeAll();

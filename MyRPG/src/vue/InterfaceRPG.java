@@ -91,7 +91,7 @@ public class InterfaceRPG implements Observer {
 
 		GridData gridData = getGridData();
 
-		Path dir = Paths.get("C:/Users/giuse_000/Desktop/rpg");
+		Path dir = Paths.get("C:/Users/giuse_000/Desktop/rpg/Plugin");
 		watchDirectories = new WatchDir(dir, true);
 		listenerCD = ListenerChargementDyn.getInstance();
 
@@ -109,18 +109,18 @@ public class InterfaceRPG implements Observer {
 		// 1 > liste des classes
 		gClasses = new GroupClasses(fenetre, classes, gridData, listenerCD);
 		listenerCD.addObserver(gClasses);
-
 		// 2 > saisie nom du perso + apperçu perso
 		// gAppercu = new GroupApercuPerso(fenetre, gridData);
 
 		// 4 > armes
 		gArmes = new GroupArmes(fenetre, items, gridData);
-
+		listenerCD.addObserver(gArmes);
 		// 5 > armures
 		gArmures = new GroupArmures(fenetre, items, gridData);
-
+		listenerCD.addObserver(gArmures);
 		// 6 > potions
 		gPotions = new GroupPotions(fenetre, items, gridData);
+		listenerCD.addObserver(gPotions);
 
 		// 3 > caractéristiques
 		gCarac = new GroupCaracteristiquesPerso(fenetre, gridData, perso,

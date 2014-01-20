@@ -86,9 +86,15 @@ public class GroupArmes extends Observable implements Observer {
 		Display.getDefault().syncExec(new Runnable() {
 			public void run() {
 				if (arg0 instanceof ListenerChargementDyn) {
-					listeDesArmes.add(items.getLast().getNameClasse());
-					listeDesArmes.pack();
-
+					if(items.size()!=0){
+					Item Item = (Item) items.getLast().getClassCharged()
+							.getAnnotations()[0];
+					
+					if(Item.type() == TypeItem.Arme){
+						listeDesArmes.add(items.getLast().getNameItem());
+						listeDesArmes.pack();
+					}
+					}
 				} else if (arg0 instanceof GroupClasses) {
 					listeDesArmes.setEnabled(true);
 					listeDesArmes.removeAll();

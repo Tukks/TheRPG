@@ -17,8 +17,11 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Shell;
 
+import annot.Item;
+import annot.TypeItem;
 import util.PathManager;
 import chargementDynamique.ChargementDynamique;
+import chargementDynamique.ListenerChargementDyn;
 
 public class GroupPotions implements Observer {
 
@@ -58,10 +61,10 @@ public class GroupPotions implements Observer {
 		listeDesPotions.setFont(new Font(fenetre.getDisplay(), "Arial", 12,
 				SWT.NONE));
 		
-		if (listeDesPotions.getItemCount() == 0)
-			listeDesPotions.setEnabled(false);
-
+		
+			listeDesPotions.setEnabled(true);
 	}
+	
 
 	private void addListener() {
 		listeDesPotions.addMouseListener(new MouseAdapter() {
@@ -84,11 +87,20 @@ public class GroupPotions implements Observer {
 	}
 
 	@Override
-	public void update(Observable arg0, Object arg1) {
+	public void update(final Observable arg0, Object arg1) {
 		Display.getDefault().syncExec(new Runnable() {
 			public void run() {
-				listeDesPotions.add(potions.getLast().getNameClasse());
+				if(arg0 instanceof ListenerChargementDyn){
+					if(potions.size()!=0){
+					Item Item = (Item) potions.getLast().getClassCharged()
+							.getAnnotations()[0];
+					if(Item.type() ==TypeItem.Potion || Item.type() == TypeItem.Poison){
+				listeDesPotions.add(potions.getLast().getNameItem());
+				listeDesPotions.redraw();
 				thisGroup.pack();
+					}
+					}
+				}
 			}
 		});
 	}
