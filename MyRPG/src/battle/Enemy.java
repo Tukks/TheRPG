@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Random;
 
 import serializable.VisitorRPG;
+import util.PathManager;
 
 public class Enemy implements Serializable {
 	private static final long serialVersionUID = -8487896641271550505L;
@@ -12,6 +13,7 @@ public class Enemy implements Serializable {
 	private int attaque;
 	private int nbrPotion;
 	private int defense;
+	private String imgEn;
 
 	private boolean reculer = false;
 
@@ -24,6 +26,7 @@ public class Enemy implements Serializable {
 		this.nbrPotion = generateRand(1, 5);
 		this.defense = generateRand(1, 10);
 		this.nom = generateName();
+		this.setImgEn(generateImgEn());
 	}
 
 	/**
@@ -46,6 +49,27 @@ public class Enemy implements Serializable {
 			return "Ogre";
 		case 5:
 			return "Elf";
+		default:
+			break;
+		}
+		return "";
+	}
+
+	private String generateImgEn() {
+		int i = generateRand(0, 5);
+		switch (i) {
+		case 0:
+			return PathManager.imgEn1;
+		case 1:
+			return PathManager.imgEn2;
+		case 2:
+			return PathManager.imgEn3;
+		case 3:
+			return PathManager.imgEn4;
+		case 4:
+			return PathManager.imgEn5;
+		case 5:
+			return PathManager.imgEn3;
 		default:
 			break;
 		}
@@ -119,6 +143,14 @@ public class Enemy implements Serializable {
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
+	}
+
+	public String getImgEn() {
+		return imgEn;
+	}
+
+	public void setImgEn(String imgEn) {
+		this.imgEn = imgEn;
 	}
 
 }

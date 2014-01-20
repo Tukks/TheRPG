@@ -2,7 +2,10 @@ package vue;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
+
+import javax.imageio.ImageIO;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -14,7 +17,6 @@ import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Button;
-
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.FileDialog;
@@ -33,12 +35,14 @@ import util.PathManager;
 public class HomeRPG {
 
 	private static Display display = new Display();// new Display();
+	
 	private ImageData cursor_Image = new ImageData(PathManager.cursorImg);
 	private Shell fenetre;
 
-	public HomeRPG() throws InstantiationException, IllegalAccessException,
-			ClassNotFoundException, IOException {
-
+	public HomeRPG() {
+		
+		
+		
 		fenetre = new Shell(display, SWT.CLOSE | SWT.MIN);
 		fenetre.setSize(1024, 700);
 
